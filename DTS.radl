@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="RESTBucks" radl-version="1.0"
+    xmlns="urn:radl:service" 
+    xmlns:html="http://www.w3.org/1999/xhtml">
+  <documentation>
+
+  </documentation>
+
+  <states>
+    <state name="Choose protocol">
+      <transitions>
+        <transition name="List namespaces" to="Choose namespace"/>
+      </transitions>
+    </state>
+    
+    <state name="Choose namespace">
+      <transitions>
+        <transition name="List text groups" to="Choose text group"/>
+      </transitions>
+    </state>
+    
+    <state name="Choose text group">
+      <transitions>
+        <transition name="List works" to="Choose work"/>
+      </transitions>
+    </state>
+    
+    <state name="Choose work">
+      <transitions>
+        <transition name="List editions" to="Choose edition"/>
+      </transitions>
+    </state>
+    
+    <state name="Choose edition">
+      <transitions>
+        <transition name="Send edition" to="Read edition"></transition>
+      </transitions>
+    </state>
+    
+  </states>
+
+  <link-relations>
+        
+    <link-relation name="protocols">
+      <transitions>
+        <transition ref="Choose protocol"/>
+      </transitions>
+    </link-relation>
+    
+    <link-relation name="namespaces">
+      <transitions>
+        <transition ref="Choose namespaces"/>
+      </transitions>
+    </link-relation>
+    
+    <link-relation name="textgroups">
+      <transitions>
+        <transition ref="Choose text group"/>
+      </transitions>
+    </link-relation>
+    
+    <link-relation name="works">
+      <transitions>
+        <transition ref="Choose work"/>
+      </transitions>
+    </link-relation>
+    
+    <link-relation name="editions">
+      <transitions>
+        <transition ref="Choose edition"/>
+      </transitions>
+    </link-relation>
+    
+  </link-relations>
+
+  <property-groups>
+
+  </property-groups>
+
+  <media-types default="application/xml">
+    <media-type name="text/html">
+      <specification href="https://html.spec.whatwg.org/"></specification>
+    </media-type>
+    
+    <media-type name="application/xml">
+      <specification href="https://www.w3.org/TR/xml11/"></specification>
+    </media-type>
+    
+    <media-type name="application/ld+json">
+      <specification href="http://www.w3.org/TR/json-ld/"/>
+    </media-type>
+    
+  </media-types>
+
+  <errors>
+    <error name="/not-found" status-code="404">
+      <documentation>The URI you requested doesn't exist.</documentation>
+    </error>
+    <error name="/server-error" status-code="500">
+      <documentation>Oh, I am slain!</documentation>
+    </error>
+  </errors>
+
+  <conventions>
+    <uri-template-variables>
+      <uri-template-variable name="cts-ns">
+        <documentation>
+          A CTS namespace, e.g. "greekLit".
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="text-group">
+        <documentation>
+          A CTS Text Group. Usually corresponds to the collected works of an author.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="work">
+        <documentation>
+          A CTS Work.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="edition">
+        <documentation>
+          The id of an edition or translation of a work.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="location">
+        <documentation>
+          A location within an edition, translation, or work
+        </documentation>
+      </uri-template-variable>
+    </uri-template-variables>
+  </conventions>
+
+  <resources>
+    <resource name="Root">
+      <location uri="/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List protocols"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="CTS">
+      <location uri="/cts/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List namespaces"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Namespace">
+      <location uri-template="/cts/{cts-ns}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List text groups"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="TextGroup">
+      <location uri-template="/cts/{cts-ns}/{text-group}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List works"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Work">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List editions"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="Edition">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{edition}"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Send edition"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+  </resources>
+</service>
