@@ -6,6 +6,28 @@ client application,find out which editions of a work are available,I can choose 
 client application,find out which translations of a work are available,I can choose one
 client application,be served an alternate edition if the one I asked for is not available but another is,I can automatically resolve references to other versions
 client application,find out if any editions of a work are available which have a specific passage range,I can choose one that will resolve my passage reference
-client application,to perform CRUD operations on a named curated collection of texts,can offer custom subsets
+client application,perform CRUD operations on a named curated collection of texts,can offer custom subsets
+client application,retrieve a specific passage of a text,I can do something with it
+client application,get a list of available works filtered by author,I can choose one
+client application,get a list of available works filtered by texgroup,I can choose one
+client application,get a list of available editions or translations filtered by author,I can choose one
+client application,get a list of available editions or translations filtered by author and language,I can choose one
+client application,retrieve the entire contents of a text,I can do something with it
+client application,retrieve an ordered list of available passages in a text,I can choose one
+client application,find the previous and next passages for a given passage,I can navigate a text
+client application,get descriptive metadata about a specific edition,I can do something with it
+client application,get descriptive metadata about a work,I can do something with it
+client application,get descriptive metadata about a textgroup,I can do something with it
+client application,get descriptive metadata about an author,I can do something with it
+client application,find out which repositories are available,I can choose one
+client application,find out which repositories contain a specific work,I can choose one
+client application,find out which repositories contain a specific edition of a work,I can choose one
+
+
+
+
+
+
+
 
 
