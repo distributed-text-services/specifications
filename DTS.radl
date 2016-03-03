@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<service name="RESTBucks" radl-version="1.0"
+<service name="DTS API" radl-version="1.0"
     xmlns="urn:radl:service" 
     xmlns:html="http://www.w3.org/1999/xhtml">
   <documentation>
@@ -7,74 +7,223 @@
   </documentation>
 
   <states>
-    <state name="Choose protocol">
+    <start-state>
       <transitions>
-        <transition name="List namespaces" to="Choose namespace"/>
+        <transition name="Access" to="Reading Endpoint Details">
+          <documentation>The process starts when the client accesses the API.</documentation>
+        </transition>
+      </transitions>
+    </start-state>
+    
+    <state name="Reading Endpoint Details" property-group="endpoint">
+      <transitions>
+        <transition name="List protocols" to="Reading Protocols">
+          <documentation>
+            Once the client has accessed the API, it lists the protocols to see what the API supports.
+          </documentation>
+        </transition>       
+        <transition name="Find textobject" to="Reading Query Results">
+          <documentation>
+            Client queries to find available instances of a TextObject
+          </documentation>
+          <input property-group="TextObjectURN"/>
+          <input property-group="OtherFilterCriteria"/>
+        </transition>
+      </transitions>
+   </state>
+    
+    <state name="Reading Protocols" property-group="protocols">
+      <transitions>
+        <transition name="Choose cts protocol" to="Reading CTS NameSpaces">
+          <documentation>
+            The client chooses the CTS protocol
+          </documentation>
+          <input property-group="protocoltype"/>
+        </transition>
+        <transition name="Choose dts protocol" to="Reading DTS TopLevel">
+          <documentation>
+            The client chooses the DTS protocol
+          </documentation>
+          <input property-group="protocoltype"/>
+        </transition>
+      </transitions>
+    </state>
+
+    <state name="Reading Query Results" property-group="queryresults">
+      <transitions>
+        <transition name="Traverse cts version" to="Reading CTS Locations">
+          <documentation>
+            The client chooses to traverse locations in a CTS Version
+          </documentation>
+          <input property-group="TextObjectURN"/>
+        </transition>
+        <transition name="Choose cts version" to="Reading TextObject">
+          <documentation>
+            The client chooses a CTS Version
+          </documentation>
+          <input property-group="TextObjectURN"/>
+        </transition>
+        <transition name="Choose dts writtenwork" to="Reading TextObject">          
+          <documentation>
+            The client chooses a DTS WrittenWork
+          </documentation>
+          <input property-group="TextObjectURN"/>
+        </transition>
+      </transitions>
+    </state>
+     
+    <state name="Reading CTS NameSpaces" property-group="cts protocol">
+      <transitions>
+        <transition name="Choose cts namespace" to="Reading CTS TextGroups">
+          <documentation>
+            The client chooses a CTS Namespace 
+          </documentation>
+          <input property-group="CTSURNComponent"/>
+        </transition>
+      </transitions>
+      
+    </state>
+    
+    <state name="Reading CTS TextGroups" property-group="cts namespace">
+      <transitions>
+        <transition name="Choose cts textgroup" to="Reading CTS Works">
+          <input property-group="CTSURNComponent"/>
+          <documentation>
+            The client chooses a CTS Textgroup 
+          </documentation>
+        </transition>
       </transitions>
     </state>
     
-    <state name="Choose namespace">
+    <state name="Reading CTS Works" property-group="cts textgroup">
       <transitions>
-        <transition name="List text groups" to="Choose text group"/>
+        <transition name="Choose cts work" to="Reading CTSVersions">
+          <input property-group="CTSURNComponent"/>
+          <documentation>
+            The client chooses a CTS Work 
+          </documentation>
+        </transition>
       </transitions>
+      
     </state>
     
-    <state name="Choose text group">
+    <state name="Reading CTS Versions" property-group="cts work">
       <transitions>
-        <transition name="List works" to="Choose work"/>
+        <transition name="Traverse cts version" to="Reading CTS Locations">
+          <input property-group="CTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse locations in a CTS Version 
+          </documentation>
+        </transition>
+        <transition name="Choose cts version" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire version.
+          </documentation>
+        </transition>
       </transitions>
+
     </state>
     
-    <state name="Choose work">
+    <state name="Reading CTS Locations" property-group="cts locationlist">
       <transitions>
-        <transition name="List editions" to="Choose edition"/>
+        <transition name="Traverse cts location" to="Reading CTS Locations">
+          <input property-group="CTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse child locations in a CTS Location 
+          </documentation>
+        </transition>
+        <transition name="Choose cts location" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of a CTS location
+          </documentation>
+        </transition>
       </transitions>
+      
     </state>
     
-    <state name="Choose edition">
-      <transitions>
-        <transition name="Send edition" to="Read edition"></transition>
-      </transitions>
+    
+    <state name="Reading TextObject" property-group="textobject">
+      <documentation>
+        The text is retrieved.
+      </documentation>
     </state>
     
   </states>
 
   <link-relations>
-        
-    <link-relation name="protocols">
+    
+    <link-relation name="http://example.org/protocols">
+      <specification href="http://example.org/protocols"/>
       <transitions>
-        <transition ref="Choose protocol"/>
+        <transition ref="List protocols"/>
       </transitions>
     </link-relation>
     
-    <link-relation name="namespaces">
+    <link-relation name="http://example.org/dtstophierarchy">
+      <specification href="http://example.org/dtstophierarchy"/>
       <transitions>
-        <transition ref="Choose namespaces"/>
+        <transition ref="Choose dts protocol"/>
+      </transitions>
+    </link-relation>
+   
+    <link-relation name="http://example.org/ctsnamespaces">
+      <specification href="http://example.org/ctsnamespaces"/>
+      <transitions>
+        <transition ref="Choose cts protocol"/>
       </transitions>
     </link-relation>
     
-    <link-relation name="textgroups">
+    <link-relation name="http://example.org/ctstextgroups">
+      <specification href="http://example.org/ctstextgroups"/>
       <transitions>
-        <transition ref="Choose text group"/>
+        <transition ref="Choose cts namespace"/>
       </transitions>
     </link-relation>
     
-    <link-relation name="works">
+    
+    <link-relation name="http://example.org/ctsworks">
+      <specification href="http://example.org/ctsworks"/>
       <transitions>
-        <transition ref="Choose work"/>
+        <transition ref="Choose cts textgroup"/>
+      </transitions>
+    </link-relation>
+
+    <link-relation name="http://example.org/ctsversions">
+      <specification href="http://example.org/ctsversions"/>
+      <transitions>
+        <transition ref="Choose cts work"/>
       </transitions>
     </link-relation>
     
-    <link-relation name="editions">
+    <link-relation name="http://example.org/ctslocations">
+      <specification href="http://example.org/ctslocations"/>
       <transitions>
-        <transition ref="Choose edition"/>
+        <transition ref="Traverse cts version"/>
+      </transitions>
+    </link-relation>
+    
+    <link-relation name="http://example.org/text">
+      <specification href="http://example.org/text"/>
+      <transitions>
+        <transition ref="Choose cts version"/>
+        <transition ref="Choose cts location"/>
+        <transition ref="Choose dts writtenwork"/>
+        <transition ref="Choose dts location"/>
       </transitions>
     </link-relation>
     
   </link-relations>
 
   <property-groups>
-
+    <property-group name="endpoint" uri="http://example.org/endpoint"/>
+    <property-group name="queryresults" uri="http://example.org/queryresults"/>
+    <property-group name="protocols" uri="http://example.org/protocols"/>
+    <property-group name="protocoltype" uri="http://example.org/protocoltype"/>
+    <property-group name="CTSURNComponent" uri="http://example.org/CTSURNComponent"/>
+    <property-group name="TextObjectURN" uri="http://example.org/TextObjectURN"/>
+    <property-group name="OtherFilterCriteria" uri="http://example.org/OtherFilterCriteria"/>
   </property-groups>
 
   <media-types default="application/xml">
@@ -132,72 +281,148 @@
   </conventions>
 
   <resources>
-    <resource name="Root">
+    <resource name="Endpoint">
       <location uri="/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="List protocols"/>
+            <transition ref="Access"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="Protocols">
+      <location uri="/protocols/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List protocols"/>        
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="TextObjectQuery">
+      <location uri="/query/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Find textobject"/>
           </transitions>
           <response/>
         </method>
       </methods>
     </resource>
 
-    <resource name="CTS">
+    <resource name="Catalogs">
+      <location uri="/catalogs/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="List catalogs"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+
+    <resource name="CTSNamespaces">
       <location uri="/cts/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="List namespaces"/>
+            <transition ref="Choose cts protocol"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    
+    <resource name="DTSTopLevel">
+      <location uri="/dts/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts protocol"/>
           </transitions>
           <response/>
         </method>
       </methods>
     </resource>
 
-    <resource name="Namespace">
+    <resource name="CTSTextGroups">
       <location uri-template="/cts/{cts-ns}/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="List text groups"/>
+            <transition ref="Choose cts namespace"/>
           </transitions>
           <response/>
         </method>
       </methods>
     </resource>
 
-    <resource name="TextGroup">
+    <resource name="CTSWorks">
       <location uri-template="/cts/{cts-ns}/{text-group}/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="List works"/>
+            <transition ref="Choose cts textgroup"/>
           </transitions>
           <response/>
         </method>
       </methods>
     </resource>
 
-    <resource name="Work">
+    <resource name="CTSVersions">
       <location uri-template="/cts/{cts-ns}/{text-group}/{work}/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="List editions"/>
+            <transition ref="Chose cts work"/>
           </transitions>
           <response/>
         </method>
       </methods>
     </resource>
 
-    <resource name="Edition">
-      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{edition}"/>
+    <resource name="CTSLocationList">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/"/>
       <methods>
         <method name="GET">
           <transitions>
-            <transition ref="Send edition"/>
+            <transition ref="Traverse cts version"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="CTSSubLocationList">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Traverse cts location"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="TextObject">
+      <location uri-template="/text/{uri}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose cts location"/>
+            <transition ref="Choose cts version"/>
+            <transition ref="Choose dts writtenwork"/>
           </transitions>
           <response/>
         </method>
