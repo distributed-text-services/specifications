@@ -1,4 +1,4 @@
-As,I want to,So that,Prerequisites
+As,I want to,So that
 client application,query if a work is available,I can retrieve it
 client application,query if a specific version is available,I can retrieve it
 client application,access the most recent edition of a work,I can do something with it
