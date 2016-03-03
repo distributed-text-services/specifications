@@ -1,11 +1,11 @@
-As,I want to,So that, Prerequisites,Scope 
-client application,query if a work is available,I can retrieve it,
-client application,query if a specific version is available,I can retrieve it,
-client application,access the most recent edition of a work,I can do something with it,
-client application,find out which editions of a work are available,I can choose one,
-client application,find out which translations of a work are available,I can choose one,
-client application,be served an alternate edition if the one I asked for is not available but another is,I can automatically resolve references to other versions,
-client application,find out if any editions of a work are available which have a specific passage range,I can choose one that will resolve my passage reference,
-client application,to perform CRUD operations on a named curated collection of texts,can offer custom subsets,
+As,I want to,So that,Prerequisites
+client application,query if a work is available,I can retrieve it
+client application,query if a specific version is available,I can retrieve it
+client application,access the most recent edition of a work,I can do something with it
+client application,find out which editions of a work are available,I can choose one
+client application,find out which translations of a work are available,I can choose one
+client application,be served an alternate edition if the one I asked for is not available but another is,I can automatically resolve references to other versions
+client application,find out if any editions of a work are available which have a specific passage range,I can choose one that will resolve my passage reference
+client application,to perform CRUD operations on a named curated collection of texts,can offer custom subsets
 
 
