@@ -1,3 +1,3 @@
-Level, Title, Description
-Metadata, Edition have only one language, CTS right now accepts only one language for its editions. What about text which do not have clear first language (Religious texts, Bodin ?)
-Request, Inventory needs pagination or filtering, For text repository with thousands of text; it is not possible to reply with full inventory.
+Level,Title,Description
+Metadata,Edition have only one language,CTS right now accepts only one language for its editions. What about text which do not have clear first language (Religious texts, Bodin ?)
+Request,Inventory needs pagination or filtering,For text repository with thousands of text; it is not possible to reply with full inventory.
