@@ -1,0 +1,1478 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>DTS API REST Service </title><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script><style type="text/css">/*
+ * Copyright (c) 2016. EMC Corporation. All Rights Reserved.
+ */
+
+html{
+  font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+  color:#303030;
+}
+body{
+  margin:0;
+  padding:0 0 0 18em;
+}
+a:link{
+  color:#0987ED;
+  text-decoration:none;
+}
+a:hover {
+  color: hotpink;
+  text-decoration:underline;
+}
+
+h1,
+h2,
+h3{
+  color:#013661;
+}
+.doctitle{
+  font-weight:bold;
+  font-size: 300%;
+}
+
+table{
+  border-collapse:collapse;
+  margin-bottom:1em;
+  width:90%
+}
+th,
+td{
+  border:1px solid;
+  padding:0.35em;
+  vertical-align:top;
+}
+th{
+  color:White;
+  background-color:#147ACC;
+  text-align:left;
+  border-color:LightGrey;
+}
+td{
+  border-color:LightGrey;
+  vertical-align:middle;
+  font-size:0.9em;
+}
+tr:nth-child(odd){
+  background-color:#F2F8FC;
+  padding:16px;
+}
+
+dl{
+  margin:16px;
+}
+dl dl{
+  background-color:#F2F8FC;
+  padding:12px;
+}
+dd{
+  margin:0;
+  padding-left:16px;
+}
+dt{
+  font-weight: bold;
+}
+div.nested{
+  margin:0;
+  padding-left:16px;
+}
+
+li.transition{
+  list-style-type:none;
+}
+
+.outline{
+  vertical-align:top;
+  padding:1em;
+}
+.toc-left{
+  position:fixed;
+  top:0;
+  left:0;
+  width:14em;
+  height:100%;
+  background-color:#E6F2FC;
+}
+.toc-left>h2>a{
+  font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+  color:#0767B5;
+}
+.toc-left>h2>a:hover{
+  color:hotpink;
+  font-style:normal;
+}
+.toc-left>ul>li>h3>a{
+  font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+  color:#0767B5;
+}
+.toc-left>ul>li>h3>a:hover{
+  color:hotpink;
+  font-style:normal;
+}
+.content{
+  height:100%;
+}
+.buggy{
+  background-color:yellow;
+}
+.http{
+  border-radius:2px;
+  color:white;
+  display:inline-block;
+  font-size:0.9em;
+  font-weight: normal;
+  padding:4px 0 2px;
+  text-align:center;
+  width:50px;
+}
+.http a{
+  color:white;
+}
+.DELETE{
+  background-color:#a41e22;
+}
+.GET{
+  background-color:#0f6ab4;
+}
+.PATCH{
+  background-color:#7D2DA6;
+}
+.POST{
+  background-color:#10a54a;
+}
+.PUT{
+  background-color:#ED3A37;
+}
+*:not(pre)>code{
+  background:none repeat scroll 0 0 #F0F4FC;
+  border:1px solid #ccc;
+  border-radius:2px;
+  padding:1px 3px;
+  font-weight: normal;
+}</style></head>
+   <body>
+      <div id="toc" class="outline toc-left">
+         <h2><a href="#doctitle">DTS API</a></h2>
+         <ul>
+            <li>
+               <h3><a href="#states">States</a></h3>
+            </li>
+            <li>
+               <h3><a href="#link-relations">Link Relations</a></h3>
+            </li>
+            <li>
+               <h3><a href="#property-groups">Property Groups</a></h3>
+            </li>
+            <li>
+               <h3><a href="#uri-parameters">URI Parameters</a></h3>
+            </li>
+            <li>
+               <h3><a href="#media-types">Media Types</a></h3>
+            </li>
+            <li>
+               <h3><a href="#headers">Custom Headers</a></h3>
+            </li>
+            <li>
+               <h3><a href="#status-codes">Status Codes</a></h3>
+            </li>
+            <li>
+               <h3><a href="#resources">Resources</a></h3>
+            </li>
+            <li>
+               <h3><a href="#authentication">Authentication</a></h3>
+            </li>
+         </ul>
+      </div>
+      <div id="content" class="outline content">
+         <h1 id="doctitle" class="doctitle">DTS API</h1>
+         
+         
+         <hr>
+         <h1 id="states">States</h1>
+         <table sortable="true">
+            <thead>
+               <tr>
+                  <th>State</th>
+                  <th>Transition</th>
+                  <th>Result State</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><a href="#state-Start">Start</a></td>
+                  <td><a href="#transition-Start-Access">Access</a></td>
+                  <td><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></td>
+                  <td><a href="#transition-Reading-Endpoint-Details-List-protocols">List protocols</a></td>
+                  <td><a href="#state-Reading-Protocols">Reading Protocols</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></td>
+                  <td><a href="#transition-Reading-Endpoint-Details-Find-textobject">Find textobject</a></td>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Protocols">Reading Protocols</a></td>
+                  <td><a href="#transition-Reading-Protocols-Choose-cts-protocol">Choose cts protocol</a></td>
+                  <td><a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Protocols">Reading Protocols</a></td>
+                  <td><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a></td>
+                  <td><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Traverse-cts-version">Traverse cts version</a></td>
+                  <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></td>
+                  <td><a href="#transition-Reading-CTS-NameSpaces-Choose-cts-namespace">Choose cts namespace</a></td>
+                  <td><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></td>
+                  <td><a href="#transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Choose cts textgroup</a></td>
+                  <td><a href="#state-Reading-CTS-Works">Reading CTS Works</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-Works">Reading CTS Works</a></td>
+                  <td><a href="#transition-Reading-CTS-Works-Choose-cts-work">Choose cts work</a></td>
+                  <td><a href="#state-Reading-CTSVersions">Reading CTSVersions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-Versions">Reading CTS Versions</a></td>
+                  <td><a href="#transition-Reading-CTS-Versions-Traverse-cts-version">Traverse cts version</a></td>
+                  <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-Versions">Reading CTS Versions</a></td>
+                  <td><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+                  <td><a href="#transition-Reading-CTS-Locations-Traverse-cts-location">Traverse cts location</a></td>
+                  <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+                  <td><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="state-detail">
+            <hr>
+            <h2 id="state-Start">State: Start</h2>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Start-Access">Access</a></td>
+                     <td>[None]</td>
+                     <td><span class="http GET"><a href="#method-Endpoint-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Start-Access">Transition: Access</h3>
+               <p>The process starts when the client accesses the API.</p>
+               <p id="transition-Start-Access-GET">By performing HTTP method <span class="http GET">GET</span> on state <a href="#state-Start">Start</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
+            <h2 id="state-Reading-Endpoint-Details">State: Reading Endpoint Details</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-endpoint">endpoint</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-Endpoint-Details-List-protocols">List protocols</a></td>
+                     <td><code><a href="#linkrel-http---example.org-protocols">http://example.org/protocols</a></code></td>
+                     <td><span class="http GET"><a href="#method-Protocols-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-Protocols">Reading Protocols</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Endpoint-Details-Find-textobject">Find textobject</a></td>
+                     <td>[None]</td>
+                     <td><span class="http GET"><a href="#method-TextObjectQuery-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-Endpoint-Details-List-protocols">Transition: List protocols</h3>
+               <p>
+                  Once the client has accessed the API, it lists the protocols to see what the API supports.
+                  
+               </p>
+               <p id="transition-Reading-Endpoint-Details-List-protocols-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-protocols">http://example.org/protocols</a></code> of state <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-Protocols">Reading Protocols</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Endpoint-Details-Find-textobject">Transition: Find textobject</h3>
+               <p>
+                  Client queries to find available instances of a TextObject
+                  
+               </p>
+               <p id="transition-Reading-Endpoint-Details-Find-textobject-GET">By performing HTTP method <span class="http GET">GET</span> on state <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-Query-Results">Reading Query Results</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
+            <h2 id="state-Reading-Protocols">State: Reading Protocols</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-protocols">protocols</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-Protocols-Choose-cts-protocol">Choose cts protocol</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctsnamespaces">http://example.org/ctsnamespaces</a></code></td>
+                     <td><span class="http GET"><a href="#method-CTSNamespaces-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtstophierarchy">http://example.org/dtstophierarchy</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSTopLevel-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-Protocols-Choose-cts-protocol">Transition: Choose cts protocol</h3>
+               <p>
+                  The client chooses the CTS protocol
+                  
+               </p>
+               <p id="transition-Reading-Protocols-Choose-cts-protocol-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-ctsnamespaces">http://example.org/ctsnamespaces</a></code> of state <a href="#state-Reading-Protocols">Reading Protocols</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Protocols-Choose-dts-protocol">Transition: Choose dts protocol</h3>
+               <p>
+                  The client chooses the DTS protocol
+                  
+               </p>
+               <p id="transition-Reading-Protocols-Choose-dts-protocol-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtstophierarchy">http://example.org/dtstophierarchy</a></code> of state <a href="#state-Reading-Protocols">Reading Protocols</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
+            <h2 id="state-Reading-Query-Results">State: Reading Query Results</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-queryresults">queryresults</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Traverse-cts-version">Traverse cts version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctslocations">http://example.org/ctslocations</a></code></td>
+                     <td><span class="http GET"><a href="#method-CTSLocationList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Traverse-cts-version">Transition: Traverse cts version</h3>
+               <p>
+                  The client chooses to traverse locations in a CTS Version
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Traverse-cts-version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-ctslocations">http://example.org/ctslocations</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Choose-cts-version">Transition: Choose cts version</h3>
+               <p>
+                  The client chooses a CTS Version
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Choose-cts-version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Choose-dts-writtenwork">Transition: Choose dts writtenwork</h3>
+               <p>
+                  The client chooses a DTS WrittenWork
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Choose-dts-writtenwork-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
+            <h2 id="state-Reading-CTS-NameSpaces">State: Reading CTS NameSpaces</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-cts-protocol">cts protocol</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-NameSpaces-Choose-cts-namespace">Choose cts namespace</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctstextgroups">http://example.org/ctstextgroups</a></code></td>
+                     <td><span class="http GET"><a href="#method-CTSTextGroups-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-NameSpaces-Choose-cts-namespace">Transition: Choose cts namespace</h3>
+               <p>
+                  The client chooses a CTS Namespace 
+                  
+               </p>
+               <p id="transition-Reading-CTS-NameSpaces-Choose-cts-namespace-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-ctstextgroups">http://example.org/ctstextgroups</a></code> of state <a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-CTS-TextGroups">State: Reading CTS TextGroups</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-cts-namespace">cts namespace</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Choose cts textgroup</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctsworks">http://example.org/ctsworks</a></code></td>
+                     <td><span class="http GET"><a href="#method-CTSWorks-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-Works">Reading CTS Works</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Transition: Choose cts textgroup</h3>
+               <p>
+                  The client chooses a CTS Textgroup 
+                  
+               </p>
+               <p id="transition-Reading-CTS-TextGroups-Choose-cts-textgroup-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-ctsworks">http://example.org/ctsworks</a></code> of state <a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-Works">Reading CTS Works</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
+            <h2 id="state-Reading-CTS-Works">State: Reading CTS Works</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-cts-textgroup">cts textgroup</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-Works-Choose-cts-work">Choose cts work</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctsversions">http://example.org/ctsversions</a></code></td>
+                     <td></td>
+                     <td><a href="#state-Reading-CTSVersions">Reading CTSVersions</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-Works-Choose-cts-work">Transition: Choose cts work</h3>
+               <p>
+                  The client chooses a CTS Work 
+                  
+               </p>
+               <h4>This transition is not yet specified in an HTTP interface.</h4>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-CTS-Versions">State: Reading CTS Versions</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-cts-work">cts work</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-Versions-Traverse-cts-version">Traverse cts version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-ctslocations">http://example.org/ctslocations</a></code></td>
+                     <td><span class="http GET"><a href="#method-CTSLocationList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-Versions-Traverse-cts-version">Transition: Traverse cts version</h3>
+               <p>
+                  The client chooses to traverse locations in a CTS Version 
+                  
+               </p>
+               <p id="transition-Reading-CTS-Versions-Traverse-cts-version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-ctslocations">http://example.org/ctslocations</a></code> of state <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-Versions-Choose-cts-version">Transition: Choose cts version</h3>
+               <p>
+                  The client chooses to retrieve text of an entire version.
+                  
+               </p>
+               <p id="transition-Reading-CTS-Versions-Choose-cts-version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-CTS-Locations">State: Reading CTS Locations</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-cts-locationlist">cts locationlist</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-Locations-Traverse-cts-location">Traverse cts location</a></td>
+                     <td>[None]</td>
+                     <td><span class="http GET"><a href="#method-CTSSubLocationList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-Locations-Traverse-cts-location">Transition: Traverse cts location</h3>
+               <p>
+                  The client chooses to traverse child locations in a CTS Location 
+                  
+               </p>
+               <p id="transition-Reading-CTS-Locations-Traverse-cts-location-GET">By performing HTTP method <span class="http GET">GET</span> on state <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-CTS-Locations-Choose-cts-location">Transition: Choose cts location</h3>
+               <p>
+                  The client chooses to retrieve text of a CTS location
+                  
+               </p>
+               <p id="transition-Reading-CTS-Locations-Choose-cts-location-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-TextObject">State: Reading TextObject</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-textobject">textobject</a>.
+               
+            </p>
+            
+            <p>
+               The text is retrieved.
+               
+            </p>
+            
+         </div>
+         <hr>
+         <h1 id="link-relations">Link Relations</h1>
+         <table>
+            <tr>
+               <th>Link relation</th>
+               <th>Transitions</th>
+               <th>Description</th>
+            </tr>
+            <tr id="linkrel-http---example.org-ctslocations">
+               <td><code>http://example.org/ctslocations</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-CTS-Versions-Traverse-cts-version">Traverse cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Traverse-cts-version">Traverse cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/ctslocations">http://example.org/ctslocations</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-ctsnamespaces">
+               <td><code>http://example.org/ctsnamespaces</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-Protocols-Choose-cts-protocol">Choose cts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/ctsnamespaces">http://example.org/ctsnamespaces</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-ctstextgroups">
+               <td><code>http://example.org/ctstextgroups</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-CTS-NameSpaces-Choose-cts-namespace">Choose cts namespace</a> : <a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a> → <a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/ctstextgroups">http://example.org/ctstextgroups</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-ctsversions">
+               <td><code>http://example.org/ctsversions</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-CTS-Works-Choose-cts-work">Choose cts work</a> : <a href="#state-Reading-CTS-Works">Reading CTS Works</a> → <a href="#state-Reading-CTSVersions">Reading CTSVersions</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/ctsversions">http://example.org/ctsversions</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-ctsworks">
+               <td><code>http://example.org/ctsworks</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Choose cts textgroup</a> : <a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a> → <a href="#state-Reading-CTS-Works">Reading CTS Works</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/ctsworks">http://example.org/ctsworks</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtstophierarchy">
+               <td><code>http://example.org/dtstophierarchy</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtstophierarchy">http://example.org/dtstophierarchy</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-protocols">
+               <td><code>http://example.org/protocols</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-Endpoint-Details-List-protocols">List protocols</a> : <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a> → <a href="#state-Reading-Protocols">Reading Protocols</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/protocols">http://example.org/protocols</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-text">
+               <td><code>http://example.org/text</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a> : <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/text">http://example.org/text</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+         </table>
+         <hr>
+         <h1 id="property-groups">Property Groups</h1>
+         <table sortable="true">
+            <thead>
+               <tr>
+                  <th>Property Groups</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><a href="#propertygroup-endpoint">endpoint</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-queryresults">queryresults</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-protocols">protocols</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-protocoltype">protocoltype</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-CTSURNComponent">CTSURNComponent</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-TextObjectURN">TextObjectURN</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#propertygroup-OtherFilterCriteria">OtherFilterCriteria</a></td>
+               </tr>
+            </tbody>
+         </table>
+         <h2 id="propertygroup-CTSURNComponent">CTSURNComponent (<a href="http://example.org/CTSURNComponent"><code>http://example.org/CTSURNComponent</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-OtherFilterCriteria">OtherFilterCriteria (<a href="http://example.org/OtherFilterCriteria"><code>http://example.org/OtherFilterCriteria</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-TextObjectURN">TextObjectURN (<a href="http://example.org/TextObjectURN"><code>http://example.org/TextObjectURN</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-endpoint">endpoint (<a href="http://example.org/endpoint"><code>http://example.org/endpoint</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-protocols">protocols (<a href="http://example.org/protocols"><code>http://example.org/protocols</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-protocoltype">protocoltype (<a href="http://example.org/protocoltype"><code>http://example.org/protocoltype</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-queryresults">queryresults (<a href="http://example.org/queryresults"><code>http://example.org/queryresults</code></a>)
+            
+         </h2>
+         <hr>
+         <h1 id="uri-parameters">URI Parameters</h1>
+         <p>No URI parameters.</p>
+         <hr>
+         <h1 id="headers">Headers</h1>
+         <p>No custom headers.</p>
+         <hr>
+         <h1 id="status-codes">Status Codes</h1>
+         <p>No special use of status codes.</p>
+         <hr>
+         <h1 id="media-types">Media Types</h1>
+         <table sortable="true">
+            <thead>
+               <tr>
+                  <th>Media Type</th>
+                  <th>Documentation</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><code>application/ld+json</code></td>
+                  <td><a href="http://www.w3.org/TR/json-ld/">Specification</a></td>
+               </tr>
+               <tr>
+                  <td><code>application/xml</code></td>
+                  <td><a href="https://www.w3.org/TR/xml11/">Specification</a></td>
+               </tr>
+               <tr>
+                  <td><code>text/html</code></td>
+                  <td><a href="https://html.spec.whatwg.org/">Specification</a></td>
+               </tr>
+            </tbody>
+         </table>
+         <hr>
+         <h1 id="resources">Resources</h1>
+         <table>
+            <thead>
+               <tr>
+                  <th>Resource</th>
+                  <th>Location</th>
+                  <th>Methods</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td><a href="#resource-Endpoint">Endpoint</a></td>
+                  <td><code>/</code></td>
+                  <td><span class="http GET"><a href="#method-Endpoint-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-Protocols">Protocols</a></td>
+                  <td><code>/protocols/</code></td>
+                  <td><span class="http GET"><a href="#method-Protocols-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-TextObjectQuery">TextObjectQuery</a></td>
+                  <td><code>/query/</code></td>
+                  <td><span class="http GET"><a href="#method-TextObjectQuery-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-Catalogs">Catalogs</a></td>
+                  <td><code>/catalogs/</code></td>
+                  <td><span class="http GET"><a href="#method-Catalogs-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSNamespaces">CTSNamespaces</a></td>
+                  <td><code>/cts/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSNamespaces-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSTopLevel">DTSTopLevel</a></td>
+                  <td><code>/dts/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSTopLevel-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSTextGroups">CTSTextGroups</a></td>
+                  <td><code>/cts/{cts-ns}/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSTextGroups-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSWorks">CTSWorks</a></td>
+                  <td><code>/cts/{cts-ns}/{text-group}/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSWorks-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSVersions">CTSVersions</a></td>
+                  <td><code>/cts/{cts-ns}/{text-group}/{work}/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSVersions-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSLocationList">CTSLocationList</a></td>
+                  <td><code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSLocationList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-CTSSubLocationList">CTSSubLocationList</a></td>
+                  <td><code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/</code></td>
+                  <td><span class="http GET"><a href="#method-CTSSubLocationList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-TextObject">TextObject</a></td>
+                  <td><code>/text/{uri}/</code></td>
+                  <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span> 
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         <h2 id="resource-Endpoint">Resource: Endpoint</h2>
+         <dl>
+            <dt>Location: <code>/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-Endpoint-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Start-Access">Access</a> : <a href="#state-"></a> → <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-Protocols">Resource: Protocols</h2>
+         <dl>
+            <dt>Location: <code>/protocols/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-Protocols-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-Endpoint-Details-List-protocols">List protocols</a> : <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a> → <a href="#state-Reading-Protocols">Reading Protocols</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-Protocols">Reading Protocols</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-TextObjectQuery">Resource: TextObjectQuery</h2>
+         <dl>
+            <dt>Location: <code>/query/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-TextObjectQuery-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-Endpoint-Details-Find-textobject">Find textobject</a> : <a href="#state-Reading-Endpoint-Details">Reading Endpoint Details</a> → <a href="#state-Reading-Query-Results">Reading Query Results</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-Query-Results">Reading Query Results</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-Catalogs">Resource: Catalogs</h2>
+         <dl>
+            <dt>Location: <code>/catalogs/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-Catalogs-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul></ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl></dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSNamespaces">Resource: CTSNamespaces</h2>
+         <dl>
+            <dt>Location: <code>/cts/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSNamespaces-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-Protocols-Choose-cts-protocol">Choose cts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSTopLevel">Resource: DTSTopLevel</h2>
+         <dl>
+            <dt>Location: <code>/dts/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSTopLevel-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSTextGroups">Resource: CTSTextGroups</h2>
+         <dl>
+            <dt>Location: <code>/cts/{cts-ns}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSTextGroups-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-CTS-NameSpaces-Choose-cts-namespace">Choose cts namespace</a> : <a href="#state-Reading-CTS-NameSpaces">Reading CTS NameSpaces</a> → <a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSWorks">Resource: CTSWorks</h2>
+         <dl>
+            <dt>Location: <code>/cts/{cts-ns}/{text-group}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSWorks-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Choose cts textgroup</a> : <a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a> → <a href="#state-Reading-CTS-Works">Reading CTS Works</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-CTS-Works">Reading CTS Works</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSVersions">Resource: CTSVersions</h2>
+         <dl>
+            <dt>Location: <code>/cts/{cts-ns}/{text-group}/{work}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSVersions-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul></ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl></dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSLocationList">Resource: CTSLocationList</h2>
+         <dl>
+            <dt>Location: <code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSLocationList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-CTS-Versions-Traverse-cts-version">Traverse cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Traverse-cts-version">Traverse cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-CTSSubLocationList">Resource: CTSSubLocationList</h2>
+         <dl>
+            <dt>Location: <code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-CTSSubLocationList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-CTS-Locations-Traverse-cts-location">Traverse cts location</a> : <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a> → <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-TextObject">Resource: TextObject</h2>
+         <dl>
+            <dt>Location: <code>/text/{uri}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-TextObject-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a> : <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <hr>
+         <h1 id="authentication">Authentication</h1>
+         <p>No authentication.</p>
+      </div>
+   </body>
+</html>
