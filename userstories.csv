@@ -22,7 +22,12 @@ client application,get descriptive metadata about an author,I can do something w
 client application,find out which repositories are available,I can choose one
 client application,find out which repositories contain a specific work,I can choose one
 client application,find out which repositories contain a specific edition of a work,I can choose one
-
+canonical texts contributor (?), post my new edition of a text with an id, it can be queried via DTS
+canonical texts contributor (?), post my new collection of texts with an id, it can be queried via DTS
+canonical texts contributor (?), I want to increment the canonical references list, so that people can use it as canonical
+client application, query for literature papyri inscriptions from one service, so that I don’t have to query different things
+client application, get a standard final result (first line of translation in english or first line of latin text) if I don’t specify further my query, so that I don’t need to care about the several options
+client application, use several traditional systems to retrive the text I mean, so that I don’t need to know the canonical reference (the system knows it)
 
 
 
