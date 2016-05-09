@@ -1,40 +1,40 @@
-As;I want to;So that;Access Type;Data Type;
-client application;query if a work is available;I can retrieve it;search;ID;
-client application;query if a specific version is available;I can retrieve it;search;ID;
-client application;access the most recent edition of a work;I can do something with it;read;content;
-client application;find out which editions of a work are available;I can choose one;search;ID;
-client application;find out which translations of a work are available;I can choose one;search;ID;
-client application;be served an alternate edition if the one I asked for is not available but another is;I can automatically resolve references to other versions;read;collection;
-client application;find out if any editions of a work are available which have a specific passage range;I can choose one that will resolve my passage reference;search;ID;
-client application;perform CRUD operations on a named curated collection of texts;can offer custom subsets;update;collection;
-client application;retrieve a specific passage of a text;I can do something with it;read;content;
-client application;get a list of available works filtered by author;I can choose one;search;metadata;
-client application;get a list of available works filtered by texgroup;I can choose one;search;metadata;
-client application;get a list of available editions or translations filtered by author;I can choose one;search;metadata;
-client application;get a list of available editions or translations filtered by author and language;I can choose one;search;metadata;
-client application;retrieve the entire contents of a text;I can do something with it;read;content;
-client application;retrieve an ordered list of available passages in a text;I can choose one;search;ID;
-client application;find the previous and next passages for a given passage;I can navigate a text;search;ID;
-client application;get descriptive metadata about a specific edition;I can do something with it;read;metadata;
-client application;get descriptive metadata about a work;I can do something with it;read;metadata;
-client application;get descriptive metadata about a textgroup;I can do something with it;read;metadata;
-client application;get descriptive metadata about an author;I can do something with it;read;metadata;
-client application;find out which repositories are available;I can choose one;search;collection;
-client application;find out which repositories contain a specific work;I can choose one;search;ID;
-client application;find out which repositories contain a specific edition of a work;I can choose one;search;ID;
-canonical texts contributor (?);post my new edition of a text with an id;it can be queried via DTS;update;ID;
-canonical texts contributor (?);post my new collection of texts with an id;it can be queried via DTS;update;collection;
-canonical texts contributor (?);I want to increment the canonical references list;so that people can use it as canonical;update;collection;
-client application;query for literature papyri inscriptions from one service;so that I don’t have to query different things;search;ID;
-client application;get a standard final result (first line of translation in english or first line of latin text) if I don’t specify further my query;so that I don’t need to care about the several options;read;content;
-client application;use several traditional systems to retrive the text I mean;so that I don’t need to know the canonical reference (the system knows it);read;content;
-user;to see what’s canonical;I know what to query for;search;collection;
-client application;get the first page of a text;I can read it;read;content;
-client application;get the first page of the current text;I can read it;read;content;
-client application;get the next page of the current text;I can read it;read;content;
-client application;get the previous page of the current text;I can read it;read;content;
-client application;get the table of contents of the current text;I can find what I am looking for;read;content;
-client application;full-text search the contents of the current text;I can find examples or known texts;search;content;
-client application;full-text search the contents of a collection of texts;I can find examples or known texts;search;content;
-client application;full-text search the contents of a collection of texts filtered by metadata;I can find examples or known texts that satisfy metadata conditions;search;content;
-client application;get the revision history for a text;I can see what was changed by whom for what reason on what date;search;metadata;
+As,I want to,So that,Access Type,Data Type,
+client application,query if a work is available,I can retrieve it,search,ID,
+client application,query if a specific version is available,I can retrieve it,search,ID,
+client application,access the most recent edition of a work,I can do something with it,read,content,
+client application,find out which editions of a work are available,I can choose one,search,ID,
+client application,find out which translations of a work are available,I can choose one,search,ID,
+client application,be served an alternate edition if the one I asked for is not available but another is,I can automatically resolve references to other versions,read,collection,
+client application,find out if any editions of a work are available which have a specific passage range,I can choose one that will resolve my passage reference,search,ID,
+client application,perform CRUD operations on a named curated collection of texts,can offer custom subsets,update,collection,
+client application,retrieve a specific passage of a text,I can do something with it,read,content,
+client application,get a list of available works filtered by author,I can choose one,search,metadata,
+client application,get a list of available works filtered by texgroup,I can choose one,search,metadata,
+client application,get a list of available editions or translations filtered by author,I can choose one,search,metadata,
+client application,get a list of available editions or translations filtered by author and language,I can choose one,search,metadata,
+client application,retrieve the entire contents of a text,I can do something with it,read,content,
+client application,retrieve an ordered list of available passages in a text,I can choose one,search,ID,
+client application,find the previous and next passages for a given passage,I can navigate a text,search,ID,
+client application,get descriptive metadata about a specific edition,I can do something with it,read,metadata,
+client application,get descriptive metadata about a work,I can do something with it,read,metadata,
+client application,get descriptive metadata about a textgroup,I can do something with it,read,metadata,
+client application,get descriptive metadata about an author,I can do something with it,read,metadata,
+client application,find out which repositories are available,I can choose one,search,collection,
+client application,find out which repositories contain a specific work,I can choose one,search,ID,
+client application,find out which repositories contain a specific edition of a work,I can choose one,search,ID,
+canonical texts contributor (?),post my new edition of a text with an id,it can be queried via DTS,update,ID,
+canonical texts contributor (?),post my new collection of texts with an id,it can be queried via DTS,update,collection,
+canonical texts contributor (?),I want to increment the canonical references list,so that people can use it as canonical,update,collection,
+client application,query for literature papyri inscriptions from one service,so that I don’t have to query different things,search,ID,
+client application,get a standard final result (first line of translation in english or first line of latin text) if I don’t specify further my query,so that I don’t need to care about the several options,read,content,
+client application,use several traditional systems to retrive the text I mean,so that I don’t need to know the canonical reference (the system knows it),read,content,
+user,to see what’s canonical,I know what to query for,search,collection,
+client application,get the first page of a text,I can read it,read,content,
+client application,get the first page of the current text,I can read it,read,content,
+client application,get the next page of the current text,I can read it,read,content,
+client application,get the previous page of the current text,I can read it,read,content,
+client application,get the table of contents of the current text,I can find what I am looking for,read,content,
+client application,full-text search the contents of the current text,I can find examples or known texts,search,content,
+client application,full-text search the contents of a collection of texts,I can find examples or known texts,search,content,
+client application,full-text search the contents of a collection of texts filtered by metadata,I can find examples or known texts that satisfy metadata conditions,search,content,
+client application,get the revision history for a text,I can see what was changed by whom for what reason on what date,search,metadata,
