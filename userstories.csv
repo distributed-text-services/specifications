@@ -44,3 +44,4 @@ client application,get a specific verse of a book of the Bible such as John 2:1 
 client application,get annotations on a specific book/chapter/verse/word,I can see what others have said about it
 client application,get annotations by a specific user or group on a specific book/chapter/verse/word,I can see what others have said about it
 client application,get annotations by users or groups with specific characteristics on a specific book/chapter/verse/word,I can see what others have said about it
+client application,get papyrii and transcriptions for a specific book/chapter/verse/word,I can read the original artifact with a little help
