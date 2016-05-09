@@ -38,3 +38,9 @@ client application,full-text search the contents of the current text,I can find 
 client application,full-text search the contents of a collection of texts,I can find examples or known texts,search,content,
 client application,full-text search the contents of a collection of texts filtered by metadata,I can find examples or known texts that satisfy metadata conditions,search,content,
 client application,get the revision history for a text,I can see what was changed by whom for what reason on what date,search,metadata,
+client application,get a specific book of the Bible such as John and see all available manuscripts and critical editions,I can pick one to read
+client application,get a specific chapter of a book of the Bible such as John 1 and see all available manuscripts and critical editions,I can read it
+client application,get a specific verse of a book of the Bible such as John 2:1 and see all available manuscripts and critical editions,I can read it
+client application,get annotations on a specific book/chapter/verse/word,I can see what others have said about it
+client application,get annotations by a specific user or group on a specific book/chapter/verse/word,I can see what others have said about it
+client application,get annotations by users or groups with specific characteristics on a specific book/chapter/verse/word,I can see what others have said about it
