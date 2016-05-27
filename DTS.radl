@@ -40,7 +40,7 @@
           </documentation>
           <input property-group="protocoltype"/>
         </transition>
-        <transition name="Choose dts protocol" to="Reading DTS TopLevel">
+        <transition name="Choose dts protocol" to="Reading DTS NamingAuthoritys">
           <documentation>
             The client chooses the DTS protocol
           </documentation>
@@ -71,7 +71,10 @@
         </transition>
       </transitions>
     </state>
-     
+    
+    
+    
+    <!--level 1-->
     <state name="Reading CTS NameSpaces" property-group="cts protocol">
       <transitions>
         <transition name="Choose cts namespace" to="Reading CTS TextGroups">
@@ -81,9 +84,23 @@
           <input property-group="CTSURNComponent"/>
         </transition>
       </transitions>
-      
     </state>
     
+    <!--new-->
+    <state name="Reading DTS NamingAuthoritys" property-group="dts protocol">
+      <transitions>
+        <transition name="Choose dts namingAuthority" to="Reading DTS Collections">
+          <documentation>
+            The client chooses a DTS Naming Authority 
+          </documentation>
+          <input property-group="DTSURNComponent"/>
+        </transition>
+      </transitions>
+    </state>
+    
+    
+    
+<!--    level 2-->
     <state name="Reading CTS TextGroups" property-group="cts namespace">
       <transitions>
         <transition name="Choose cts textgroup" to="Reading CTS Works">
@@ -95,6 +112,22 @@
       </transitions>
     </state>
     
+    <!--new-->
+    <state name="Reading DTS Collections" property-group="dts namingAuthority">
+      <transitions>
+        <transition name="Choose dts collection" to="Reading DTS AuthorLogicalGroupings">
+          <documentation>
+            The client chooses a DTS Author/Logical grouping 
+          </documentation>
+          <input property-group="DTSURNComponent"/>
+        </transition>
+      </transitions>
+    </state>
+    
+    
+    
+<!--    level 3-->
+    
     <state name="Reading CTS Works" property-group="cts textgroup">
       <transitions>
         <transition name="Choose cts work" to="Reading CTSVersions">
@@ -104,8 +137,22 @@
           </documentation>
         </transition>
       </transitions>
-      
     </state>
+    
+    <!--new-->
+    <state name="Reading DTS AuthorLogicalGroupings" property-group="dts namingAuthority">
+      <transitions>
+        <transition name="Choose dts AuthorLogicalGrouping" to="Reading DTS AbstractWorks">
+          <documentation>
+            The client chooses a DTS Abstract work 
+          </documentation>
+          <input property-group="DTSURNComponent"/>
+        </transition>
+      </transitions>
+    </state>
+    
+    
+<!--    level 4-->
     
     <state name="Reading CTS Versions" property-group="cts work">
       <transitions>
@@ -125,12 +172,86 @@
 
     </state>
     
+    
+    <!--new-->
+    
+    
+    <state name="Reading DTS AbstractWorks" property-group="dts AuthorLogicalGrouping">
+      <transitions>
+        <transition name="Traverse dts AbstractWork" to="Reading DTS Exemplars">
+          <input property-group="DTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse exemplars in a DTS Abstract work 
+          </documentation>
+        </transition>
+        <transition name="Choose dts AbstractWork" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire Abstract work.
+          </documentation>
+        </transition>
+      </transitions>
+      
+    </state>
+    
+    
+<!--    level 4a-->
+<!--    new-->
+    
+    <state name="Reading DTS Exemplars" property-group="dts AbstractWork">
+      <transitions>
+        <transition name="Traverse dts Exemplar" to="Reading DTS Editions">
+          <input property-group="DTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse editions in a DTS Exemplar 
+          </documentation>
+        </transition>
+        <transition name="Choose dts Exemplar" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire Exemplar.
+          </documentation>
+        </transition>
+      </transitions>
+      
+    </state>
+    
+<!--    level 4b-->
+<!--    new-->
+    
+    <state name="Reading DTS Editions" property-group="dts Exemplar">
+      <transitions>
+        <transition name="Traverse dts Edition" to="Reading DTS Versions">
+          <input property-group="DTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse versions in a DTS Edition 
+          </documentation>
+        </transition>
+        <transition name="Choose dts Edition" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire Edition.
+          </documentation>
+        </transition>
+      </transitions>
+      
+    </state>
+    
+    
+<!--    level 5-->
+    
     <state name="Reading CTS Locations" property-group="cts locationlist">
       <transitions>
         <transition name="Traverse cts location" to="Reading CTS Locations">
           <input property-group="CTSURNComponent"/>
           <documentation>
             The client chooses to traverse child locations in a CTS Location 
+          </documentation>
+        </transition>
+        <transition name="Traverse cts location trans" to="Reading CTS Locations"><!--not sure this transition actually needed at all-->
+          <input property-group="CTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse child locations in a CTS translation Location 
           </documentation>
         </transition>
         <transition name="Choose cts location" to="Reading TextObject">
@@ -144,6 +265,40 @@
     </state>
     
     
+<!--    new-->
+    
+    <state name="Reading DTS Versions" property-group="dts Edition">
+      <transitions>
+        <transition name="Traverse dts Version" to="Reading DTS Fragments">
+          <input property-group="DTSURNComponent"/>
+          <documentation>
+            The client chooses to traverse fragments in a DTS Version 
+          </documentation>
+        </transition>
+        <transition name="Choose dts Version" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire Version.
+          </documentation>
+        </transition>
+      </transitions>
+      
+    </state>
+    
+    <!--    new level 6-->
+    
+    <state name="Reading DTS Fragments" property-group="dts Version">
+      
+        <transition name="Choose dts Fragment" to="Reading TextObject">
+          <input property-group="TextObjectURN"/>
+          <documentation>
+            The client chooses to retrieve text of an entire Fragment.
+          </documentation>
+        </transition>
+      
+    </state>
+    
+<!--    reading TextObject state-->
     <state name="Reading TextObject" property-group="textobject">
       <documentation>
         The text is retrieved.
@@ -161,8 +316,9 @@
       </transitions>
     </link-relation>
     
-    <link-relation name="http://example.org/dtstophierarchy">
-      <specification href="http://example.org/dtstophierarchy"/>
+<!--    changed-->
+    <link-relation name="http://example.org/dtsnamingauthoritys">
+      <specification href="http://example.org/dtsnamingauthoritys"/>
       <transitions>
         <transition ref="Choose dts protocol"/>
       </transitions>
@@ -182,11 +338,26 @@
       </transitions>
     </link-relation>
     
+    <!--new-->
+    <link-relation name="http://example.org/dtscollections">
+      <specification href="http://example.org/dtscollections"/>
+      <transitions>
+        <transition ref="Choose dts namingAuthority"/>
+      </transitions>
+    </link-relation>
     
     <link-relation name="http://example.org/ctsworks">
       <specification href="http://example.org/ctsworks"/>
       <transitions>
         <transition ref="Choose cts textgroup"/>
+      </transitions>
+    </link-relation>
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtsauthorlogicalgroupings">
+      <specification href="http://example.org/dtsauthorlogicalgroupings"/>
+      <transitions>
+        <transition ref="Choose dts collection"/>
       </transitions>
     </link-relation>
 
@@ -197,10 +368,53 @@
       </transitions>
     </link-relation>
     
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtsabstractworks">
+      <specification href="http://example.org/dtsabstractworks"/>
+      <transitions>
+        <transition ref="Choose dts AuthorLogicalGrouping"/>
+      </transitions>
+    </link-relation>
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtsexemplars">
+      <specification href="http://example.org/dtsexemplars"/>
+      <transitions>
+        <transition ref="Choose dts AbstractWork"/>
+      </transitions>
+    </link-relation>  
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtseditions">
+      <specification href="http://example.org/dtseditions"/>
+      <transitions>
+        <transition ref="Choose dts Exemplar"/>
+      </transitions>
+    </link-relation>  
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtsversions">
+      <specification href="http://example.org/dtsversions"/>
+      <transitions>
+        <transition ref="Choose dts Edition"/>
+      </transitions>
+    </link-relation> 
+    
+    
+    
     <link-relation name="http://example.org/ctslocations">
       <specification href="http://example.org/ctslocations"/>
       <transitions>
         <transition ref="Traverse cts version"/>
+      </transitions>
+    </link-relation>
+    
+    <!--new-->
+    <link-relation name="http://example.org/dtsfragments">
+      <specification href="http://example.org/dtsfragments"/>
+      <transitions>
+        <transition ref="Traverse dts Version"/>
       </transitions>
     </link-relation>
     
@@ -209,8 +423,8 @@
       <transitions>
         <transition ref="Choose cts version"/>
         <transition ref="Choose cts location"/>
-        <transition ref="Choose dts writtenwork"/>
-        <transition ref="Choose dts location"/>
+        <transition ref="Choose dts Version"/>
+        <transition ref="Choose dts Fragment"/>
       </transitions>
     </link-relation>
     
@@ -221,6 +435,7 @@
     <property-group name="queryresults" uri="http://example.org/queryresults"/>
     <property-group name="protocols" uri="http://example.org/protocols"/>
     <property-group name="protocoltype" uri="http://example.org/protocoltype"/>
+    <property-group name="DTSURNComponent" uri="http://example.org/DTSURNComponent"/>
     <property-group name="CTSURNComponent" uri="http://example.org/CTSURNComponent"/>
     <property-group name="TextObjectURN" uri="http://example.org/TextObjectURN"/>
     <property-group name="OtherFilterCriteria" uri="http://example.org/OtherFilterCriteria"/>
@@ -250,6 +465,8 @@
     </error>
   </errors>
 
+
+<!--not sure what is the following used for-->
   <conventions>
     <uri-template-variables>
       <uri-template-variable name="cts-ns">
@@ -257,14 +474,44 @@
           A CTS namespace, e.g. "greekLit".
         </documentation>
       </uri-template-variable>
+      <uri-template-variable name="dts-na">
+        <documentation>
+          A DTS Naming Authority
+        </documentation>
+      </uri-template-variable>
       <uri-template-variable name="text-group">
         <documentation>
           A CTS Text Group. Usually corresponds to the collected works of an author.
         </documentation>
       </uri-template-variable>
+      <uri-template-variable name="logic-group">
+        <documentation>
+          A DTS Logical Group or Author.
+        </documentation>
+      </uri-template-variable>
       <uri-template-variable name="work">
         <documentation>
           A CTS Work.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="abwork">
+        <documentation>
+          A DTS Abstract Work.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="exemplar">
+        <documentation>
+          A DTS Exemplar.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="Edition_Translation">
+        <documentation>
+          A DTS Edition or Translation.
+        </documentation>
+      </uri-template-variable>
+      <uri-template-variable name="version">
+        <documentation>
+          A DTS version.
         </documentation>
       </uri-template-variable>
       <uri-template-variable name="edition">
@@ -277,6 +524,12 @@
           A location within an edition, translation, or work
         </documentation>
       </uri-template-variable>
+      <uri-template-variable name="fragment">
+        <documentation>
+          A DTS fragment.
+        </documentation>
+      </uri-template-variable>
+      
     </uri-template-variables>
   </conventions>
 
@@ -343,7 +596,7 @@
     </resource>
     
     
-    <resource name="DTSTopLevel">
+    <resource name="DTSNamingAuthoritys">
       <location uri="/dts/"/>
       <methods>
         <method name="GET">
@@ -366,6 +619,18 @@
         </method>
       </methods>
     </resource>
+    
+    <resource name="DTSCollections">
+      <location uri="/dts/{dts-na}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts namingAuthority"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
 
     <resource name="CTSWorks">
       <location uri-template="/cts/{cts-ns}/{text-group}/"/>
@@ -378,6 +643,67 @@
         </method>
       </methods>
     </resource>
+    
+    <resource name="DTSAuthorLogicalGroupings">
+      <location uri-template="/dts/{dts-na}/{logic-group}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts collection"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="DTSAbstractWorks">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts AuthorLogicalGrouping"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="DTSExemplars">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts AbstractWork"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="DTSEditionss">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts Exemplar"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+
+    <resource name="DTSVersions">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Choose dts Edition"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
 
     <resource name="CTSVersions">
       <location uri-template="/cts/{cts-ns}/{text-group}/{work}/"/>
@@ -402,6 +728,30 @@
         </method>
       </methods>
     </resource>
+    
+    <resource name="DTSFragmentList">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Traverse dts Version"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="CTSLocationListT">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{translation}/locations/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Traverse cts version"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
 
     <resource name="CTSSubLocationList">
       <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/"/>
@@ -415,6 +765,30 @@
       </methods>
     </resource>
     
+    <resource name="DTSSubFragmentList">
+      <location uri-template="/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/{fragment}"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Traverse dts Fragment"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
+    <resource name="CTSSubLocationListT">
+      <location uri-template="/cts/{cts-ns}/{text-group}/{work}/{translation}/locations/{location}/"/>
+      <methods>
+        <method name="GET">
+          <transitions>
+            <transition ref="Traverse cts location trans"/>
+          </transitions>
+          <response/>
+        </method>
+      </methods>
+    </resource>
+    
     <resource name="TextObject">
       <location uri-template="/text/{uri}/"/>
       <methods>
@@ -422,7 +796,11 @@
           <transitions>
             <transition ref="Choose cts location"/>
             <transition ref="Choose cts version"/>
-            <transition ref="Choose dts writtenwork"/>
+            <transition ref="Choose dts AbstractWork"/>
+            <transition ref="Choose dts Exemplar"/>
+            <transition ref="Choose dts Edition"/>
+            <transition ref="Choose dts Version"/>
+            <transition ref="Choose dts Fragment"/>
           </transitions>
           <response/>
         </method>
