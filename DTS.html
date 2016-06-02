@@ -222,7 +222,7 @@ li.transition{
                <tr>
                   <td><a href="#state-Reading-Protocols">Reading Protocols</a></td>
                   <td><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a></td>
-                  <td><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></td>
+                  <td><a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></td>
                </tr>
                <tr>
                   <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
@@ -231,12 +231,42 @@ li.transition{
                </tr>
                <tr>
                   <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a></td>
+                  <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Traverse-dts-Exemplar">Traverse dts Exemplar</a></td>
+                  <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Traverse-dts-Edition">Traverse dts Edition</a></td>
+                  <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Traverse-dts-Version">Traverse dts Version</a></td>
+                  <td><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
                   <td><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a></td>
                   <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
                </tr>
                <tr>
                   <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
-                  <td><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Choose-dts-Edition">Choose dts Edition</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Choose-dts-Version">Choose dts Version</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-Query-Results">Reading Query Results</a></td>
+                  <td><a href="#transition-Reading-Query-Results-Choose-dts-Fragment">Choose dts Fragment</a></td>
                   <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
                </tr>
                <tr>
@@ -245,14 +275,29 @@ li.transition{
                   <td><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></td>
                </tr>
                <tr>
+                  <td><a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></td>
+                  <td><a href="#transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority">Choose dts namingAuthority</a></td>
+                  <td><a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></td>
+               </tr>
+               <tr>
                   <td><a href="#state-Reading-CTS-TextGroups">Reading CTS TextGroups</a></td>
                   <td><a href="#transition-Reading-CTS-TextGroups-Choose-cts-textgroup">Choose cts textgroup</a></td>
                   <td><a href="#state-Reading-CTS-Works">Reading CTS Works</a></td>
                </tr>
                <tr>
+                  <td><a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></td>
+                  <td><a href="#transition-Reading-DTS-Collections-Choose-dts-collection">Choose dts collection</a></td>
+                  <td><a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></td>
+               </tr>
+               <tr>
                   <td><a href="#state-Reading-CTS-Works">Reading CTS Works</a></td>
                   <td><a href="#transition-Reading-CTS-Works-Choose-cts-work">Choose cts work</a></td>
                   <td><a href="#state-Reading-CTSVersions">Reading CTSVersions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></td>
+                  <td><a href="#transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping">Choose dts AuthorLogicalGrouping</a></td>
+                  <td><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></td>
                </tr>
                <tr>
                   <td><a href="#state-Reading-CTS-Versions">Reading CTS Versions</a></td>
@@ -265,6 +310,36 @@ li.transition{
                   <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
                </tr>
                <tr>
+                  <td><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></td>
+                  <td><a href="#transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a></td>
+                  <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></td>
+                  <td><a href="#transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork">Choose dts AbstractWork</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+                  <td><a href="#transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar">Traverse dts Exemplar</a></td>
+                  <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+                  <td><a href="#transition-Reading-DTS-Exemplars-Choose-dts-Exemplar">Choose dts Exemplar</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+                  <td><a href="#transition-Reading-DTS-Editions-Traverse-dts-Edition">Traverse dts Edition</a></td>
+                  <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+                  <td><a href="#transition-Reading-DTS-Editions-Choose-dts-Edition">Choose dts Edition</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
                   <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
                   <td><a href="#transition-Reading-CTS-Locations-Traverse-cts-location">Traverse cts location</a></td>
                   <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
@@ -272,6 +347,16 @@ li.transition{
                <tr>
                   <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
                   <td><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a></td>
+                  <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+                  <td><a href="#transition-Reading-DTS-Versions-Traverse-dts-Version">Traverse dts Version</a></td>
+                  <td><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></td>
+               </tr>
+               <tr>
+                  <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+                  <td><a href="#transition-Reading-DTS-Versions-Choose-dts-Version">Choose dts Version</a></td>
                   <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
                </tr>
             </tbody>
@@ -425,9 +510,9 @@ li.transition{
                   </tr>
                   <tr>
                      <td><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a></td>
-                     <td><code><a href="#linkrel-http---example.org-dtstophierarchy">http://example.org/dtstophierarchy</a></code></td>
-                     <td><span class="http GET"><a href="#method-DTSTopLevel-GET">GET</a></span></td>
-                     <td><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsnamingauthoritys">http://example.org/dtsnamingauthoritys</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSNamingAuthoritys-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></td>
                   </tr>
                </tbody>
             </table>
@@ -460,7 +545,7 @@ li.transition{
                   The client chooses the DTS protocol
                   
                </p>
-               <p id="transition-Reading-Protocols-Choose-dts-protocol-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtstophierarchy">http://example.org/dtstophierarchy</a></code> of state <a href="#state-Reading-Protocols">Reading Protocols</a>.
+               <p id="transition-Reading-Protocols-Choose-dts-protocol-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsnamingauthoritys">http://example.org/dtsnamingauthoritys</a></code> of state <a href="#state-Reading-Protocols">Reading Protocols</a>.
                </p>
                <dl>
                   <dt></dt>
@@ -470,7 +555,7 @@ li.transition{
                         <dt>Result States:</dt>
                         <dd>
                            <ul>
-                              <li><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                              <li><a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></li>
                            </ul>
                         </dd>
                      </dl>
@@ -503,13 +588,49 @@ li.transition{
                      <td><a href="#state-Reading-CTS-Locations">Reading CTS Locations</a></td>
                   </tr>
                   <tr>
+                     <td><a href="#transition-Reading-Query-Results-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsexemplars">http://example.org/dtsexemplars</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSExemplarList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Traverse-dts-Exemplar">Traverse dts Exemplar</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtseditions">http://example.org/dtseditions</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSEditionList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Traverse-dts-Edition">Traverse dts Edition</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsversions">http://example.org/dtsversions</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSVersionList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Traverse-dts-Version">Traverse dts Version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsfragments">http://example.org/dtsfragments</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSFragmentList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></td>
+                  </tr>
+                  <tr>
                      <td><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a></td>
                      <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
                      <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
                      <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
                   </tr>
                   <tr>
-                     <td><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a></td>
+                     <td><a href="#transition-Reading-Query-Results-Choose-dts-Edition">Choose dts Edition</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSVersion-GET">GET</a></span><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Choose-dts-Version">Choose dts Version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-Query-Results-Choose-dts-Fragment">Choose dts Fragment</a></td>
                      <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
                      <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
                      <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
@@ -540,6 +661,98 @@ li.transition{
                </dl>
             </li>
             <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Traverse-dts-AbstractWork">Transition: Traverse dts AbstractWork</h3>
+               <p>
+                  The client chooses to traverse exemplars in a DTS Abstarct Work
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Traverse-dts-AbstractWork-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsexemplars">http://example.org/dtsexemplars</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Traverse-dts-Exemplar">Transition: Traverse dts Exemplar</h3>
+               <p>
+                  The client chooses to traverse editions in a DTS Exemplar
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Traverse-dts-Exemplar-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtseditions">http://example.org/dtseditions</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Traverse-dts-Edition">Transition: Traverse dts Edition</h3>
+               <p>
+                  The client chooses to traverse versions in a DTS Edition
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Traverse-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsversions">http://example.org/dtsversions</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Traverse-dts-Version">Transition: Traverse dts Version</h3>
+               <p>
+                  The client chooses to traverse fragments in a DTS Version
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Traverse-dts-Version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsfragments">http://example.org/dtsfragments</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
                <h3 id="transition-Reading-Query-Results-Choose-cts-version">Transition: Choose cts version</h3>
                <p>
                   The client chooses a CTS Version
@@ -563,12 +776,74 @@ li.transition{
                </dl>
             </li>
             <li class="transition">
-               <h3 id="transition-Reading-Query-Results-Choose-dts-writtenwork">Transition: Choose dts writtenwork</h3>
+               <h3 id="transition-Reading-Query-Results-Choose-dts-Edition">Transition: Choose dts Edition</h3>
                <p>
-                  The client chooses a DTS WrittenWork
+                  The client chooses a DTS Edition
                   
                </p>
-               <p id="transition-Reading-Query-Results-Choose-dts-writtenwork-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               <p id="transition-Reading-Query-Results-Choose-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+               <p id="transition-Reading-Query-Results-Choose-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Choose-dts-Version">Transition: Choose dts Version</h3>
+               <p>
+                  The client chooses a DTS Version
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Choose-dts-Version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-Query-Results-Choose-dts-Fragment">Transition: Choose dts Fragment</h3>
+               <p>
+                  The client chooses a DTS Fragment
+                  
+               </p>
+               <p id="transition-Reading-Query-Results-Choose-dts-Fragment-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-Query-Results">Reading Query Results</a>.
                </p>
                <dl>
                   <dt></dt>
@@ -636,6 +911,55 @@ li.transition{
                </dl>
             </li>
             
+            <hr>
+            <h2 id="state-Reading-DTS-NamingAuthoritys">State: Reading DTS NamingAuthoritys</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-protocol">dts protocol</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority">Choose dts namingAuthority</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtscollections">http://example.org/dtscollections</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSCollections-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority">Transition: Choose dts namingAuthority</h3>
+               <p>
+                  The client chooses a DTS Naming Authority 
+                  
+               </p>
+               <p id="transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtscollections">http://example.org/dtscollections</a></code> of state <a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
             
             <hr>
             <h2 id="state-Reading-CTS-TextGroups">State: Reading CTS TextGroups</h2>
@@ -688,6 +1012,56 @@ li.transition{
             </li>
             
             <hr>
+            <h2 id="state-Reading-DTS-Collections">State: Reading DTS Collections</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-namingAuthority">dts namingAuthority</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Collections-Choose-dts-collection">Choose dts collection</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsauthorlogicalgroupings">http://example.org/dtsauthorlogicalgroupings</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSAuthorLogicalGroupings-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Collections-Choose-dts-collection">Transition: Choose dts collection</h3>
+               <p>
+                  The client chooses a DTS Author/Logical grouping 
+                  
+               </p>
+               <p id="transition-Reading-DTS-Collections-Choose-dts-collection-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsauthorlogicalgroupings">http://example.org/dtsauthorlogicalgroupings</a></code> of state <a href="#state-Reading-DTS-Collections">Reading DTS Collections</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            <hr>
             <h2 id="state-Reading-CTS-Works">State: Reading CTS Works</h2>
             <h3>Properties</h3>
             <p>See <a href="#propertygroup-cts-textgroup">cts textgroup</a>.
@@ -722,6 +1096,55 @@ li.transition{
                <h4>This transition is not yet specified in an HTTP interface.</h4>
             </li>
             
+            <hr>
+            <h2 id="state-Reading-DTS-AuthorLogicalGroupings">State: Reading DTS AuthorLogicalGroupings</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-namingAuthority">dts namingAuthority</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping">Choose dts AuthorLogicalGrouping</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsabstractwork">http://example.org/dtsabstractwork</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSAbstractWorks-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping">Transition: Choose dts AuthorLogicalGrouping</h3>
+               <p>
+                  The client chooses a DTS Abstract work 
+                  
+               </p>
+               <p id="transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsabstractwork">http://example.org/dtsabstractwork</a></code> of state <a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
             
             <hr>
             <h2 id="state-Reading-CTS-Versions">State: Reading CTS Versions</h2>
@@ -804,6 +1227,262 @@ li.transition{
             
             
             <hr>
+            <h2 id="state-Reading-DTS-AbstractWorks">State: Reading DTS AbstractWorks</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-AuthorLogicalGrouping">dts AuthorLogicalGrouping</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsexemplars">http://example.org/dtsexemplars</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSExemplarList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork">Choose dts AbstractWork</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsexemplar">http://example.org/dtsexemplar</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSExemplars-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork">Transition: Traverse dts AbstractWork</h3>
+               <p>
+                  The client chooses to traverse exemplars in a DTS Abstract work 
+                  
+               </p>
+               <p id="transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsexemplars">http://example.org/dtsexemplars</a></code> of state <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork">Transition: Choose dts AbstractWork</h3>
+               <p>
+                  The client chooses to retrieve text of an entire Abstract work.
+                  
+               </p>
+               <p id="transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsexemplar">http://example.org/dtsexemplar</a></code> of state <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-DTS-Exemplars">State: Reading DTS Exemplars</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-AbstractWork">dts AbstractWork</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar">Traverse dts Exemplar</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtseditions">http://example.org/dtseditions</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSEditionList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Exemplars-Choose-dts-Exemplar">Choose dts Exemplar</a></td>
+                     <td>[None]</td>
+                     <td><span class="http GET"><a href="#method-DTSEditions-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar">Transition: Traverse dts Exemplar</h3>
+               <p>
+                  The client chooses to traverse editions in a DTS Exemplar 
+                  
+               </p>
+               <p id="transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtseditions">http://example.org/dtseditions</a></code> of state <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Exemplars-Choose-dts-Exemplar">Transition: Choose dts Exemplar</h3>
+               <p>
+                  The client chooses to retrieve text of an entire Exemplar.
+                  
+               </p>
+               <p id="transition-Reading-DTS-Exemplars-Choose-dts-Exemplar-GET">By performing HTTP method <span class="http GET">GET</span> on state <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-DTS-Editions">State: Reading DTS Editions</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-Exemplar">dts Exemplar</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Editions-Traverse-dts-Edition">Traverse dts Edition</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsversions">http://example.org/dtsversions</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSVersionList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Editions-Choose-dts-Edition">Choose dts Edition</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSVersion-GET">GET</a></span><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Editions-Traverse-dts-Edition">Transition: Traverse dts Edition</h3>
+               <p>
+                  The client chooses to traverse versions in a DTS Edition 
+                  
+               </p>
+               <p id="transition-Reading-DTS-Editions-Traverse-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsversions">http://example.org/dtsversions</a></code> of state <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Editions-Choose-dts-Edition">Transition: Choose dts Edition</h3>
+               <p>
+                  The client chooses to retrieve text of an entire Edition.
+                  
+               </p>
+               <p id="transition-Reading-DTS-Editions-Choose-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+               <p id="transition-Reading-DTS-Editions-Choose-dts-Edition-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
             <h2 id="state-Reading-CTS-Locations">State: Reading CTS Locations</h2>
             <h3>Properties</h3>
             <p>See <a href="#propertygroup-cts-locationlist">cts locationlist</a>.
@@ -865,6 +1544,127 @@ li.transition{
                   
                </p>
                <p id="transition-Reading-CTS-Locations-Choose-cts-location-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-DTS-Versions">State: Reading DTS Versions</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-Edition">dts Edition</a>.
+               
+            </p>
+            
+            <h3>Transitions</h3>
+            <table sortable="true">
+               <thead>
+                  <tr>
+                     <th width="20%">Transition</th>
+                     <th width="50%">Link Relation</th>
+                     <th width="10%">Method</th>
+                     <th width="20%">Result State</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Versions-Traverse-dts-Version">Traverse dts Version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-dtsfragments">http://example.org/dtsfragments</a></code></td>
+                     <td><span class="http GET"><a href="#method-DTSFragmentList-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></td>
+                  </tr>
+                  <tr>
+                     <td><a href="#transition-Reading-DTS-Versions-Choose-dts-Version">Choose dts Version</a></td>
+                     <td><code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code></td>
+                     <td><span class="http GET"><a href="#method-TextObject-GET">GET</a></span></td>
+                     <td><a href="#state-Reading-TextObject">Reading TextObject</a></td>
+                  </tr>
+               </tbody>
+            </table>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Versions-Traverse-dts-Version">Transition: Traverse dts Version</h3>
+               <p>
+                  The client chooses to traverse fragments in a DTS Version 
+                  
+               </p>
+               <p id="transition-Reading-DTS-Versions-Traverse-dts-Version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-dtsfragments">http://example.org/dtsfragments</a></code> of state <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Versions-Choose-dts-Version">Transition: Choose dts Version</h3>
+               <p>
+                  The client chooses to retrieve text of an entire Version.
+                  
+               </p>
+               <p id="transition-Reading-DTS-Versions-Choose-dts-Version-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a>.
+               </p>
+               <dl>
+                  <dt></dt>
+                  <dt>Response:</dt>
+                  <dd>
+                     <dl>
+                        <dt>Result States:</dt>
+                        <dd>
+                           <ul>
+                              <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                           </ul>
+                        </dd>
+                     </dl>
+                  </dd>
+               </dl>
+            </li>
+            
+            
+            <hr>
+            <h2 id="state-Reading-DTS-Fragments">State: Reading DTS Fragments</h2>
+            <h3>Properties</h3>
+            <p>See <a href="#propertygroup-dts-Version">dts Version</a>.
+               
+            </p>
+            
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Fragments-Traverse-dts-fragment">Transition: Traverse dts fragment</h3>
+               <p>
+                  The client chooses to traverse child fragments in a DTS fragment 
+                  
+               </p>
+               <h4>This transition is not yet specified in an HTTP interface.</h4>
+            </li>
+            
+            <li class="transition">
+               <h3 id="transition-Reading-DTS-Fragments-Choose-dts-Fragment">Transition: Choose dts Fragment</h3>
+               <p>
+                  The client chooses to retrieve text of an entire Fragment.
+                  
+               </p>
+               <p id="transition-Reading-DTS-Fragments-Choose-dts-Fragment-GET">By performing HTTP method <span class="http GET">GET</span> on link relation <code><a href="#linkrel-http---example.org-text">http://example.org/text</a></code> of state <a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a>.
                </p>
                <dl>
                   <dt></dt>
@@ -970,15 +1770,134 @@ li.transition{
                   </p>
                </td>
             </tr>
-            <tr id="linkrel-http---example.org-dtstophierarchy">
-               <td><code>http://example.org/dtstophierarchy</code></td>
+            <tr id="linkrel-http---example.org-dtsabstractwork">
+               <td><code>http://example.org/dtsabstractwork</code></td>
                <td>
                   <ul>
-                     <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                     <li><a href="#transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping">Choose dts AuthorLogicalGrouping</a> : <a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a> → <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></li>
                   </ul>
                </td>
                <td>
-                  <p> Specification: <a href="http://example.org/dtstophierarchy">http://example.org/dtstophierarchy</a>.
+                  <p> Specification: <a href="http://example.org/dtsabstractwork">http://example.org/dtsabstractwork</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsabstractworks">
+               <td><code>http://example.org/dtsabstractworks</code></td>
+               <td>
+                  <ul></ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsabstractworks">http://example.org/dtsabstractworks</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsauthorlogicalgroupings">
+               <td><code>http://example.org/dtsauthorlogicalgroupings</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-Collections-Choose-dts-collection">Choose dts collection</a> : <a href="#state-Reading-DTS-Collections">Reading DTS Collections</a> → <a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsauthorlogicalgroupings">http://example.org/dtsauthorlogicalgroupings</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtscollections">
+               <td><code>http://example.org/dtscollections</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority">Choose dts namingAuthority</a> : <a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a> → <a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtscollections">http://example.org/dtscollections</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtseditions">
+               <td><code>http://example.org/dtseditions</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar">Traverse dts Exemplar</a> : <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a> → <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Traverse-dts-Exemplar">Traverse dts Exemplar</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtseditions">http://example.org/dtseditions</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsexemplar">
+               <td><code>http://example.org/dtsexemplar</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork">Choose dts AbstractWork</a> : <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsexemplar">http://example.org/dtsexemplar</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsexemplars">
+               <td><code>http://example.org/dtsexemplars</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a> : <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a> → <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsexemplars">http://example.org/dtsexemplars</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsfragments">
+               <td><code>http://example.org/dtsfragments</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-Versions-Traverse-dts-Version">Traverse dts Version</a> : <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a> → <a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Traverse-dts-Version">Traverse dts Version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsfragments">http://example.org/dtsfragments</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsnamingauthoritys">
+               <td><code>http://example.org/dtsnamingauthoritys</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsnamingauthoritys">http://example.org/dtsnamingauthoritys</a>.
+                     
+                  </p>
+               </td>
+            </tr>
+            <tr id="linkrel-http---example.org-dtsversions">
+               <td><code>http://example.org/dtsversions</code></td>
+               <td>
+                  <ul>
+                     <li><a href="#transition-Reading-DTS-Editions-Traverse-dts-Edition">Traverse dts Edition</a> : <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a> → <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Traverse-dts-Edition">Traverse dts Edition</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <p> Specification: <a href="http://example.org/dtsversions">http://example.org/dtsversions</a>.
                      
                   </p>
                </td>
@@ -1003,7 +1922,11 @@ li.transition{
                      <li><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                      <li><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                      <li><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a> : <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
-                     <li><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-DTS-Editions-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-DTS-Versions-Choose-dts-Version">Choose dts Version</a> : <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Choose-dts-Version">Choose dts Version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     <li><a href="#transition-Reading-Query-Results-Choose-dts-Fragment">Choose dts Fragment</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                   </ul>
                </td>
                <td>
@@ -1035,6 +1958,9 @@ li.transition{
                   <td><a href="#propertygroup-protocoltype">protocoltype</a></td>
                </tr>
                <tr>
+                  <td><a href="#propertygroup-DTSURNComponent">DTSURNComponent</a></td>
+               </tr>
+               <tr>
                   <td><a href="#propertygroup-CTSURNComponent">CTSURNComponent</a></td>
                </tr>
                <tr>
@@ -1046,6 +1972,9 @@ li.transition{
             </tbody>
          </table>
          <h2 id="propertygroup-CTSURNComponent">CTSURNComponent (<a href="http://example.org/CTSURNComponent"><code>http://example.org/CTSURNComponent</code></a>)
+            
+         </h2>
+         <h2 id="propertygroup-DTSURNComponent">DTSURNComponent (<a href="http://example.org/DTSURNComponent"><code>http://example.org/DTSURNComponent</code></a>)
             
          </h2>
          <h2 id="propertygroup-OtherFilterCriteria">OtherFilterCriteria (<a href="http://example.org/OtherFilterCriteria"><code>http://example.org/OtherFilterCriteria</code></a>)
@@ -1141,9 +2070,9 @@ li.transition{
                   </td>
                </tr>
                <tr>
-                  <td><a href="#resource-DTSTopLevel">DTSTopLevel</a></td>
+                  <td><a href="#resource-DTSNamingAuthoritys">DTSNamingAuthoritys</a></td>
                   <td><code>/dts/</code></td>
-                  <td><span class="http GET"><a href="#method-DTSTopLevel-GET">GET</a></span> 
+                  <td><span class="http GET"><a href="#method-DTSNamingAuthoritys-GET">GET</a></span> 
                   </td>
                </tr>
                <tr>
@@ -1153,9 +2082,63 @@ li.transition{
                   </td>
                </tr>
                <tr>
+                  <td><a href="#resource-DTSCollections">DTSCollections</a></td>
+                  <td><code>/dts/{dts-na}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSCollections-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
                   <td><a href="#resource-CTSWorks">CTSWorks</a></td>
                   <td><code>/cts/{cts-ns}/{text-group}/</code></td>
                   <td><span class="http GET"><a href="#method-CTSWorks-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSAuthorLogicalGroupings">DTSAuthorLogicalGroupings</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSAuthorLogicalGroupings-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSAbstractWorks">DTSAbstractWorks</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSAbstractWorks-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSExemplarList">DTSExemplarList</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/exemplars/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSExemplarList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSExemplars">DTSExemplars</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSExemplars-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSEditionList">DTSEditionList</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/Edition_Translations/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSEditionList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSEditions">DTSEditions</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSEditions-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSVersionList">DTSVersionList</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/versions/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSVersionList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSVersion">DTSVersion</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSVersion-GET">GET</a></span> 
                   </td>
                </tr>
                <tr>
@@ -1171,9 +2154,21 @@ li.transition{
                   </td>
                </tr>
                <tr>
+                  <td><a href="#resource-DTSFragmentList">DTSFragmentList</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/</code></td>
+                  <td><span class="http GET"><a href="#method-DTSFragmentList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
                   <td><a href="#resource-CTSSubLocationList">CTSSubLocationList</a></td>
                   <td><code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/</code></td>
                   <td><span class="http GET"><a href="#method-CTSSubLocationList-GET">GET</a></span> 
+                  </td>
+               </tr>
+               <tr>
+                  <td><a href="#resource-DTSSubFragmentList">DTSSubFragmentList</a></td>
+                  <td><code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/{fragment}</code></td>
+                  <td><span class="http GET"><a href="#method-DTSSubFragmentList-GET">GET</a></span> 
                   </td>
                </tr>
                <tr>
@@ -1300,17 +2295,17 @@ li.transition{
                </dl>
             </dd>
          </dl>
-         <h2 id="resource-DTSTopLevel">Resource: DTSTopLevel</h2>
+         <h2 id="resource-DTSNamingAuthoritys">Resource: DTSNamingAuthoritys</h2>
          <dl>
             <dt>Location: <code>/dts/</code></dt>
          </dl>
          <h3>HTTP Methods:</h3>
-         <dl id="method-DTSTopLevel-GET">
+         <dl id="method-DTSNamingAuthoritys-GET">
             <dt>Method <span class="http GET">GET</span></dt>
             <dt>Transitions: </dt>
             <dd>
                <ul>
-                  <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                  <li><a href="#transition-Reading-Protocols-Choose-dts-protocol">Choose dts protocol</a> : <a href="#state-Reading-Protocols">Reading Protocols</a> → <a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></li>
                </ul>
             </dd>
             <dt>Response:</dt>
@@ -1319,7 +2314,7 @@ li.transition{
                   <dt>Result States:</dt>
                   <dd>
                      <ul>
-                        <li><a href="#state-Reading-DTS-TopLevel">Reading DTS TopLevel</a></li>
+                        <li><a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a></li>
                      </ul>
                   </dd>
                </dl>
@@ -1350,6 +2345,31 @@ li.transition{
                </dl>
             </dd>
          </dl>
+         <h2 id="resource-DTSCollections">Resource: DTSCollections</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSCollections-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-NamingAuthoritys-Choose-dts-namingAuthority">Choose dts namingAuthority</a> : <a href="#state-Reading-DTS-NamingAuthoritys">Reading DTS NamingAuthoritys</a> → <a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-Collections">Reading DTS Collections</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
          <h2 id="resource-CTSWorks">Resource: CTSWorks</h2>
          <dl>
             <dt>Location: <code>/cts/{cts-ns}/{text-group}/</code></dt>
@@ -1370,6 +2390,210 @@ li.transition{
                   <dd>
                      <ul>
                         <li><a href="#state-Reading-CTS-Works">Reading CTS Works</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSAuthorLogicalGroupings">Resource: DTSAuthorLogicalGroupings</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSAuthorLogicalGroupings-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Collections-Choose-dts-collection">Choose dts collection</a> : <a href="#state-Reading-DTS-Collections">Reading DTS Collections</a> → <a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSAbstractWorks">Resource: DTSAbstractWorks</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSAbstractWorks-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-AuthorLogicalGroupings-Choose-dts-AuthorLogicalGrouping">Choose dts AuthorLogicalGrouping</a> : <a href="#state-Reading-DTS-AuthorLogicalGroupings">Reading DTS AuthorLogicalGroupings</a> → <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSExemplarList">Resource: DTSExemplarList</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/exemplars/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSExemplarList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-AbstractWorks-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a> : <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a> → <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Traverse-dts-AbstractWork">Traverse dts AbstractWork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSExemplars">Resource: DTSExemplars</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSExemplars-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-AbstractWorks-Choose-dts-AbstractWork">Choose dts AbstractWork</a> : <a href="#state-Reading-DTS-AbstractWorks">Reading DTS AbstractWorks</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSEditionList">Resource: DTSEditionList</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/Edition_Translations/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSEditionList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Exemplars-Traverse-dts-Exemplar">Traverse dts Exemplar</a> : <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a> → <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Traverse-dts-Exemplar">Traverse dts Exemplar</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-Editions">Reading DTS Editions</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSEditions">Resource: DTSEditions</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSEditions-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Exemplars-Choose-dts-Exemplar">Choose dts Exemplar</a> : <a href="#state-Reading-DTS-Exemplars">Reading DTS Exemplars</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSVersionList">Resource: DTSVersionList</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/versions/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSVersionList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Editions-Traverse-dts-Edition">Traverse dts Edition</a> : <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a> → <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Traverse-dts-Edition">Traverse dts Edition</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-Versions">Reading DTS Versions</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
+         <h2 id="resource-DTSVersion">Resource: DTSVersion</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSVersion-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Editions-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-TextObject">Reading TextObject</a></li>
                      </ul>
                   </dd>
                </dl>
@@ -1417,6 +2641,32 @@ li.transition{
                </dl>
             </dd>
          </dl>
+         <h2 id="resource-DTSFragmentList">Resource: DTSFragmentList</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSFragmentList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul>
+                  <li><a href="#transition-Reading-DTS-Versions-Traverse-dts-Version">Traverse dts Version</a> : <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a> → <a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Traverse-dts-Version">Traverse dts Version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+               </ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl>
+                  <dt>Result States:</dt>
+                  <dd>
+                     <ul>
+                        <li><a href="#state-Reading-DTS-Fragments">Reading DTS Fragments</a></li>
+                     </ul>
+                  </dd>
+               </dl>
+            </dd>
+         </dl>
          <h2 id="resource-CTSSubLocationList">Resource: CTSSubLocationList</h2>
          <dl>
             <dt>Location: <code>/cts/{cts-ns}/{text-group}/{work}/{edition}/locations/{location}/</code></dt>
@@ -1442,6 +2692,22 @@ li.transition{
                </dl>
             </dd>
          </dl>
+         <h2 id="resource-DTSSubFragmentList">Resource: DTSSubFragmentList</h2>
+         <dl>
+            <dt>Location: <code>/dts/{dts-na}/{logic-group}/{abwork}/{exemplar}/{Edition_Translation}/{version}/fragments/{fragment}</code></dt>
+         </dl>
+         <h3>HTTP Methods:</h3>
+         <dl id="method-DTSSubFragmentList-GET">
+            <dt>Method <span class="http GET">GET</span></dt>
+            <dt>Transitions: </dt>
+            <dd>
+               <ul></ul>
+            </dd>
+            <dt>Response:</dt>
+            <dd>
+               <dl></dl>
+            </dd>
+         </dl>
          <h2 id="resource-TextObject">Resource: TextObject</h2>
          <dl>
             <dt>Location: <code>/text/{uri}/</code></dt>
@@ -1455,7 +2721,11 @@ li.transition{
                   <li><a href="#transition-Reading-CTS-Locations-Choose-cts-location">Choose cts location</a> : <a href="#state-Reading-CTS-Locations">Reading CTS Locations</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                   <li><a href="#transition-Reading-CTS-Versions-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-CTS-Versions">Reading CTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                   <li><a href="#transition-Reading-Query-Results-Choose-cts-version">Choose cts version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
-                  <li><a href="#transition-Reading-Query-Results-Choose-dts-writtenwork">Choose dts writtenwork</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-DTS-Editions-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-DTS-Editions">Reading DTS Editions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-dts-Edition">Choose dts Edition</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-dts-Fragment">Choose dts Fragment</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-DTS-Versions-Choose-dts-Version">Choose dts Version</a> : <a href="#state-Reading-DTS-Versions">Reading DTS Versions</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
+                  <li><a href="#transition-Reading-Query-Results-Choose-dts-Version">Choose dts Version</a> : <a href="#state-Reading-Query-Results">Reading Query Results</a> → <a href="#state-Reading-TextObject">Reading TextObject</a></li>
                </ul>
             </dd>
             <dt>Response:</dt>
