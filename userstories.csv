@@ -1,5 +1,5 @@
 As,I want to,So that,Access Type,Data Type,
-client application,query if a work is available,I can retrieve it,search,ID,
+client application,query if an abstract work is represented by digital resources,I can retrieve digital resources,search,ID,
 client application,query if a specific version is available,I can retrieve it,search,ID,
 client application,access the most recent edition of a work,I can do something with it,read,content,
 client application,find out which editions of a work are available,I can choose one,search,ID,
