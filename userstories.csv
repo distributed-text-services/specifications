@@ -45,6 +45,6 @@ client application,get annotations on a specific book/chapter/verse/word,I can s
 client application,get annotations by a specific user or group on a specific book/chapter/verse/word,I can see what others have said about it,search,content,
 client application,get annotations by users or groups with specific characteristics on a specific book/chapter/verse/word,I can see what others have said about it,search,content,
 client application,get papyrii and transcriptions for a specific book/chapter/verse/word,I can read the original artifact with a little help,search,content,
-client application,insert an annotation on a text or image of a specific book/chapter/verse/word,I can collect and share my thoughts,annotate,content,
-client application,vote on another person's annotation, I can have my own favorites to find easily and make these more prominent for others, annotate, content,
+client application,insert an annotation on a text or image of a specific book/chapter/verse/word,I can collect and share my thoughts,update,content,
+client application,vote on another person's annotation, I can have my own favorites to find easily and make these more prominent for others, update, content,
 
