@@ -1,0 +1,375 @@
+
+[
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta
+   {
+     "@id": "http://scta.info/resource/scta",
+     "dts:capabilities": {
+       "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+       "ontology": "http://w3id.org/scta-ontology/",
+       "dts:ordered": false,
+       "dts:hasDefaultMember": false,
+       "dts:static": true,
+       "dts:navigation": {
+         "dts:parents": [],
+         "dts:siblings": {}
+       }
+     },
+     "dts:description": [
+       {
+         "@lang": "eng",
+         "dc:title": "Sentences Commentary Text Archive",
+         "dc:editor": "Jeffrey C. Witt"
+       }
+     ],
+     "dts:properties": {
+       "rdf:type": "http://w3id.org/scta-ontology/workGroup"
+     },
+     "dts:members": [
+       { "@id": "http://scta.info/resource/scta#parts",
+         "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts",
+         "dts:model": "http://w3id.org/dts-ontology/collection"
+       },
+       { "@id": "http://scta.info/resource/scta#expressions",
+         "rdf:type": "http://w3id.org/scta-ontology/workgroup#expressions",
+         "dts:model": "http://w3id.org/dts-ontology/collection"
+       }
+    ]
+  },
+
+  {
+      ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23parts
+    "@id": "http://scta.info/resource/scta#parts",
+    "dts:capabilities": {
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [ "http://scta.info/resource/scta" ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Sentences Commentary Text Archive Workgroups",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts"
+    },
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/sententia",
+        "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/deanima",
+        "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+      ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23expressions
+  {
+    "@id": "http://scta.info/resource/scta#expressions",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [
+          "http://scta.info/resource/scta"
+        ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Sentences Commentary Text Archive Expressions",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/wodehamordinatio",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23eplaoulcommentary
+
+  {
+    "@id": "http://scta.info/resource/plaoulcommentary",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [ "http://scta.info/resource/scta/sententia", "http://scta.info/resource/scta" ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/expression"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Commentary on the Sentences by Peter Plaoul",
+        "dc:author": "Peter Plaoul",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary#manifestations",
+        "rdf:type": "http://w3id.org/scta-ontology/expression#manifestations",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary#parts",
+        "rdf:type": "http://w3id.org/scta-ontology/expression#parts",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary#items",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23eplaoulcommentary#manifestations
+
+  {
+    "@id": "http://scta.info/resource/plaoulcommentary#manifestations",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:static": false,
+      "dts:hasDefaultMember": true,
+      "dts:navigation": {
+        "dts:parents": [
+          "http://scta.info/resource/plaoulcommentary"
+        ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/expression#manifestations"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Manifestations of the Commentary on the Sentences by Peter Plaoul",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+     {
+        "@id": "http://scta.info/resource/plaoulcommentary/critical",
+        "rdf:type": "http://w3id.org/scta-ontology/manifestation",
+        "dts:model": "http://w3id.org/dts-ontology/collection",
+        "dts:defaultMember": true
+      },
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary/reims",
+        "rdf:type": "http://w3id.org/scta-ontology/manifestation",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23eplaoulcommentary#parts
+
+  {
+    "@id": "http://scta.info/resource/plaoulcommentary#parts",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:static": true,
+      "dts:hasDefaultMember": false,
+      "dts:ordered": true,
+      "dts:parents": ["http://scta.info/resource/plaoulcommentary"],
+      "dts:siblings": {}
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/expression#parts"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Parts of the Commentary on the Sentences by Peter Plaoul",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/deFide",
+        "rdf:type": "http://w3id.org/scta-ontology/structureDivision",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/deNotitia",
+        "rdf:type": "http://w3id.org/scta-ontology/structureDivision",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23eplaoulcommentary#dts:members
+
+  {
+    "@id": "http://scta.info/resource/plaoulcommentary#items",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:static": true,
+      "dts:ordered": true,
+      "dts:hasDefaultMember": false,
+      "dts:parents": [ "http://scta.info/resource/plaoulcommentary" ],
+      "dts:siblings": {}
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/expression#items"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Items of the Commentary on the Sentences by Peter Plaoul",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/lectio1",
+        "rdf:type": "http://w3id.org/scta-ontology/structureItem",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/lectio2",
+        "rdf:type": "http://w3id.org/scta-ontology/structureItem",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Flectio1
+
+  {
+    "@id": "http://scta.info/resource/lectio1",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": true,
+      "dts:static": true,
+      "dts:hasDefaultMember": false,
+      "dts:navigation": {
+        "dts:parents": [ "http://scta.info/resource/plaoulcommentary","http://scta.info/resource/deFide" ],
+        "dts:siblings": {
+          "dts:next": "http://scta.info/resource/lectio2",
+          "dts:previous": null
+        }
+      }
+    },
+    "dts:properties": {
+      "rdf:type": [
+        "http://w3id.org/scta-ontology/expression",
+        "http://w3id.org/scta-ontology/structureItem"
+      ]
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Lectio 1",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/p1",
+        "rdf:type": "http://w3id.org/scta-ontology/structureBlock",
+        "dts:model": "http://w3id.org/dts-ontology/item"
+      },
+      {
+        "@id": "http://scta.info/resource/p2",
+        "rdf:type": "http://w3id.org/scta-ontology/structureBlock",
+        "dts:model": "http://w3id.org/dts-ontology/item"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fplaoulcommentary%2Fcritical
+
+  {
+    "@id": "http://scta.info/resource/plaoulcommentary/critical",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": true,
+      "dts:static": false,
+      "dts:hasDefaultMember": true,
+      "dts:navigation": {
+        "dts:parents": [
+          {
+            "@id": "http://scta.info/resource/plaoulcommentary#manifestations"
+          }
+        ],
+        "dts:siblings": { }
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/manifestation"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Critical edition for lectio 1 in Plaoul Commentary"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/lectio1/critical/transcription",
+        "rdf:type": "http://w3id.org/scta-ontology/transcription",
+        "dts:model": "http://w3id.org/dts-ontology/item",
+        "dts:defaultMember": true
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fplaoulcommentary%2Fcritical/members/http%3A%2F%2Fscta.info%2Fresource%2Fplaoulcommentary%2Fcritical%2Ftranscription
+  {
+    "@id": "http://scta.info/resource/lectio1/critical/transcription",
+    "dts:locator": "http://bitbucket.org/jeffreycwitt/raw/master/lectio1.xml",
+    "rdf:type": "http://w3id.org/scta-ontology/transcription",
+    "dts:status": "draft",
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Transcription of Critical edition for lectio 1 in Plaoul Commentary",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ]
+  }
+]
