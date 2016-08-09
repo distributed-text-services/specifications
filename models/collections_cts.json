@@ -1,0 +1,115 @@
+[
+  ///collections/urn%3AlatinLit%3Aphi1294
+   {
+     "@id": "urn:cts:latinLit:phi1294",
+     "dts:capabilities": {
+       "dts:ordered": false,
+       "dts:supportsRoles": true,
+       "dts:static": true, // means no more members (i.e. works in this case) will be added
+       "dts:navigation": {
+         "dts:parents": [
+           {
+             "@id": "http://cts.example.org/inventories/thibaultsfavorites",
+             "rdf:type": "http://w3id.org/dts-ontology/inventory",
+             "dts:model": "http://w3id.org/dts-ontology/collection"
+           },
+           {
+             "@id": "http://cts.example.org/inventories/pdl",
+             "rdf:type": "http://w3id.org/dts-ontology/inventory",
+             "dts:model": "http://w3id.org/dts-ontology/collection",
+             "dts:role": "http://w3id.org/dts-ontology/canonicalCollection"
+           }
+         ],
+         "dts:siblings": {}
+       }
+     },
+     "dts:description": [
+       {
+         "@lang": "eng",
+         "dc:title": "Martial",
+         "dc:editor": "Lisa Cerrato",
+         "dc:creator": "Gregory Crane",
+         "dc:contributor": ["Bridget Almas", "Thibault Clerice", "Alison Babeu"]
+       }
+     ],
+     "dts:properties": {
+       "rdf:type": "http://homermultitext.org/rdfvocab/textgroup",
+       "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
+     },
+     "dts:members": [
+       { "@id": "urn:cts:latinLit:phi1294.phi002",
+         "rdf:type": "http://homermultitext.org/rdfvocab/work",
+         "dts:model": "http://w3id.org/dts-ontology/collection"
+       }
+    ]
+  },
+
+  {
+      ///collections/urn%3Acts%3AlatinLit%3Aphi1294%3Aphi002
+    "@id": "urn:cts:latinLit:phi1294.phi002",
+    "dts:capabilities": {
+      "dts:ordered": false,
+      "dts:supportsRoles": true,
+      "dts:static": false, // means additional editions/translations may be added
+      "dts:navigation": {
+        "dts:parents": [
+          {
+            "@id": "urn:cts:latinLit:phi1294",
+            "rdf:type": "http://homermultitext.org/rdfvocab/textgroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
+        ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Epigrammata",
+        "dc:author": ["Martial","http://data.perseus.org/authors/urn:cite:perseus:author.897"],
+      }
+    ],
+    "dts:properties": {
+      "rdf:type": "http://homermultitext.org/rdfvocab/work",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    "dts:members": [
+      {
+        "@id": "urn:cts:latinLit:phi1294.phi002.perseus-lat2",
+        "rdf:type": "http://homermultitext.org/rdfvocab/edition",
+        "dts:model": "http://w3id.org/dts-ontology/item",
+        "dts:role": "http://w3id.org/dts-ontology/preferredItem"
+      },
+      {
+        "@id": "urn:cts:latinLit:phi1294.phi002.perseus-eng2",
+        "rdf:type": "http://homermultitext.org/rdfvocab/translation",
+        "dts:model": "http://w3id.org/dts-ontology/item"
+      }
+    ]
+  },
+
+  ///collections/urn%3Acts%3AlatinLit%3Aphi1294%phi002/members/perseus-lat2
+  {
+    "@id": "http://scta.info/resource/lectio1/critical/transcription",
+    "dts:locator": "http://cts.perseids.org/api/cts/?request=GetCapabilities&urn=urn:cts:latinLit:phi1294.phi002.perseus-lat2",
+    "rdf:type": "http://homermultitext.org/rdfvocab/edition",
+    "dts:status": "published",
+    "dts:navigation": {
+      "dts:parents": [
+        {
+          "@id": "urn:cts:latinLit:phi1294.phi002",
+          "rdf:type": "http://homermultitext.org/rdfvocab/work",
+          "dts:model": "http://w3id.org/dts-ontology/collection"
+        }
+      ],
+      "dts:siblings": {}
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Eigrammata, Perseus Epidoc Edition",
+        "dc:publisher": "Perseus Digital Library"
+      }
+    ]
+  }
+]

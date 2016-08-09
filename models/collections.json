@@ -5,7 +5,7 @@
      "@id": "http://scta.info/resource/scta",
      "dts:capabilities": {
        "dts:ordered": false,
-       "dts:hasDefaultMember": false,
+       "dts:supportsRoles": false,
        "dts:static": true,
        "dts:navigation": {
          "dts:parents": [],
@@ -40,10 +40,16 @@
     "@id": "http://scta.info/resource/scta#parts",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
-        "dts:parents": [ "http://scta.info/resource/scta" ],
+        "dts:parents": [
+          {
+            "@id": "http://scta.info/resource/scta",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
+        ],
         "dts:siblings": {}
       }
     },
@@ -77,11 +83,15 @@
     "@id": "http://scta.info/resource/scta#expressions",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
         "dts:parents": [
-          "http://scta.info/resource/scta"
+          {
+            "@id": "http://scta.info/resource/scta",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
         ],
         "dts:siblings": {}
       }
@@ -117,10 +127,16 @@
     "@id": "http://scta.info/resource/sententia",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
-        "dts:parents": [ "http://scta.info/resource/scta#parts" ],
+        "dts:parents": [
+          {
+            "@id": "http://scta.info/resource/scta#parts",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
+        ],
         "dts:siblings": {}
       }
     },
@@ -155,11 +171,15 @@
     "@id": "http://scta.info/resource/sententia#parts",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
         "dts:parents": [
-          "http://scta.info/resource/sententia#parts"
+          {
+            "@id": "http://scta.info/resource/sententia",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
         ],
         "dts:siblings": {}
       }
@@ -195,11 +215,15 @@
     "@id": "http://scta.info/resource/sententia#expressions",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
         "dts:parents": [
-          "http://scta.info/resource/sententia#expressions"
+          {
+            "@id": "http://scta.info/resource/sententia",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
         ],
         "dts:siblings": {}
       }
@@ -236,10 +260,21 @@
     "@id": "http://scta.info/resource/plaoulcommentary",
     "dts:capabilities": {
       "dts:ordered": false,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:static": true,
       "dts:navigation": {
-        "dts:parents": [ "http://scta.info/resource/scta/sententia", "http://scta.info/resource/scta" ],
+        "dts:parents": [
+          {
+            "@id": "http://scta.info/resource/sententia",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          },
+          {
+            "@id": "http://scta.info/resource/scta",
+            "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
+        ],
         "dts:siblings": {}
       }
     },
@@ -281,10 +316,14 @@
     "dts:capabilities": {
       "dts:ordered": false,
       "dts:static": false,
-      "dts:hasDefaultMember": true,
+      "dts:supportsRoles": true,
       "dts:navigation": {
         "dts:parents": [
-          "http://scta.info/resource/plaoulcommentary"
+          {
+            "@id": "http://scta.info/resource/plaoulcommentary",
+            "rdf:type": "http://w3id.org/scta-ontology/expression",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
         ],
         "dts:siblings": {}
       }
@@ -305,7 +344,7 @@
         "@id": "http://scta.info/resource/plaoulcommentary/critical",
         "rdf:type": "http://w3id.org/scta-ontology/manifestation",
         "dts:model": "http://w3id.org/dts-ontology/collection",
-        "dts:defaultMember": true
+        "dts:role": "http://w3id.org/scta-ontology/canonicalManifestation"
       },
       {
         "@id": "http://scta.info/resource/plaoulcommentary/reims",
@@ -321,9 +360,15 @@
     "@id": "http://scta.info/resource/plaoulcommentary#parts",
     "dts:capabilities": {
       "dts:static": true,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:ordered": true,
-      "dts:parents": ["http://scta.info/resource/plaoulcommentary"],
+      "dts:parents": [
+        {
+          "@id": "http://scta.info/resource/plaoulcommentary",
+          "rdf:type": "http://w3id.org/scta-ontology/expression",
+          "dts:model": "http://w3id.org/dts-ontology/collection"
+        }
+      ],
       "dts:siblings": {}
     },
     "dts:properties": {
@@ -358,8 +403,14 @@
     "dts:capabilities": {
       "dts:static": true,
       "dts:ordered": true,
-      "dts:hasDefaultMember": false,
-      "dts:parents": [ "http://scta.info/resource/plaoulcommentary" ],
+      "dts:supportsRoles": false,
+      "dts:parents": [
+        {
+          "@id": "http://scta.info/resource/plaoulcommentary",
+          "rdf:type": "http://w3id.org/scta-ontology/expression",
+          "dts:model": "http://w3id.org/dts-ontology/collection"
+        }
+      ],
       "dts:siblings": {}
     },
     "dts:properties": {
@@ -394,9 +445,20 @@
     "dts:capabilities": {
       "dts:ordered": true,
       "dts:static": true,
-      "dts:hasDefaultMember": false,
+      "dts:supportsRoles": false,
       "dts:navigation": {
-        "dts:parents": [ "http://scta.info/resource/plaoulcommentary","http://scta.info/resource/deFide" ],
+        "dts:parents": [
+          {
+            "@id": "http://scta.info/resource/plaoulcommentary",
+            "rdf:type": "http://w3id.org/scta-ontology/expression",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          },
+          {
+            "@id": "http://scta.info/resource/deFide",
+            "rdf:type": "http://w3id.org/scta-ontology/structureDivision",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
+          }
+        ],
         "dts:siblings": {
           "dts:next": "http://scta.info/resource/lectio2",
           "dts:previous": null
@@ -438,11 +500,13 @@
     "dts:capabilities": {
       "dts:ordered": true,
       "dts:static": false,
-      "dts:hasDefaultMember": true,
+      "dts:supportsRoles": true,
       "dts:navigation": {
         "dts:parents": [
           {
-            "@id": "http://scta.info/resource/plaoulcommentary#manifestations"
+            "@id": "http://scta.info/resource/plaoulcommentary#manifestations",
+            "rdf:type": "http://w3id.org/scta-ontology/expression#manifestations",
+            "dts:model": "http://w3id.org/dts-ontology/collection"
           }
         ],
         "dts:siblings": { }
@@ -463,7 +527,7 @@
         "@id": "http://scta.info/resource/lectio1/critical/transcription",
         "rdf:type": "http://w3id.org/scta-ontology/transcription",
         "dts:model": "http://w3id.org/dts-ontology/item",
-        "dts:defaultMember": true
+        "dts:role" : "http://w3id.org/scta-ontology/canonicalTranscription",
       }
     ]
   },
