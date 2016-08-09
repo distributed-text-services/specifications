@@ -4,8 +4,6 @@
    {
      "@id": "http://scta.info/resource/scta",
      "dts:capabilities": {
-       "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
-       "ontology": "http://w3id.org/scta-ontology/",
        "dts:ordered": false,
        "dts:hasDefaultMember": false,
        "dts:static": true,
@@ -22,7 +20,8 @@
        }
      ],
      "dts:properties": {
-       "rdf:type": "http://w3id.org/scta-ontology/workGroup"
+       "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+       "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
      },
      "dts:members": [
        { "@id": "http://scta.info/resource/scta#parts",
@@ -40,8 +39,6 @@
       ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23parts
     "@id": "http://scta.info/resource/scta#parts",
     "dts:capabilities": {
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "ontology": "http://w3id.org/scta-ontology/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -58,7 +55,8 @@
       }
     ],
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts"
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:members": [
       {
@@ -78,8 +76,6 @@
   {
     "@id": "http://scta.info/resource/scta#expressions",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -91,7 +87,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions"
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -119,8 +116,6 @@
   {
     "@id": "http://scta.info/resource/sententia",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -130,7 +125,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/workGroup"
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -158,8 +154,6 @@
   {
     "@id": "http://scta.info/resource/sententia#parts",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -171,7 +165,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts"
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -199,8 +194,6 @@
   {
     "@id": "http://scta.info/resource/sententia#expressions",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -212,7 +205,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions"
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -241,8 +235,6 @@
   {
     "@id": "http://scta.info/resource/plaoulcommentary",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:hasDefaultMember": false,
       "dts:static": true,
@@ -252,7 +244,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/expression"
+      "rdf:type": "http://w3id.org/scta-ontology/expression",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -286,8 +279,6 @@
   {
     "@id": "http://scta.info/resource/plaoulcommentary#manifestations",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": false,
       "dts:static": false,
       "dts:hasDefaultMember": true,
@@ -299,7 +290,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/expression#manifestations"
+      "rdf:type": "http://w3id.org/scta-ontology/expression#manifestations",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -328,8 +320,6 @@
   {
     "@id": "http://scta.info/resource/plaoulcommentary#parts",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:static": true,
       "dts:hasDefaultMember": false,
       "dts:ordered": true,
@@ -337,7 +327,8 @@
       "dts:siblings": {}
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/expression#parts"
+      "rdf:type": "http://w3id.org/scta-ontology/expression#parts",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -365,8 +356,6 @@
   {
     "@id": "http://scta.info/resource/plaoulcommentary#items",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:static": true,
       "dts:ordered": true,
       "dts:hasDefaultMember": false,
@@ -374,7 +363,8 @@
       "dts:siblings": {}
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/expression#items"
+      "rdf:type": "http://w3id.org/scta-ontology/expression#items",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -402,8 +392,6 @@
   {
     "@id": "http://scta.info/resource/lectio1",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": true,
       "dts:static": true,
       "dts:hasDefaultMember": false,
@@ -419,7 +407,8 @@
       "rdf:type": [
         "http://w3id.org/scta-ontology/expression",
         "http://w3id.org/scta-ontology/structureItem"
-      ]
+      ],
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
@@ -447,8 +436,6 @@
   {
     "@id": "http://scta.info/resource/plaoulcommentary/critical",
     "dts:capabilities": {
-      "ontology": "http://w3id.org/scta-ontology/",
-      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
       "dts:ordered": true,
       "dts:static": false,
       "dts:hasDefaultMember": true,
@@ -462,7 +449,8 @@
       }
     },
     "dts:properties": {
-      "rdf:type": "http://w3id.org/scta-ontology/manifestation"
+      "rdf:type": "http://w3id.org/scta-ontology/manifestation",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/"
     },
     "dts:description": [
       {
