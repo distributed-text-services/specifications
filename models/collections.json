@@ -114,6 +114,128 @@
     ]
   },
 
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23esententia
+
+  {
+    "@id": "http://scta.info/resource/sententia",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [ "http://scta.info/resource/scta#parts" ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Sententia Workgroup",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/sententia#parts",
+        "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/sententia#expressions",
+        "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23esententia#parts
+
+  {
+    "@id": "http://scta.info/resource/sententia#parts",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [
+          "http://scta.info/resource/sententia#parts"
+        ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#parts"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Parts of Sententia",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/wodehamordinatio",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+  ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23esententia#expressions
+
+  {
+    "@id": "http://scta.info/resource/sententia#expressions",
+    "dts:capabilities": {
+      "ontology": "http://w3id.org/scta-ontology/",
+      "dc:license": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "dts:ordered": false,
+      "dts:hasDefaultMember": false,
+      "dts:static": true,
+      "dts:navigation": {
+        "dts:parents": [
+          "http://scta.info/resource/sententia#expressions"
+        ],
+        "dts:siblings": {}
+      }
+    },
+    "dts:properties": {
+      "rdf:type": "http://w3id.org/scta-ontology/workGroup#expressions"
+    },
+    "dts:description": [
+      {
+        "@lang": "eng",
+        "dc:title": "Expressions of Sententia",
+        "dc:editor": "Jeffrey C. Witt"
+      }
+    ],
+    "dts:members": [
+      {
+        "@id": "http://scta.info/resource/plaoulcommentary",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      },
+      {
+        "@id": "http://scta.info/resource/wodehamordinatio",
+        "rdf:type": "http://w3id.org/scta-ontology/expression",
+        "dts:model": "http://w3id.org/dts-ontology/collection"
+      }
+    ]
+  },
+
+
   ///collections/http%3A%2F%2Fscta.info%2Fresource%2Fscta%23eplaoulcommentary
 
   {
