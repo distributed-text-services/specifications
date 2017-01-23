@@ -141,11 +141,13 @@ definitions:
         description: >-
           Collection contents are in a predetermined order.
         default: false
+        example: true
       hasRoles:
         type: boolean
         description: >-
           Roles may be assigned to collection member items
         default: false
+        example: true
   MemberResultSet:
     description: >-
       A resultset containing a potentially iterable list of Collection members items.
@@ -310,7 +312,7 @@ definitions:
         type: array
         items:
           type: string
-        example: [ 'canonicalManifestiation' ]
+        example: [ 'canonicalEdition' ]
         description: >-
           The role or roles that apply to this item. Only available if the collection
           hasRoles per its capabilities. A Controlled Vocabulary should be

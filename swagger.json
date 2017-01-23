@@ -181,12 +181,14 @@
                 "isOrdered": {
                     "type": "boolean",
                     "description": "Collection contents are in a predetermined order.",
-                    "default": false
+                    "default": false,
+                    "example": true
                 },
                 "hasRoles": {
                     "type": "boolean",
                     "description": "Roles may be assigned to collection member items",
-                    "default": false
+                    "default": false,
+                    "example": true
                 }
             }
         },
@@ -378,7 +380,7 @@
                         "type": "string"
                     },
                     "example": [
-                        "canonicalManifestiation"
+                        "canonicalEdition"
                     ],
                     "description": "The role or roles that apply to this item. Only available if the collection hasRoles per its capabilities. A Controlled Vocabulary should be used."
                 },
