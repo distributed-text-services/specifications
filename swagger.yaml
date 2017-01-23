@@ -30,7 +30,7 @@ paths:
         '200':
           description: A resultset containing a list of collection objects.
           schema:
-            $ref: '#/definitions/CollectionResultSet'
+            $ref: '#/definitions/CollectionResultset'
         '400':
           description: Invalid Input. The query was malformed.
           schema:
@@ -278,7 +278,7 @@ definitions:
         type: array
         description: list of Collection Objects returned in response to a query
         items:
-          $ref: '#/definitions/CollectionAndMembers'
+          $ref: '#/definitions/CollectionObject'
       next_cursor:
         type: string
         description: >-

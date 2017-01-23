@@ -340,7 +340,7 @@
                     "type": "array",
                     "description": "list of Collection Objects returned in response to a query",
                     "items": {
-                        "$ref": "#/definitions/CollectionAndMembers"
+                        "$ref": "#/definitions/CollectionObject"
                     }
                 },
                 "next_cursor": {
