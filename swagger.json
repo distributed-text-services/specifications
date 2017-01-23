@@ -245,55 +245,19 @@
             "description": "Descriptive metadata about the collection.  The properties available for this object are dependent upon the description ontology used, as define in the collection properties."
         },
         "CollectionAndMembers": {
-            "description": "Defines the schema for a collection object.",
+            "description": "Defines the schema for a full collection object.",
             "type": "object",
             "required": [
-                "properties",
-                "capabilities",
-                "metadata",
-                "members"
-            ],
-            "properties": {
-                "properties": {
-                    "$ref": "#/definitions/CollectionObject"
-                },
-                "capabilities": {
-                    "$ref": "#/definitions/CollectionCapabilities"
-                },
-                "metadata": {
-                    "$ref": "#/definitions/CollectionMetadata"
-                },
-                "members": {
-                    "$ref": "#/definitions/MemberResultSet"
-                },
-                "version": {
-                    "type": "string",
-                    "description": "An optional version identifier for the collection. Syntax is left up to the implication. May be a sequential number, a date string, a commit hash, etc.",
-                    "example": "a555194"
-                },
-                "parents": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CollectionObject"
-                    }
-                },
-                "next": {
-                    "$ref": "#/definitions/CollectionObject"
-                },
-                "prev": {
-                    "$ref": "#/definitions/CollectionObject"
-                }
-            }
-        },
-        "CollectionObject": {
-            "description": "Minimal functional properties of a collection, excluding members and additional metadata.",
-            "required": [
+                "@context",
                 "@id",
                 "type",
                 "license",
                 "size",
                 "labels",
-                "vocabulary"
+                "vocabulary",
+                "capabilities",
+                "metadata",
+                "members"
             ],
             "properties": {
                 "@id": {
@@ -326,6 +290,58 @@
                     "type": "string",
                     "description": "The vocabulary used to provide descriptive metadata about the collection. Ideally this is the URI of a published controlled vocabulary.",
                     "example": "http://purl.org/dc/elements/1.1/"
+                },
+                "capabilities": {
+                    "$ref": "#/definitions/CollectionCapabilities"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/CollectionMetadata"
+                },
+                "members": {
+                    "$ref": "#/definitions/MemberResultSet"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "An optional version identifier for the collection. Syntax is left up to the implication. May be a sequential number, a date string, a commit hash, etc.",
+                    "example": "a555194"
+                },
+                "parents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CollectionObjectMinimal"
+                    }
+                },
+                "next": {
+                    "$ref": "#/definitions/CollectionObjectMinimal"
+                },
+                "prev": {
+                    "$ref": "#/definitions/CollectionObjectMinimal"
+                }
+            }
+        },
+        "CollectionObjectMinimal": {
+            "description": "Minimal functional properties of a collection, excluding members and additional metadata.",
+            "required": [
+                "@id",
+                "type",
+                "labels"
+            ],
+            "properties": {
+                "@id": {
+                    "type": "string",
+                    "description": "Identifier for the collection. A URN or URI or PID.",
+                    "example": "urn:cts:latinLit:phi0959.phi005"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the collection.",
+                    "example": "http://homermultitext.org/rdfvocab/work"
+                },
+                "labels": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Label"
+                    }
                 }
             }
         },
@@ -340,7 +356,7 @@
                     "type": "array",
                     "description": "list of Collection Objects returned in response to a query",
                     "items": {
-                        "$ref": "#/definitions/CollectionObject"
+                        "$ref": "#/definitions/CollectionObjectMinimal"
                     }
                 },
                 "next_cursor": {

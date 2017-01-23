@@ -30,7 +30,7 @@ paths:
         '200':
           description: A resultset containing a list of collection objects.
           schema:
-            $ref: '#/definitions/CollectionResultset'
+            $ref: '#/definitions/CollectionResultSet'
         '400':
           description: Invalid Input. The query was malformed.
           schema:
@@ -39,7 +39,8 @@ paths:
     get:
       summary: Get a collection and its members.
       description: >-
-        This request returns a Collection, including all of its properties, metadata and members items.
+        This request returns a Collection, including all of its properties,
+        metadata and members items.
       parameters:
         - name: id
           in: path
@@ -48,9 +49,10 @@ paths:
           type: string
         - name: cursor
           description: >-
-            If a previous request for a collection and its members was paginated, this
-            parameter can be used to supply the cursor for the next or previous page. How the cursor
-            is formatted (i.e. whether's it's an opaque string, a range, etc. is up to the implementer.
+            If a previous request for a collection and its members was
+            paginated, this parameter can be used to supply the cursor for the
+            next or previous page. How the cursor is formatted (i.e. whether's
+            it's an opaque string, a range, etc. is up to the implementer.
           in: query
           type: string
       tags:
@@ -71,8 +73,9 @@ paths:
   '/collections/{id}/capabilities':
     get:
       summary: >-
-        Get the capabilities of this collection. The collection capabilities describe the actions and
-        operations that are available for this collection.
+        Get the capabilities of this collection. The collection capabilities
+        describe the actions and operations that are available for this
+        collection.
       description: >-
         This request returns the capabilities metadata for the collection
         identified by the supplied id. The collection capabilities describe the
@@ -100,13 +103,12 @@ paths:
             $ref: '#/definitions/Error'
   '/collections/{id}/metadata':
     get:
-      summary: >-
-        Get descriptive metadata of this collection. 
+      summary: 'Get descriptive metadata of this collection. '
       description: >-
         This request returns the descriptive metadata for the collection
-        identified by the supplied id. Expected to be an object containing key/value pairs.
-        The 'vocabulary' property of the collection object identifies the properties that can 
-        be expected.
+        identified by the supplied id. Expected to be an object containing
+        key/value pairs. The 'vocabulary' property of the collection object
+        identifies the properties that can  be expected.
       parameters:
         - name: id
           in: path
@@ -138,20 +140,19 @@ definitions:
     properties:
       isOrdered:
         type: boolean
-        description: >-
-          Collection contents are in a predetermined order.
+        description: Collection contents are in a predetermined order.
         default: false
         example: true
       hasRoles:
         type: boolean
-        description: >-
-          Roles may be assigned to collection member items
+        description: Roles may be assigned to collection member items
         default: false
         example: true
   MemberResultSet:
     description: >-
-      A resultset containing a potentially iterable list of Collection members items.
-      This is the  schema for the response to any request which retrieves member items.
+      A resultset containing a potentially iterable list of Collection members
+      items. This is the  schema for the response to any request which retrieves
+      member items.
     type: object
     required:
       - contents
@@ -184,7 +185,7 @@ definitions:
       '@id':
         type: string
         description: Identifier for the member item
-        example: urn:cts:latinLit:phi0959.phi005.perseus-lat2
+        example: 'urn:cts:latinLit:phi0959.phi005.perseus-lat2'
       type:
         type: string
         description: The type of the member item
@@ -194,63 +195,36 @@ definitions:
   CollectionMetadata:
     type: object
     description: >-
-      Descriptive metadata about the collection.  The properties available
-      for this object are dependent upon the description ontology used, as
-      define in the collection properties.
+      Descriptive metadata about the collection.  The properties available for
+      this object are dependent upon the description ontology used, as define in
+      the collection properties.
   CollectionAndMembers:
-    description: Defines the schema for a collection object.
+    description: Defines the schema for a full collection object.
     type: object
     required:
-      - properties
-      - capabilities
-      - metadata
-      - members
-    properties:
-      properties: 
-        $ref: '#/definitions/CollectionObject'
-      capabilities:
-        $ref: '#/definitions/CollectionCapabilities'
-      metadata:
-        $ref: '#/definitions/CollectionMetadata'
-      members:
-        $ref: '#/definitions/MemberResultSet'
-      version:
-        type: string
-        description: >-
-         An optional version identifier for the collection. Syntax is left up to the implication. May be
-         a sequential number, a date string, a commit hash, etc.
-        example: a555194
-      parents:
-        type: array
-        items:
-          $ref: '#/definitions/CollectionObject'
-      next:
-          $ref: '#/definitions/CollectionObject'
-      prev:
-          $ref: '#/definitions/CollectionObject'
-  CollectionObject:
-    description: >-
-      Minimal functional properties of a collection, excluding members and additional metadata.
-    required:
+      - '@context'
       - '@id'
       - type
       - license
       - size
       - labels
       - vocabulary
+      - capabilities
+      - metadata
+      - members
     properties:
       '@id':
         type: string
         description: Identifier for the collection. A URN or URI or PID.
-        example: urn:cts:latinLit:phi0959.phi005
-      type: 
+        example: 'urn:cts:latinLit:phi0959.phi005'
+      type:
         type: string
         description: The type of the collection.
-        example: http://homermultitext.org/rdfvocab/work
+        example: 'http://homermultitext.org/rdfvocab/work'
       license:
         type: string
         description: The URI for the license that applies to this collection
-        example: https://creativecommons.org/licenses/by-sa/3.0/
+        example: 'https://creativecommons.org/licenses/by-sa/3.0/'
       size:
         type: integer
         description: the size of the collection
@@ -262,9 +236,52 @@ definitions:
       vocabulary:
         type: string
         description: >-
-          The vocabulary used to provide descriptive metadata about the collection.
-          Ideally this is the URI of a published controlled vocabulary.
-        example: http://purl.org/dc/elements/1.1/
+          The vocabulary used to provide descriptive metadata about the
+          collection. Ideally this is the URI of a published controlled
+          vocabulary.
+        example: 'http://purl.org/dc/elements/1.1/'
+      capabilities:
+        $ref: '#/definitions/CollectionCapabilities'
+      metadata:
+        $ref: '#/definitions/CollectionMetadata'
+      members:
+        $ref: '#/definitions/MemberResultSet'
+      version:
+        type: string
+        description: >-
+          An optional version identifier for the collection. Syntax is left up
+          to the implication. May be a sequential number, a date string, a
+          commit hash, etc.
+        example: a555194
+      parents:
+        type: array
+        items:
+          $ref: '#/definitions/CollectionObjectMinimal'
+      next:
+        $ref: '#/definitions/CollectionObjectMinimal'
+      prev:
+        $ref: '#/definitions/CollectionObjectMinimal'
+  CollectionObjectMinimal:
+    description: >-
+      Minimal functional properties of a collection, excluding members and
+      additional metadata.
+    required:
+      - '@id'
+      - type
+      - labels
+    properties:
+      '@id':
+        type: string
+        description: Identifier for the collection. A URN or URI or PID.
+        example: 'urn:cts:latinLit:phi0959.phi005'
+      type:
+        type: string
+        description: The type of the collection.
+        example: 'http://homermultitext.org/rdfvocab/work'
+      labels:
+        type: array
+        items:
+          $ref: '#/definitions/Label'
   CollectionResultSet:
     description: >-
       A resultset containing a potentially iterable list of Collections Objects.
@@ -278,7 +295,7 @@ definitions:
         type: array
         description: list of Collection Objects returned in response to a query
         items:
-          $ref: '#/definitions/CollectionObject'
+          $ref: '#/definitions/CollectionObjectMinimal'
       next_cursor:
         type: string
         description: >-
@@ -312,11 +329,12 @@ definitions:
         type: array
         items:
           type: string
-        example: [ 'canonicalEdition' ]
+        example:
+          - canonicalEdition
         description: >-
-          The role or roles that apply to this item. Only available if the collection
-          hasRoles per its capabilities. A Controlled Vocabulary should be
-          used.
+          The role or roles that apply to this item. Only available if the
+          collection hasRoles per its capabilities. A Controlled Vocabulary
+          should be used.
       index:
         type: integer
         description: >-
@@ -327,11 +345,11 @@ definitions:
         type: string
         format: date-time
         description: The date the item was added to the collection.
-  Label: 
+  Label:
     description: a label for an item
     type: object
     properties:
-      lang: 
+      lang:
         type: string
         description: The ISO language code of the label
         example: lat
