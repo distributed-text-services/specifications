@@ -121,7 +121,7 @@ paths:
         '200':
           description: The collection capabilities metadata.
           schema:
-            $ref: '#/definitions/CollectionCapabilities'
+            $ref: '#/definitions/CollectionMetadata'
         '401':
           description: Unauthorized. Request was not authorized.
           schema:

@@ -148,9 +148,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The collection capabilities metadata.",
+                        "description": "The collection descriptive metadata.",
                         "schema": {
-                            "$ref": "#/definitions/CollectionCapabilities"
+                            "$ref": "#/definitions/CollectionMetadata"
                         }
                     },
                     "401": {
