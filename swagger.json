@@ -1,0 +1,401 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "DTS Collections API",
+        "description": "API Strawman for a Distributed Text Service",
+        "version": "1.0.0"
+    },
+    "host": "api.example.org",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json",
+        "application/ld+json"
+    ],
+    "paths": {
+        "/collections": {
+            "get": {
+                "summary": "Get a list of all collections",
+                "description": "This request returns a list of the collections provided by this service. ",
+                "parameters": [
+                    {
+                        "name": "f_type",
+                        "in": "query",
+                        "description": "Filter response by the type property of the collection.",
+                        "required": false,
+                        "type": "string",
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "tags": [
+                    "Collections"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A resultset containing a list of collection objects.",
+                        "schema": {
+                            "$ref": "#/definitions/CollectionResultSet"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Input. The query was malformed.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/{id}": {
+            "get": {
+                "summary": "Get a collection and its members.",
+                "description": "This request returns a Collection, including all of its properties, metadata and members items.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the collection",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cursor",
+                        "description": "If a previous request for a collection and its members was paginated, this parameter can be used to supply the cursor for the next or previous page. How the cursor is formatted (i.e. whether's it's an opaque string, a range, etc. is up to the implementer.",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Collections"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The requested collection",
+                        "schema": {
+                            "$ref": "#/definitions/CollectionAndMembers"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Request was not authorized.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The requested collection was not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/{id}/capabilities": {
+            "get": {
+                "summary": "Get the capabilities of this collection. The collection capabilities describe the actions and operations that are available for this collection.",
+                "description": "This request returns the capabilities metadata for the collection identified by the supplied id. The collection capabilities describe the actions and operations that are available for this collection.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the collection",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Collections"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The collection capabilities metadata.",
+                        "schema": {
+                            "$ref": "#/definitions/CollectionCapabilities"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Request was not authorized.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The collection identified was not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/{id}/metadata": {
+            "get": {
+                "summary": "Get descriptive metadata of this collection. ",
+                "description": "This request returns the descriptive metadata for the collection identified by the supplied id. Expected to be an object containing key/value pairs. The 'vocabulary' property of the collection object identifies the properties that can  be expected.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier for the collection",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Collections"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The collection capabilities metadata.",
+                        "schema": {
+                            "$ref": "#/definitions/CollectionCapabilities"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Request was not authorized.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "The collection identified was not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CollectionCapabilities": {
+            "description": "Capabilities define the set of actions that are supported by a collection.",
+            "type": "object",
+            "required": [
+                "isOrdered",
+                "hasRoles"
+            ],
+            "properties": {
+                "isOrdered": {
+                    "type": "boolean",
+                    "description": "Collection contents are in a predetermined order.",
+                    "default": false
+                },
+                "hasRoles": {
+                    "type": "boolean",
+                    "description": "Roles may be assigned to collection member items",
+                    "default": false
+                }
+            }
+        },
+        "MemberResultSet": {
+            "description": "A resultset containing a potentially iterable list of Collection members items. This is the  schema for the response to any request which retrieves member items.",
+            "type": "object",
+            "required": [
+                "contents"
+            ],
+            "properties": {
+                "contents": {
+                    "type": "array",
+                    "description": "list of MemberItem Objects returned in response to a query",
+                    "items": {
+                        "$ref": "#/definitions/MemberItem"
+                    }
+                },
+                "next_cursor": {
+                    "type": "string",
+                    "example": "21-30",
+                    "description": "If the service supports pagination, and the resultset is paginated, this will be a cursor which can be used to retrieve the next page in the results."
+                },
+                "prev_cursor": {
+                    "type": "string",
+                    "example": "1-20",
+                    "description": "If the service supports pagination, and the resultset is paginated, this will be a cursor which can be used to retrieve the next page in the results."
+                }
+            }
+        },
+        "MemberItem": {
+            "description": "A member item in a collection",
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Identifier for the member item"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the member item"
+                },
+                "mappings": {
+                    "$ref": "#/definitions/MemberItemMappingMetadata"
+                }
+            }
+        },
+        "CollectionMetadata": {
+            "type": "object",
+            "description": "Descriptive metadata about the collection.  The properties available for this object are dependent upon the description ontology used, as define in the collection properties."
+        },
+        "CollectionAndMembers": {
+            "description": "Defines the schema for a collection object.",
+            "type": "object",
+            "required": [
+                "properties",
+                "capabilities",
+                "metadata",
+                "members"
+            ],
+            "properties": {
+                "properties": {
+                    "$ref": "#/definitions/CollectionObject"
+                },
+                "capabilities": {
+                    "$ref": "#/definitions/CollectionCapabilities"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/CollectionMetadata"
+                },
+                "members": {
+                    "$ref": "#/definitions/MemberResultSet"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "An optional version identifier for the collection. Syntax is left up to the implication. May be a sequential number, a date string, a commit hash, etc.",
+                    "example": "a555194"
+                },
+                "parents": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CollectionObject"
+                    }
+                },
+                "next": {
+                    "$ref": "#/definitions/CollectionObject"
+                },
+                "prev": {
+                    "$ref": "#/definitions/CollectionObject"
+                }
+            }
+        },
+        "CollectionObject": {
+            "description": "Minimal functional properties of a collection, excluding members and additional metadata.",
+            "required": [
+                "id",
+                "type",
+                "license",
+                "size",
+                "labels",
+                "vocabulary"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Identifier for the collection. This is ideally a PID."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the collection."
+                },
+                "license": {
+                    "type": "string",
+                    "description": "The URI for the license that applies to this collection",
+                    "example": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "size": {
+                    "type": "integer",
+                    "description": "the size of the collection",
+                    "example": 1
+                },
+                "labels": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Label"
+                    }
+                },
+                "vocabulary": {
+                    "type": "string",
+                    "description": "The vocabulary used to provide descriptive metadata about the collection. Ideally this is the URI of a published controlled vocabulary.",
+                    "example": "http://purl.org/dc/elements/1.1/"
+                }
+            }
+        },
+        "CollectionResultSet": {
+            "description": "A resultset containing a potentially iterable list of Collections Objects. This is the  schema for the response to any request which retrieves collection items.",
+            "type": "object",
+            "required": [
+                "contents"
+            ],
+            "properties": {
+                "contents": {
+                    "type": "array",
+                    "description": "list of Collection Objects returned in response to a query",
+                    "items": {
+                        "$ref": "#/definitions/CollectionAndMembers"
+                    }
+                },
+                "next_cursor": {
+                    "type": "string",
+                    "description": "If the service supports pagination, and the resultset is paginated, this will be a cursor which can be used to retrieve the next page in the results."
+                },
+                "prev_cursor": {
+                    "type": "string",
+                    "description": "If the service supports pagination, and the resultset is paginated, this will be a cursor which can be used to retrieve the next page in the results."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "description": "A error response object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "error code"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "error message"
+                }
+            }
+        },
+        "MemberItemMappingMetadata": {
+            "description": "metadata on an item which is available by mapping from capabilities",
+            "type": "object",
+            "properties": {
+                "role": {
+                    "type": "string",
+                    "description": "The role that applies to this item. Only available if the collection hasRoles per its capabilities. A Controlled Vocabulary should be used."
+                },
+                "index": {
+                    "type": "integer",
+                    "description": "position of the item in the collection. Only available if the Collection isOrdered per its capabilities."
+                },
+                "dateAdded": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date the item was added to the collection."
+                }
+            }
+        },
+        "Label": {
+            "description": "a label for an item",
+            "type": "object",
+            "properties": {
+                "lang": {
+                    "type": "string",
+                    "description": "The ISO language code of the label",
+                    "example": "en"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The label value",
+                    "example": "This is a label"
+                }
+            }
+        }
+    }
+}
