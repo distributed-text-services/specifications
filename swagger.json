@@ -21,6 +21,13 @@
                 "description": "This request returns a list of the collections provided by this service. ",
                 "parameters": [
                     {
+                        "name": "prefLang",
+                        "in": "query",
+                        "description": "Provide a prefered language (when available) for CollectionObjectMinimal",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "f_type",
                         "in": "query",
                         "description": "Filter response by the type property of the collection.",
@@ -235,6 +242,11 @@
                     "description": "The type of the member item",
                     "example": "http://homermultitext.org/rdfvocab/edition"
                 },
+                "model": {
+                    "type": "string",
+                    "description": "The type of the member in the DTS Ontology (Collection, Resource, etc.)",
+                    "example": "http://w3id.org/dts-ontology/collection"
+                },
                 "mappings": {
                     "$ref": "#/definitions/MemberItemMappingMetadata"
                 }
@@ -254,7 +266,6 @@
                 "license",
                 "size",
                 "labels",
-                "vocabulary",
                 "capabilities",
                 "metadata",
                 "members"
@@ -286,10 +297,12 @@
                         "$ref": "#/definitions/Label"
                     }
                 },
-                "vocabulary": {
-                    "type": "string",
-                    "description": "The vocabulary used to provide descriptive metadata about the collection. Ideally this is the URI of a published controlled vocabulary.",
-                    "example": "http://purl.org/dc/elements/1.1/"
+                "@context": {
+                    "type": "object",
+                    "description": "Prefixes and the namespace they represent",
+                    "example": {
+                        "dc": "http://purl.org/dc/elements/1.1/"
+                    }
                 },
                 "capabilities": {
                     "$ref": "#/definitions/CollectionCapabilities"
