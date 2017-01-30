@@ -262,10 +262,11 @@
             "required": [
                 "@context",
                 "@id",
+                "model",
                 "type",
                 "license",
                 "size",
-                "labels",
+                "label",
                 "capabilities",
                 "metadata",
                 "members"
@@ -291,11 +292,16 @@
                     "description": "the size of the collection",
                     "example": 1
                 },
-                "labels": {
+                "label": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Label"
                     }
+                },
+                "model": {
+                    "type": "string",
+                    "description": "The type of the member in the DTS Ontology (Collection, Resource, etc.)",
+                    "example": "http://w3id.org/dts-ontology/collection"
                 },
                 "@context": {
                     "type": "object",
@@ -429,12 +435,12 @@
             "description": "a label for an item",
             "type": "object",
             "properties": {
-                "lang": {
+                "@lang": {
                     "type": "string",
                     "description": "The ISO language code of the label",
                     "example": "lat"
                 },
-                "value": {
+                "@value": {
                     "type": "string",
                     "description": "The label value",
                     "example": "Remedia amoris"
