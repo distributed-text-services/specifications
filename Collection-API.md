@@ -14,13 +14,17 @@ A server that uses the CTS collection hierarchy might provide the following top 
 
 Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
 
+JSON wide attributes :
+
+- `@context` must be extending Hydra and providing DCT, TEI and DTS namespaces prefix
+
+Item properties :
 - `title` is a single string
 - `@id` holds the identifier of the object
 - `@type` should always be `Collection` or `Resource`
 - `totalItems` represent the number of children hold by an object
-- "@context" must be extending Hydra and providing DCT, TEI and DTS namespaces prefix
-- "member"  contains children of the current collection described with at least the mandatory keys
 - (Optional) `description` is a single description.
+- (Optional) `member` contains children of the current collection described with at least the mandatory keys
 - (Optional) `dts:dublincore` holds Dublin Core Terms metadata
 - (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
 - (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
