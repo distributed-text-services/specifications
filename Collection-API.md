@@ -18,10 +18,10 @@ Here is the scheme for the current draft. Everything that is not marked as Optio
 - `@id` holds the identifier of the object
 - `@type` should always be `Collection` or `Resource`
 - `totalItems` represent the number of children hold by an object
+- "@context" should be extending Hydra and providing DCT, TEI and DTS namespaces prefix
 - (Optional) `description` is a single description.
 - (Optional) `dts:dublincore` holds Dublin Core Terms metadata
 - (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
-- (Optional) "@context" should be extending Hydra and providing DCT, TEI and DTS namespaces prefix
 - (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
 - (Optional) `dts:passage` holds a link to the Passage API for the current object
 - (Optional) `dts:download` holds a link or a list of links to a downloadable format of the current object (*This may change in the future*)
