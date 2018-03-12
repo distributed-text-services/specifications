@@ -241,6 +241,7 @@ The client wants to retrieve a list of passage identifiers which are between two
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
     "passage": ["2.1", "2.2"]
 }
+```
 
 ### Retrieval of typology of references
 
