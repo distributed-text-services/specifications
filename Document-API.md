@@ -4,8 +4,8 @@ The documents entry point is used to access the data for documents, as opposed t
 
 ## Default Scheme
 
-- The document API can support as many response format as the content provider wishes.
-- The document API must support an `application/tei+xml` response format that is made of at least the following structure : 
+- The document API **can** support as many response format as the content provider wishes.
+- The document API **must**, at minimum, support an `application/tei+xml` response format that is made of at least the following structure : 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,13 +42,13 @@ The response contains the following response headers:
 
 ### URI Template
 
-Here is a template of the URI for Collection API. The route itself (`/dts/api/navigation/`) is up to the implementer.
+Here is a template of the URI for Collection API. The route itself (`/dts/api/document/`) is up to the implementer.
 
 ```json
 {
   "@context": "http://www.w3.org/ns/hydra/context.jsonld",
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
+  "template": "/dts/api/document/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
