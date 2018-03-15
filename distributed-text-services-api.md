@@ -2,6 +2,12 @@
 
 Status: nascent.  Not yet ready for implementation.
 
+## Vocabulary
+
+- Collection :
+- Readable Collection : 
+- Reference : Identifier of a citable node inside a readable collection
+
 ## Media Types
 
 The media type for DTS is JSON-LD, using Hydra conventions [http://www.hydra-cg.com](http://www.hydra-cg.com). The `@id` of any resource can be any URI, which may be a URL or a URI.
