@@ -24,7 +24,7 @@ Item properties :
 - `@type` should always be `Collection` or `Resource`
 - `totalItems` represent the number of children hold by an object
 - (Optional) `description` is a single description.
-- (Optional) `member` contains children of the current collection described with at least the mandatory keys
+- (Optional) `member` contains navigations results of the current collection described with at least the mandatory keys
 - (Optional) `dts:dublincore` holds Dublin Core Terms metadata
 - (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
 - (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
@@ -45,6 +45,7 @@ The collections endpoint supports the following query parameters:
 |------|------------------------------------------|---------|
 | id   | identifier for a collection or document. |  GET    |
 | page | page of the current collections members |  GET    |
+| nav  | (Default : *children*) Navigational direction of the collection. Available : `children`, `parent`. |
 
 ### URI Template
 
@@ -394,5 +395,89 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
         "next": "/api/dts/collections/?id=lettres_de_poilus&page=20",
         "last": "/api/dts/collections/?id=lettres_de_poilus&page=500"
     }
+}
+```
+
+### Querying parents
+
+#### Example of url : 
+
+- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parent`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response
+
+```json
+{
+    "@context": {
+        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "dct": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "dc": "http://purl.org/dc/elements/1.1/",
+        "tei": "http://www.tei-c.org/ns/1.0",
+    },
+    "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "@type" : "Resource",
+    "title" : "Priapeia",
+    "description": "Priapeia based on the edition of Aemilius Baehrens",
+    "totalItems": 0,
+    "dts:dublincore": {
+        "dc:title": [{"@lang": "lat", "@value": "Priapeia"}],
+        "dc:description": [{
+           "@lang": "eng",
+            "@value": "Anonymous lascivious Poems "
+        }],
+        "dc:type": [
+            "http://chs.harvard.edu/xmlns/cts#edition",
+            "dc:Text"
+        ],
+        "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
+        "dct:dateCopyrighted": 1879,
+        "dc:creator": [
+            {"@lang": "eng", "@value": "Anonymous"}
+        ],
+        "dc:contributor": ["Aemilius Baehrens"],
+        "dc:language": ["lat", "eng"]
+    },
+    "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
+    "tei:refsDecl": [
+        {
+            "tei:matchPattern":  "(\\w+)",
+            "tei:replacementPattern": "#xpath(/tei:TEI/tei:text/tei:body/tei:div/tei:div[@n='$1'])",
+            "@type": "poem"
+        },
+        {
+            "tei:matchPattern":  "(\\w+)\\.(\\w+)",
+            "tei:replacementPattern": "#xpath(/tei:TEI/tei:text/tei:body/tei:div/tei:div[@n='$1']//tei:l[@n='$2'])",
+            "@type": "line"
+        }
+    ],
+    "members": [
+        {
+            "@id" : "urn:cts:latinLit:phi1103.phi001",
+            "title" : "Priapeia",
+            "dts:dublincore": {
+                "dc:type": [
+                    "http://chs.harvard.edu/xmlns/cts#work"
+                ],
+                "dc:creator": [
+                    {"@lang": "eng", "@value": "Anonymous"}
+                ],
+                "dc:language": ["lat", "eng"],
+                "dc:description": [
+                    { "@lang": "eng", "@value": "Anonymous lascivious Poems" }
+                ],
+            },
+            "@type" : "Collection",
+            "totalItems": 1
+        }
+    ]
 }
 ```
