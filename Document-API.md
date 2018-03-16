@@ -10,7 +10,7 @@ The documents entry point is used to access the data for documents, as opposed t
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <dts:fragment xmlns:dts="DTS PURL ?">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
     <!-- XML or string of the passage requested here -->
   </dts:fragment>
 </TEI>
@@ -115,7 +115,7 @@ Retrieve the passage `1` of `bgu.11.2029`
          </publicationStmt>
       </fileDesc>
    </teiHeader>
-   <dts:fragment xmlns:dts="DTS PURL ?">
+   <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
     <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος 
    </dts:fragment>
 </TEI>
@@ -141,7 +141,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-   <dts:fragment xmlns:dts="DTS PURL ?">
+   <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
        <text xml:lang="lat">
           <body>
              <div type="edition" xml:lang="lat" n="urn:cts:latinLit:phi1318.phi001.perseus-lat1">

@@ -93,7 +93,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "@context": {
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "http://purl.org//dts-ontology/#",
+        "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0",
     },
     "@id": "general",
@@ -152,7 +152,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "@context": {
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "http://purl.org//dts-ontology/#",
+        "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0",
     },
     "@id": "lasciva_roma",
@@ -220,7 +220,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "@context": {
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "http://purl.org//dts-ontology/#",
+        "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0",
     },
     "@id": "urn:cts:latinLit:phi1103.phi001",
@@ -303,7 +303,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "@context": {
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dct": "http://purl.org/dc/terms/",
-        "dts": "http://purl.org//dts-ontology/#",
+        "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
         "tei": "http://www.tei-c.org/ns/1.0",
     },
@@ -368,7 +368,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "@context": {
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dct": "http://purl.org/dc/terms/",
-        "dts": "http://purl.org//dts-ontology/#",
+        "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
         "tei": "http://www.tei-c.org/ns/1.0",
     },
