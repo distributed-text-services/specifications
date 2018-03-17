@@ -24,7 +24,7 @@ Item properties :
 - `@type` should always be `Collection` or `Resource`
 - `totalItems` represent the number of children hold by an object
 - (Optional) `description` is a single description.
-- (Optional) `member` contains navigations results of the current collection described with at least the mandatory keys
+- (Optional) `member` contains members of the current collection, described with at least the mandatory keys
 - (Optional) `dts:dublincore` holds Dublin Core Terms metadata
 - (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
 - (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
