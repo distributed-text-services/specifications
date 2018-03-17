@@ -17,7 +17,7 @@ The documents entry point is used to access the data for documents, as opposed t
   </dts:fragment>
 </TEI>
 ```
-- If the passage is not a reconstruction (query for a full document), the use of `dts:fragment` is prohibited.
+- If the request returns a complete document, it is returned directly, without a `dts:fragment` element.
 - There is no limitation to what can be contained by `dts:fragment` or what can be it siblings. The only limiting factor is that `dts:fragment` should contain the required fragment.
 
 ## URI 
