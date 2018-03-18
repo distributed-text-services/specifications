@@ -5,18 +5,20 @@ The documents entry point is used to access the data for documents, as opposed t
 ## Default Scheme
 
 - The document API **can** support as many response format as the content provider wishes.
-- The document API **must**, at minimum, support an `application/tei+xml` response format that is made of at least the following structure : 
+- The document API **must**, at minimum, support an `application/tei+xml` response.
+- The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
+- If the document or passage required is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <dts:fragment xmlns:dts="DTS PURL ?">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
     <!-- XML or string of the passage requested here -->
   </dts:fragment>
 </TEI>
 ```
-- The rest of the document can contain any node of the TEI
-- The requested passage should be part of the `dts:fragment` Node
+- If the request returns a complete document, it is returned directly, without a `dts:fragment` element.
+- There is no limitation to what can be contained by `dts:fragment` or what can be it siblings. The only limiting factor is that `dts:fragment` should contain the required fragment.
 
 ## URI 
 
@@ -115,7 +117,7 @@ Retrieve the passage `1` of `bgu.11.2029`
          </publicationStmt>
       </fileDesc>
    </teiHeader>
-   <dts:fragment xmlns:dts="DTS PURL ?">
+   <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
     <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος 
    </dts:fragment>
 </TEI>
@@ -141,7 +143,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-   <dts:fragment xmlns:dts="DTS PURL ?">
+   <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
        <text xml:lang="lat">
           <body>
              <div type="edition" xml:lang="lat" n="urn:cts:latinLit:phi1318.phi001.perseus-lat1">
@@ -165,4 +167,74 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 
 ### Retrieve a full document
 
-[Waiting for solution in issue 82](https://github.com/distributed-text-services/collection-api/issues/82)
+Retrieve the full document bgu.11.2029
+
+#### Example of url : 
+
+- GET `/dts/api/documents/?id=bgu.11.2029`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/tei+xml |
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.stoa.org/epidoc/schema/8.13/tei-epidoc.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="hgv9566">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Torzollquittung</title>
+         </titleStmt>
+         <publicationStmt>
+            <idno type="filename">9566</idno>
+            <idno type="TM">9566</idno>
+            <idno type="ddb-perseus-style">0001;11;2029</idno>
+            <idno type="ddb-filename">bgu.11.2029</idno>
+            <idno type="ddb-hybrid">bgu;11;2029</idno>
+         </publicationStmt>
+      </fileDesc>
+      <encodingDesc>
+         <p>This file encoded to comply with EpiDoc Guidelines and Schema version 8
+                <ref>http://www.stoa.org/epidoc/gl/5/</ref>
+         </p>
+      </encodingDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div type="commentary" subtype="general">
+            <p>Tag: 9. Aug. Zur Datierung vgl. P.Customs, S. 114 und 154 zu Nr. 238 und zum Tagesdatum ZPE 106, 1995, S. 194.</p>
+         </div>
+         <div type="bibliography" subtype="principalEdition">
+            <listBibl>
+               <bibl type="publication" subtype="principal">
+                  <title level="s" type="abbreviated">BGU</title>
+                  <biblScope type="volume">11</biblScope>
+                  <biblScope type="numbers">2029</biblScope>
+               </bibl>
+            </listBibl>
+         </div>
+         <div type="bibliography" subtype="corrections">
+            <head>BL-Einträge nach BL-Konkordanz</head>
+            <listBibl>
+               <bibl type="BL">
+                  <biblScope type="volume">VIII</biblScope> 
+                  <biblScope type="pages">51</biblScope>
+               </bibl>
+               <bibl type="BL">
+                  <biblScope type="volume">X</biblScope> 
+                  <biblScope type="pages">22</biblScope>
+               </bibl>
+            </listBibl>
+         </div>
+         <div type="bibliography" subtype="illustrations">
+            <p>keine</p>
+         </div>
+      </body>
+   </text>
+</TEI>
+```

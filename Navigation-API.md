@@ -12,6 +12,8 @@ Item properties :
 - `@base` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID if the current document
 - `passage` is a list of passage
+  - A list of passage can be made of single `ids` : `["a", "b", "1.1"]`
+  - A list of passage can be made of ranges : `[{"start": "a", "end": "b"}]`
 
 ## URI 
 
@@ -24,7 +26,9 @@ Item properties :
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
 | start | (For range) Start of the passage we want descendants of | GET |
 | end |  (For range) End of the passage we want descendants of | GET |
-| types | ([**Not definitive. See issue 78**](https://github.com/distributed-text-services/collection-api/issues/78)) Collect categories of passage as you retrieve their identifier | GET |
+| chunkSize | Retrieve ranges instead of single units | GET |
+| max | Allows for limiting the number of results and getting pagination | GET | 
+
 
 ### Response Headers
 
@@ -100,7 +104,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -127,7 +131,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -154,7 +158,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -181,7 +185,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -208,7 +212,7 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -235,7 +239,7 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "http://purl.org//dts-ontology/#passage"
+        "passage": "https://w3id.org/dts/api#/#passage"
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
@@ -243,10 +247,37 @@ The client wants to retrieve a list of passage identifiers which are between two
 }
 ```
 
-### Retrieval of typology of references
+### Passages grouped by the provider 
+
+The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
+
+#### Example of url : 
+
+- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&passage=1&level=2&chunkSize=2`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response
+
+```json
+{
+    "@context": {
+        "passage": "https://w3id.org/dts/api#/#passage"
+    },
+    "@base": "/dts/api/document/",
+    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
+    "passage": [{"start": "1.1.1", "end": "1.1.2"}, {"start": "1.2.1", "end": "1.2.2"}]
+}
+```
+
+### Retrieval of typology of references (**Future Draft Only**)
 
 **Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
 
-### Retrieval of titles
+### Retrieval of titles (**Future Draft Only**)
 
-**Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
+**Waiting for [Issue #80](https://github.com/distributed-text-services/collection-api/issues/80)**
