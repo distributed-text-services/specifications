@@ -95,7 +95,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
         "@base": "http://www.w3.org/ns/hydra/context.jsonld",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
     "@id": "general",
     "@type": "Collection",
@@ -128,7 +128,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
              "totalItems" : "10000"
-        },
+        }
     ]
 }
 ```
