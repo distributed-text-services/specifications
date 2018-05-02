@@ -30,6 +30,7 @@ Item properties :
 - (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
 - (Optional) `dts:passage` holds a link to the Passage API for the current object
 - (Optional) `dts:download` holds a link or a list of links to a downloadable format of the current object (*This may change in the future*)
+- (Optional) `tei:refsDecl` holds a list of citation xpath possibles according to TEI Guidelines, see [Sub-collection readable](#sub-collection-readable)
 
 ### Note on Internationalization
 
