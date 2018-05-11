@@ -22,7 +22,7 @@ Item properties :
 - `title` is a single string
 - `@id` holds the identifier of the object
 - `@type` should always be `Collection` or `Resource`
-- `totalItems` represent the number of children hold by an object
+- `totalItems` represents the number of children held by an object
 - (Optional) `description` is a single description.
 - (Optional) `member` contains members of the current collection, described with at least the mandatory keys
 - (Optional) `dts:dublincore` holds Dublin Core Terms metadata
