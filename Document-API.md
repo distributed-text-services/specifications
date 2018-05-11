@@ -5,7 +5,7 @@ The documents endpoint is used to access the data for documents, as opposed to m
 ## Default Scheme
 
 - Implementations of the DTS document endpoint **can** support as many response formats as the content provider wishes.
-- Implentations of the DTS document endpoint  **must**, at minimum, support an `application/tei+xml` response.
+- Implementations of the DTS document endpoint  **must**, at minimum, support an `application/tei+xml` response.
 - The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
 - If the document or passage returned is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
 
