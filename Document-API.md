@@ -29,9 +29,9 @@ The documents endpoint supports the following query parameters:
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | identifier for a document |  GET    |
-| passage | passage identifier (used together with `id`) | n/a    |
-| start | (For range) Start of the passage we want descendants of | GET |
-| end |  (For range) End of the passage we want descendants of | GET |
+| passage | passage identifier (used together with `id` can't be used with `start` and `end`) | n/a    |
+| start | (For range) Start of a range of passages (can't be used with `passage`) | GET |
+| end |  (For range) End of a range of passages (requires `start` and no `passage`) | GET |
 
 ### Response Headers
 
