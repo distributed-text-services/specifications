@@ -1,4 +1,4 @@
-# Distributed Text Services - Collection API
+# Distributed Text Services API - Collections Endpoint
 
 The collections endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
 
