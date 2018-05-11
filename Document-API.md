@@ -48,7 +48,12 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/do
 
 ```json
 {
-  "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+  "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
+  },
   "@type": "IriTemplate",
   "template": "/dts/api/document/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
   "variableRepresentation": "BasicRepresentation",
