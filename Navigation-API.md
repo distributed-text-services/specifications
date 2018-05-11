@@ -26,7 +26,7 @@ Item properties :
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
 | start | (For range) Start of the range passages (not to be used with `passage`) | GET |
 | end |  (For range) End of the range of passages (requires `start` not to be used with `passage`) | GET |
-| chunkSize | Retrieve ranges instead of single units | GET |
+| chunkSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 
 
