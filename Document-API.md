@@ -4,10 +4,10 @@ The documents entry point is used to access the data for documents, as opposed t
 
 ## Default Scheme
 
-- The document API **can** support as many response format as the content provider wishes.
+- The document API **can** support as many response formats as the content provider wishes.
 - The document API **must**, at minimum, support an `application/tei+xml` response.
 - The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
-- If the document or passage required is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
+- If the document or passage returned is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -18,7 +18,7 @@ The documents entry point is used to access the data for documents, as opposed t
 </TEI>
 ```
 - If the request returns a complete document, it is returned directly, without a `dts:fragment` element.
-- There is no limitation to what can be contained by `dts:fragment` or what can be it siblings. The only limiting factor is that `dts:fragment` should contain the required fragment.
+- There is no limitation to what can be contained by `dts:fragment` or what its siblings can be. The only limiting factor is that `dts:fragment` should contain the requested fragment.
 
 ## URI 
 
