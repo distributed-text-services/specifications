@@ -6,7 +6,7 @@ The hierarchy of collections is not fixed.  One server might provide all documen
 
 ### Hydra Representation and Hierarchy
 
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
+DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.  DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
 
 ## Scheme
 
