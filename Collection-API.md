@@ -361,7 +361,6 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
-| Link | </api/dts/collections/?id=lettres_de_poilus&page=1>; rel="first", </api/dts/collections/?id=lettres_de_poilus&page=18>; rel="previous", </api/dts/collections/?id=lettres_de_poilus&page=20>; rel="next", </api/dts/collections/?id=lettres_de_poilus&page=500>; rel="last" | 
 
 #### Response
 
