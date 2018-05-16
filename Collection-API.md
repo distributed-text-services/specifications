@@ -8,8 +8,6 @@ The hierarchy of collections is not fixed.  One server might provide all documen
 
 DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
-A server that uses the CTS collection hierarchy might provide the following top level collection:
-
 ## Scheme
 
 Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
