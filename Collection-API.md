@@ -20,7 +20,7 @@ JSON wide attributes :
 
 Item properties :
 - `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dct:title`, e.g. for internationalization.
-- `@id` is the identifier of the object
+- `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
 - `totalItems` is the number of children contained by the object
 - (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dct:description`, e.g. for internationalization.
