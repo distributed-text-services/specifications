@@ -19,21 +19,17 @@ JSON wide attributes :
 - `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
 
 Item properties :
-- `title` is a single string
+- `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dct:title`, e.g. for internationalization.
 - `@id` is the identifier of the object
 - `@type` is either `Collection` or `Resource`
 - `totalItems` is the number of children contained by the object
-- (Optional) `description` is a string that describes the object. (Additional descriptions may be placed in `dts:dublincore`).
+- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dct:description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
 - (Optional) `dts:dublincore` contains Dublin Core Terms metadata
 - (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
 - (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
 - (Optional) `dts:passage` contains a link to the Passage API for the object
 - (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
-
-### Note on Internationalization
-
-Any internationalization of the title or the description should be written in `dts:dublincore` under `dct:title` and `dct:description`.
 
 ## URI 
 
