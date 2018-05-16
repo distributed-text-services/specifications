@@ -16,7 +16,7 @@ Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` must extend Hydra and provide the DCT, TEI and DTS namespace prefixes
+- `@context` extends Hydra and must provide the DCT, TEI and DTS namespace prefixes
 
 Item properties :
 - `title` is a single string
