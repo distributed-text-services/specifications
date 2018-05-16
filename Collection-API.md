@@ -22,14 +22,14 @@ Item properties :
 - `title` is a single string
 - `@id` is the identifier of the object
 - `@type` is either `Collection` or `Resource`
-- `totalItems` represent the number of children hold by an object
-- (Optional) `description` is a single description.
-- (Optional) `member` contains members of the current collection, described with at least the mandatory keys
-- (Optional) `dts:dublincore` holds Dublin Core Terms metadata
-- (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
-- (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
-- (Optional) `dts:passage` holds a link to the Passage API for the current object
-- (Optional) `dts:download` holds a link or a list of links to a downloadable format of the current object (*This may change in the future*)
+- `totalItems` is the number of children contained by the object
+- (Optional) `description` describes the object.
+- (Optional) `member` contains members of the collection
+- (Optional) `dts:dublincore` contains Dublin Core Terms metadata
+- (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
+- (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member` ?)
+- (Optional) `dts:passage` contains a link to the Passage API for the object
+- (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (*This may change in the future*)
 
 ### Note on Internationalization
 
