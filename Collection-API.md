@@ -12,11 +12,11 @@ DTS does not specify any particular hierarchy of collections. A collection might
 
 ## Scheme
 
-Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
+Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` must be extending Hydra and providing DCT, TEI and DTS namespaces prefix
+- `@context` must extend Hydra and provide the DCT, TEI and DTS namespace prefixes
 
 Item properties :
 - `title` is a single string
