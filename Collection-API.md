@@ -19,6 +19,7 @@ JSON wide attributes :
 - `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
 
 Item properties :
+
 - `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dct:title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
@@ -30,6 +31,7 @@ Item properties :
 - (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
 - (Optional) `dts:passage` contains a link to the Passage API for the object
 - (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
+- (Optional) `tei:refsDecl` holds a list of citation xpath possibles according to TEI Guidelines, see [Sub-collection readable](#sub-collection-readable)
 
 ## URI 
 
