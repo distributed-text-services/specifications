@@ -1,40 +1,37 @@
-# Distributed Text Services - Collection API
+# Distributed Text Services API - Collections Endpoint
 
-The collections entry point is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
+The collections endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
 
 The hierarchy of collections is not fixed.  One server might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
+DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
+
 ### Hydra Representation and Hierarchy
 
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
-
-A server that uses the CTS collection hierarchy might provide the following top level collection:
+DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping. 
 
 ## Scheme
 
-Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
+Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` must be extending Hydra and providing DCT, TEI and DTS namespaces prefix
+- `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
 
 Item properties :
-- `title` is a single string
-- `@id` holds the identifier of the object
-- `@type` should always be `Collection` or `Resource`
-- `totalItems` represent the number of children hold by an object
-- (Optional) `description` is a single description.
-- (Optional) `member` contains members of the current collection, described with at least the mandatory keys
-- (Optional) `dts:dublincore` holds Dublin Core Terms metadata
-- (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
-- (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
-- (Optional) `dts:passage` holds a link to the Passage API for the current object
-- (Optional) `dts:download` holds a link or a list of links to a downloadable format of the current object (*This may change in the future*)
+
+- `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dct:title`, e.g. for internationalization.
+- `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
+- `@type` is either `Collection` or `Resource`
+- `totalItems` is the number of children contained by the object
+- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dct:description`, e.g. for internationalization.
+- (Optional) `member` contains members of the collection
+- (Optional) `dts:dublincore` contains Dublin Core Terms metadata
+- (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
+- (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
+- (Optional) `dts:passage` contains a link to the Passage API for the object
+- (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
 - (Optional) `tei:refsDecl` holds a list of citation xpath possibles according to TEI Guidelines, see [Sub-collection readable](#sub-collection-readable)
-
-### Note on Internationalization
-
-Any internationalization of the title or the description should be written in `dts:dublincore` under `dct:title` and `dct:description`.
 
 ## URI 
 
@@ -54,7 +51,12 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 
 ```json
 {
-  "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+  "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
+  },
   "@type": "IriTemplate",
   "template": "/dts/api/collection/?id={collection_id}&page={page}",
   "variableRepresentation": "BasicRepresentation",
@@ -93,7 +95,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0"
@@ -111,21 +113,21 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "member": [
         {
              "@id" : "cartulaires",
-             "title" : "Cartulaires",
+             "dc:title" : "Cartulaires",
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
              "totalItems" : "10"
         },
         {
              "@id" : "lasciva_roma",
-             "title" : "Lasciva Roma",
+             "dc:title" : "Lasciva Roma",
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
              "totalItems" : "1"
         },
         {
              "@id" : "lettres_de_poilus",
-             "title" : "Correspondance des poilus",
+             "dc:title" : "Correspondance des poilus",
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
              "totalItems" : "10000"
@@ -152,10 +154,10 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
     "@id": "lasciva_roma",
     "@type": "Collection",
@@ -220,7 +222,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0",
@@ -303,7 +305,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
@@ -368,7 +370,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
@@ -416,7 +418,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",

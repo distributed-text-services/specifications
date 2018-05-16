@@ -1,6 +1,6 @@
-# Distributed Text Services - Navigation API
+# Distributed Text Services API - Navigation Endpoint
 
-Navigation API's role is to provide a list of passages that are available for a given resource. It's direction is parent-to-children by default.
+The Navigation endpoint provides a list of passages that are available for a given resource. Its direction is parent-to-child by default.
 
 ## Scheme
 
@@ -11,9 +11,9 @@ JSON wide attributes :
 Item properties :
 - `@base` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID if the current document
-- `passage` is a list of passage
-  - A list of passage can be made of single `ids` : `["a", "b", "1.1"]`
-  - A list of passage can be made of ranges : `[{"start": "a", "end": "b"}]`
+- `passage` is a list of passages
+  - A list of passages can be made of single `ids` : `["a", "b", "1.1"]`
+  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
 
 ## URI 
 
@@ -24,9 +24,9 @@ Item properties :
 | id   | identifier for a document |  GET    |
 | passage | passage identifier (used together with `id`) | GET    |
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
-| start | (For range) Start of the passage we want descendants of | GET |
-| end |  (For range) End of the passage we want descendants of | GET |
-| chunkSize | Retrieve ranges instead of single units | GET |
+| start | (For range) Start of the range passages (not to be used with `passage`) | GET |
+| end |  (For range) End of the range of passages (requires `start` not to be used with `passage`) | GET |
+| chunkSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 
 
@@ -44,7 +44,12 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
 
 ```json
 {
-  "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+  "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
+  },  
   "@type": "IriTemplate",
   "template": "/dts/api/navigation/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
   "variableRepresentation": "BasicRepresentation",
