@@ -111,21 +111,21 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "member": [
         {
              "@id" : "cartulaires",
-             "dc:title" : "Cartulaires",
+             "title" : "Cartulaires",
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
              "totalItems" : "10"
         },
         {
              "@id" : "lasciva_roma",
-             "dc:title" : "Lasciva Roma",
+             "title" : "Lasciva Roma",
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
              "totalItems" : "1"
         },
         {
              "@id" : "lettres_de_poilus",
-             "dc:title" : "Correspondance des poilus",
+             "title" : "Correspondance des poilus",
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
              "totalItems" : "10000"
