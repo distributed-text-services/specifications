@@ -1,13 +1,13 @@
-# Distributed Text Services : Document API
+# Distributed Text Services API : Document Endpoint
 
-The documents entry point is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
+The documents endpoint is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
 
 ## Default Scheme
 
-- The document API **can** support as many response format as the content provider wishes.
-- The document API **must**, at minimum, support an `application/tei+xml` response.
+- Implementations of the DTS document endpoint **can** support as many response formats as the content provider wishes.
+- Implementations of the DTS document endpoint  **must**, at minimum, support an `application/tei+xml` response.
 - The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
-- If the document or passage required is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
+- If the document or passage returned is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` node of the DTS Namespace (`https://w3id.org/dts/api#`) such as
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -18,7 +18,7 @@ The documents entry point is used to access the data for documents, as opposed t
 </TEI>
 ```
 - If the request returns a complete document, it is returned directly, without a `dts:fragment` element.
-- There is no limitation to what can be contained by `dts:fragment` or what can be it siblings. The only limiting factor is that `dts:fragment` should contain the required fragment.
+- There is no limitation to what can be contained by `dts:fragment` or what its siblings can be. The only limiting factor is that `dts:fragment` should contain the requested fragment.
 
 ## URI 
 
@@ -29,9 +29,9 @@ The documents endpoint supports the following query parameters:
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | identifier for a document |  GET    |
-| passage | passage identifier (used together with `id`) | n/a    |
-| start | (For range) Start of the passage we want descendants of | GET |
-| end |  (For range) End of the passage we want descendants of | GET |
+| passage | passage identifier (used together with `id` can't be used with `start` and `end`) | n/a    |
+| start | (For range) Start of a range of passages (can't be used with `passage`) | GET |
+| end |  (For range) End of a range of passages (requires `start` and no `passage`) | GET |
 
 ### Response Headers
 
@@ -48,7 +48,12 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/do
 
 ```json
 {
-  "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+  "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
+  },
   "@type": "IriTemplate",
   "template": "/dts/api/document/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
   "variableRepresentation": "BasicRepresentation",

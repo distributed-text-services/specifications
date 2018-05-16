@@ -1,6 +1,6 @@
-# Distributed Text Services - Collection API
+# Distributed Text Services API - Collections Endpoint
 
-The collections entry point is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
+The collections endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
 
 The hierarchy of collections is not fixed.  One server might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
@@ -16,7 +16,7 @@ Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` extends Hydra and must provide the DCT, TEI and DTS namespace prefixes
+- `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
 
 Item properties :
 - `title` is a single string
@@ -53,7 +53,12 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 
 ```json
 {
-  "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+  "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
+  },
   "@type": "IriTemplate",
   "template": "/dts/api/collection/?id={collection_id}&page={page}",
   "variableRepresentation": "BasicRepresentation",
@@ -92,7 +97,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0"
@@ -110,21 +115,21 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "member": [
         {
              "@id" : "cartulaires",
-             "title" : "Cartulaires",
+             "dc:title" : "Cartulaires",
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
              "totalItems" : "10"
         },
         {
              "@id" : "lasciva_roma",
-             "title" : "Lasciva Roma",
+             "dc:title" : "Lasciva Roma",
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
              "totalItems" : "1"
         },
         {
              "@id" : "lettres_de_poilus",
-             "title" : "Correspondance des poilus",
+             "dc:title" : "Correspondance des poilus",
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
              "totalItems" : "10000"
@@ -151,10 +156,10 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
     "@id": "lasciva_roma",
     "@type": "Collection",
@@ -219,7 +224,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0",
@@ -302,7 +307,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
@@ -367,7 +372,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
@@ -415,7 +420,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": {
-        "@base": "http://www.w3.org/ns/hydra/context.jsonld",
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dct": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
         "dc": "http://purl.org/dc/elements/1.1/",
