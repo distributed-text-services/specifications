@@ -4,32 +4,32 @@ The collections endpoint is used for navigating collections. A collection contai
 
 The hierarchy of collections is not fixed.  One server might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
+DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
+
 ### Hydra Representation and Hierarchy
 
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
-
-A server that uses the CTS collection hierarchy might provide the following top level collection:
+DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping. 
 
 ## Scheme
 
-Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
+Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespaces prefixes
+- `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
 
 Item properties :
 - `title` is a single string
-- `@id` holds the identifier of the object
-- `@type` should always be `Collection` or `Resource`
-- `totalItems` represents the number of children held by an object
-- (Optional) `description` is a single description.
-- (Optional) `member` contains members of the current collection, described with at least the mandatory keys
-- (Optional) `dts:dublincore` holds Dublin Core Terms metadata
-- (Optional) `dts:extensions` holds any supplementary information provided by other ontologies/domains
-- (Optional) `dts:references` holds a links to the Navigation API route for current object (mandatory in children of `member` ?)
-- (Optional) `dts:passage` holds a link to the Passage API for the current object
-- (Optional) `dts:download` holds a link or a list of links to a downloadable format of the current object (*This may change in the future*)
+- `@id` is the identifier of the object
+- `@type` is either `Collection` or `Resource`
+- `totalItems` is the number of children contained by the object
+- (Optional) `description` is a string that describes the object. (Additional descriptions may be placed in `dts:dublincore`).
+- (Optional) `member` contains members of the collection
+- (Optional) `dts:dublincore` contains Dublin Core Terms metadata
+- (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
+- (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
+- (Optional) `dts:passage` contains a link to the Passage API for the object
+- (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
 
 ### Note on Internationalization
 
