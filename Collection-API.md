@@ -105,7 +105,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"fre" : "Collection Générale de l'École Nationale des Chartes"}
+            {"fr" : "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "member": [
@@ -167,11 +167,11 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
             "Thibault Clérice", "http://orcid.org/0000-0003-1852-9204"
         ],
         "dc:title" : [
-            {"@lang": "lat", "@value": "Lasciva Roma"},
+            {"@lang": "la", "@value": "Lasciva Roma"},
         ],
         "dc:description": [
             {
-                "@lang": "eng",
+                "@lang": "en",
                 "@value": "Collection of primary sources of interest in the studies of Ancient World's sexuality"
             }
         ],
@@ -185,11 +185,11 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
                 "dc:creator": [
-                    {"@lang": "eng", "@value": "Anonymous"}
+                    {"@lang": "en", "@value": "Anonymous"}
                 ],
-                "dc:language": ["lat", "eng"],
+                "dc:language": ["la", "en"],
                 "dc:description": [
-                    { "@lang": "eng", "@value": "Anonymous lascivious Poems" }
+                    { "@lang": "en", "@value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
@@ -231,12 +231,12 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "dts:dublincore": {
         "dc:type": ["http://chs.harvard.edu/xmlns/cts#work"],
         "dc:creator": [
-            {"@lang": "eng", "@value": "Anonymous"}
+            {"@lang": "en", "@value": "Anonymous"}
         ],
-        "dc:language": ["lat", "eng"],
-        "dc:title": [{"@lang": "lat", "@value": "Priapeia"}],
+        "dc:language": ["la", "en"],
+        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "eng",
+           "@lang": "en",
             "@value": "Anonymous lascivious Poems "
         }]
     },
@@ -249,10 +249,10 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "description": "Priapeia based on the edition of Aemilius Baehrens",
             "totalItems": 0,
             "dts:dublincore": {
-                "dc:title": [{"@lang": "lat", "@value": "Priapeia"}],
+                "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
                 "dc:description": [{
-                   "@lang": "eng",
-                    "@value": "Anonymous lascivious Poems "
+                   "@lang": "en",
+                   "@value": "Anonymous lascivious Poems "
                 }],
                 "dc:type": [
                     "http://chs.harvard.edu/xmlns/cts#edition",
@@ -261,10 +261,10 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
                 "dct:dateCopyrighted": 1879,
                 "dc:creator": [
-                    {"@lang": "eng", "@value": "Anonymous"}
+                    {"@lang": "en", "@value": "Anonymous"}
                 ],
                 "dc:contributor": ["Aemilius Baehrens"],
-                "dc:language": ["lat", "eng"]
+                "dc:language": ["la", "en"]
             },
             "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
             "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -315,9 +315,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
     "dts:dublincore": {
-        "dc:title": [{"@lang": "lat", "@value": "Priapeia"}],
+        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "eng",
+           "@lang": "en",
             "@value": "Anonymous lascivious Poems "
         }],
         "dc:type": [
@@ -327,10 +327,10 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
         "dct:dateCopyrighted": 1879,
         "dc:creator": [
-            {"@lang": "eng", "@value": "Anonymous"}
+            {"@lang": "en", "@value": "Anonymous"}
         ],
         "dc:contributor": ["Aemilius Baehrens"],
-        "dc:language": ["lat", "eng"]
+        "dc:language": ["la", "en"]
     },
     "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -381,7 +381,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"fre" : "Collection Générale de l'École Nationale des Chartes"}
+            {"fr" : "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "@id" : "lettres_de_poilus",
@@ -428,9 +428,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
     "dts:dublincore": {
-        "dc:title": [{"@lang": "lat", "@value": "Priapeia"}],
+        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "eng",
+           "@lang": "en",
             "@value": "Anonymous lascivious Poems "
         }],
         "dc:type": [
@@ -440,10 +440,10 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
         "dct:dateCopyrighted": 1879,
         "dc:creator": [
-            {"@lang": "eng", "@value": "Anonymous"}
+            {"@lang": "en", "@value": "Anonymous"}
         ],
         "dc:contributor": ["Aemilius Baehrens"],
-        "dc:language": ["lat", "eng"]
+        "dc:language": ["la", "en"]
     },
     "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -469,11 +469,11 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
                 "dc:creator": [
-                    {"@lang": "eng", "@value": "Anonymous"}
+                    {"@lang": "en", "@value": "Anonymous"}
                 ],
-                "dc:language": ["lat", "eng"],
+                "dc:language": ["la", "en"],
                 "dc:description": [
-                    { "@lang": "eng", "@value": "Anonymous lascivious Poems" }
+                    { "@lang": "en", "@value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
