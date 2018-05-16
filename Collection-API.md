@@ -4,9 +4,11 @@ The collections entry point is used for navigating collections. A collection con
 
 The hierarchy of collections is not fixed.  One server might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
+DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
+
 ### Hydra Representation and Hierarchy
 
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.  DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
+DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping. 
 
 ## Scheme
 
