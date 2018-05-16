@@ -20,8 +20,8 @@ JSON wide attributes :
 
 Item properties :
 - `title` is a single string
-- `@id` holds the identifier of the object
-- `@type` should always be `Collection` or `Resource`
+- `@id` is the identifier of the object
+- `@type` is either `Collection` or `Resource`
 - `totalItems` represent the number of children hold by an object
 - (Optional) `description` is a single description.
 - (Optional) `member` contains members of the current collection, described with at least the mandatory keys
