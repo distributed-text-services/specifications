@@ -4,4 +4,6 @@ The DTS API original Draft (for discussions) is described in this document: [Dis
 
 ## Current drafts with examples
 
-- [Collection API](Collection-API.md) for catalog browsing
+- [Collection Endpoint](Collection-Endpoint.md) for catalog browsing
+- [Document Endpoint](Document-Endpoint.md)
+- [Navigation Endpoint](Navigation-Endpoint.md)
