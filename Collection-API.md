@@ -43,7 +43,7 @@ The collections endpoint supports the following query parameters:
 |------|------------------------------------------|---------|
 | id   | identifier for a collection or document. |  GET    |
 | page | page of the current collections members |  GET    |
-| nav  | (Default : *children*) Navigational direction of the collection. Available : `children`, `parent`, `prev`, `next`. |
+| nav  | return a related resource instead of the collection itself.  These values are supported : `children`, `parent`, `prev`, `next`. | GET |
 
 ### URI Template
 
