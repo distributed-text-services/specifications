@@ -6,4 +6,4 @@ The DTS API original Draft (for discussions) is described in this document: [Dis
 
 - [Collection Endpoint](Collection-Endpoint.md) for catalog browsing
 - [Document Endpoint](Document-Endpoint.md)
-- [Navigation Endpoint](Navigation-Endpoint.md)
+- [Navigation Endpoint](Navigation-Endpoint.md) for navigation within documents
