@@ -37,7 +37,7 @@ If the client does a `GET` on the entry point URL, the following document is ret
 
 ## Collections
 
-*See [Collection API documentation](Collection-API.md)*
+*See [Collection API documentation](Collection-Endpoint.md)*
 
 ## Documents
 
