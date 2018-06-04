@@ -44,7 +44,7 @@ The response contains the following response headers:
 
 ### URI Template
 
-Here is a template of the URI for Collection API. The route itself (`/dts/api/document/`) is up to the implementer.
+Here is a template of the URI for Document API. The route itself (`/dts/api/document/`) is up to the implementer.
 
 ```json
 {
