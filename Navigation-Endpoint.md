@@ -24,8 +24,8 @@ Item properties :
 | id   | identifier for a document |  GET    |
 | passage | passage identifier (used together with `id`) | GET    |
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
-| start | (For range) Start of the range passages (not to be used with `passage`) | GET |
-| end |  (For range) End of the range of passages (requires `start` not to be used with `passage`) | GET |
+| start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
+| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
 | chunkSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 
@@ -198,7 +198,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 }
 ```
 
-### References between two milestones
+### Ranges of references
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
@@ -221,17 +221,17 @@ The client wants to retrieve a list of passage identifiers which are between two
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["2"]
+    "passage": ["1","2""3"]
 }
 ```
 
-### Descendant references between two milestones
+### Descendant reference ranges
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&level=1&start=1&end=3`
+- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&level=2&start=1&end=3`
 
 #### Headers
 
@@ -248,7 +248,7 @@ The client wants to retrieve a list of passage identifiers which are between two
     },
     "@base": "/dts/api/document/",
     "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["2.1", "2.2"]
+    "passage": ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2"]
 }
 ```
 
