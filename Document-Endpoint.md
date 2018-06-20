@@ -86,18 +86,18 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
 
 ### Retrieve a passage using `passage`
 
-Retrieve the passage `1` of `bgu.11.2029`
+Retrieve the passage `1` of `bgu;11;2029`
 
 #### Example of url : 
 
-- GET `/dts/api/documents/?id=bgu.11.2029&passage=2`
+- GET `/dts/api/documents/?id=bgu;11;2029&passage=2`
 
 #### Headers
 
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu.11.2029&passage=1>; rel="prev", </dts/api/documents/?id=bgu.11.2029&passage=3>; rel="next" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&passage=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&passage=3>; rel="next" | 
 
 #### Response
 
@@ -172,11 +172,11 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 
 ### Retrieve a full document
 
-Retrieve the full document bgu.11.2029
+Retrieve the full document bgu;11;2029
 
 #### Example of url : 
 
-- GET `/dts/api/documents/?id=bgu.11.2029`
+- GET `/dts/api/documents/?id=bgu;11;2029`
 
 #### Headers
 
