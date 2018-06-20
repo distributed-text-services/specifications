@@ -188,58 +188,66 @@ Retrieve the full document bgu.11.2029
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="http://www.stoa.org/epidoc/schema/8.13/tei-epidoc.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="hgv9566">
+<?xml-model href="http://www.stoa.org/epidoc/schema/8.16/tei-epidoc.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     n="0001;11;2029"
+     xml:id="bgu.11.2029"
+     xml:lang="en">
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>Torzollquittung</title>
+            <title>bgu.11.2029</title>
          </titleStmt>
          <publicationStmt>
-            <idno type="filename">9566</idno>
-            <idno type="TM">9566</idno>
+            <authority>Duke Collaboratory for Classics Computing (DC3)</authority>
+            <idno type="filename">bgu.11.2029</idno>
             <idno type="ddb-perseus-style">0001;11;2029</idno>
-            <idno type="ddb-filename">bgu.11.2029</idno>
             <idno type="ddb-hybrid">bgu;11;2029</idno>
+            <idno type="HGV">9566</idno>
+            <idno type="TM">9566</idno>
+            <availability>
+               <p>© Duke Databank of Documentary Papyri. This work is licensed under a <ref type="license" target="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</ref>.</p>
+            </availability>
          </publicationStmt>
+         <sourceDesc>
+            <p/>
+         </sourceDesc>
       </fileDesc>
-      <encodingDesc>
-         <p>This file encoded to comply with EpiDoc Guidelines and Schema version 8
-                <ref>http://www.stoa.org/epidoc/gl/5/</ref>
-         </p>
-      </encodingDesc>
+      <profileDesc>
+         <langUsage>
+            <language ident="en">English</language>
+            <language ident="grc">Greek</language>
+         </langUsage>
+      </profileDesc>
+      <revisionDesc>
+          <change when="2011-12-14" who="http://papyri.info/editor/users/gabrielbodard">rationalized languages in langUsage</change>
+          <change when="2011-12-14" who="http://papyri.info/editor/users/gabrielbodard">changed editor names to URIs</change>
+          <change when="2010-05-05" who="http://papyri.info/editor/users/gabrielbodard">changed schema; added xml:space=preserve; indented; moved title/@n to idno</change>
+          <change when="2009-11-12" who="http://papyri.info/editor/users/gabrielbodard">Added language la-Grek</change>
+          <change when="2009-06-27" who="http://papyri.info/editor/users/gabrielbodard">Converted from TEI P4 (EpiDoc DTD v. 6) to P5 (EpiDoc RNG schema)</change>
+          <change when="2008-12-22" who="http://papyri.info/about">Automated split from transcoder files</change>
+      </revisionDesc>
    </teiHeader>
    <text>
       <body>
-         <div type="commentary" subtype="general">
-            <p>Tag: 9. Aug. Zur Datierung vgl. P.Customs, S. 114 und 154 zu Nr. 238 und zum Tagesdatum ZPE 106, 1995, S. 194.</p>
-         </div>
-         <div type="bibliography" subtype="principalEdition">
-            <listBibl>
-               <bibl type="publication" subtype="principal">
-                  <title level="s" type="abbreviated">BGU</title>
-                  <biblScope type="volume">11</biblScope>
-                  <biblScope type="numbers">2029</biblScope>
-               </bibl>
-            </listBibl>
-         </div>
-         <div type="bibliography" subtype="corrections">
-            <head>BL-Einträge nach BL-Konkordanz</head>
-            <listBibl>
-               <bibl type="BL">
-                  <biblScope type="volume">VIII</biblScope> 
-                  <biblScope type="pages">51</biblScope>
-               </bibl>
-               <bibl type="BL">
-                  <biblScope type="volume">X</biblScope> 
-                  <biblScope type="pages">22</biblScope>
-               </bibl>
-            </listBibl>
-         </div>
-         <div type="bibliography" subtype="illustrations">
-            <p>keine</p>
-         </div>
+         <head n="9566" xml:lang="en">
+            <date>AD161-9</date>
+            <placeName>Dionysias</placeName>
+         </head>
+         <div xml:lang="grc" type="edition" xml:space="preserve"><ab>
+    <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος 
+
+    <lb n="2"/>λιμένος Μέμφεως Ζώσιμος 
+
+    <lb n="3"/><expan><supplied reason="lost">ἐ</supplied><unclear>ξ</unclear>ά<ex>γων</ex></expan> <supplied reason="lost"><expan>ἐ<ex>πὶ</ex></expan> </supplied><expan><supplied reason="lost">κα</supplied>μ<ex>ή</ex>λ<ex>οις</ex></expan> δυσὶ <num value="2"/> ἐλαίου <expan>μετ<ex>ρητὰς</ex></expan> ἐννέα <num value="9"/> 
+
+    <lb n="4"/><gap reason="lost" quantity="4" unit="character"/><unclear>ρ</unclear>αχ<add place="above">ε</add> τεσσεράκοντα πέντε <num value="45"/> 
+
+    <lb n="5"/><supplied reason="lost"><expan><ex>ἔτους</ex></expan> </supplied><gap reason="lost" quantity="1" unit="character"/><supplied reason="lost"> Ἀντ</supplied>ωνείνου καὶ Οὐήρου τῶν κυρίων 
+
+    <lb n="6"/><supplied reason="lost">Σεβασ</supplied>τῶν Μεσορὴ ἑκκαιδεκάτῃ. </ab></div>
       </body>
    </text>
 </TEI>
+
 ```
