@@ -1,4 +1,4 @@
-ID,Priority,I want to...,In orded to...,Deeper Example
+ID,Priority,I want to...,In order to...,Deeper Example
 1,0,retrieve all passages references of a text at the root level,present what are the main parts of the text,
 2,0,retrieve all passages references of a text at any given level,know more about the architecture of a given node,
 3,0,retrieve all passages reference of a text in a traversing way,do not have to query every level one by one,
@@ -12,3 +12,4 @@ ID,Priority,I want to...,In orded to...,Deeper Example
 11,?,browse all passages references depending on a specific citation scheme,present a different view of a document,I want to be able to present a fac-simile view of a document and a canonical view of a document
 12,?,browse all passages filtered on some type,not display side citation system,I have a text in a repository where they allow people to cite notes but as a NLP researcher I do not care about these notes as they are not part of the original text
 13,?,retrieve the lang of passages,propose different tool in my UI for understanding the text,
+14,?,not be forced to give unecessary metadata or metadata that I don't have,not to make up dummy data to stick to the standard,
