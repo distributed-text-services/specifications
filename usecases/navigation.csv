@@ -8,3 +8,7 @@ Priority,ID,I want to...,In orded to...,Deeper Example
 1,7,retrieve passages types,identify some ruptures in the narrative flow,One could argue that knowing we move from poem to poem means passages references are the lowest continuous unit of consolidated narratives. The last word of the poem 1 is not tied to the first word of poem 2.
 2,8,retrieve title of passages,build a more human-readable table of content, I do not want as a data consummer to have to parse XML TEI documents and be dependant on the scheme implemented for TOC building
 3,9,retrieve author of passages,display more in depth information,
+0,10,retrieve the parents of a passage identifier,I can provide link to broader views of the current passage,
+?,11,browse all passages references depending on a specific citation scheme,present a different view of a document,I want to be able to present a fac-simile view of a document and a canonical view of a document
+?,12,browse all passages filtered on some type,not display side citation system,I have a text in a repository where they allow people to cite notes but as a NLP researcher I do not care about these notes as they are not part of the original text
+?,13,retrieve the lang of passages,propose different tool in my UI for understanding the text,
