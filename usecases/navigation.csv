@@ -1,14 +1,14 @@
-Priority,ID,I want to...,In orded to...,Deeper Example
-0,1,retrieve all passages references of a text at the root level,present what are the main parts of the text,
-0,2,retrieve all passages references of a text at any given level,know more about the architecture of a given node,
-0,3,retrieve all passages reference of a text in a traversing way,do not have to query every level one by one,
-0,4,retrieve siblings of a passage range,navigate from one passage range to another,
-0,5,retrieve siblings of a passage range,propose a semi-automatic way to browse texts,
-1,6,retrieve passages types,identify how to serve ranges based on types,A text is built on two architectures (book-poem-line; poem-line); I need to know where the architecture changes to build a well-thought table of content
-1,7,retrieve passages types,identify some ruptures in the narrative flow,One could argue that knowing we move from poem to poem means passages references are the lowest continuous unit of consolidated narratives. The last word of the poem 1 is not tied to the first word of poem 2.
-2,8,retrieve title of passages,build a more human-readable table of content, I do not want as a data consummer to have to parse XML TEI documents and be dependant on the scheme implemented for TOC building
-3,9,retrieve author of passages,display more in depth information,
-0,10,retrieve the parents of a passage identifier,I can provide link to broader views of the current passage,
-?,11,browse all passages references depending on a specific citation scheme,present a different view of a document,I want to be able to present a fac-simile view of a document and a canonical view of a document
-?,12,browse all passages filtered on some type,not display side citation system,I have a text in a repository where they allow people to cite notes but as a NLP researcher I do not care about these notes as they are not part of the original text
-?,13,retrieve the lang of passages,propose different tool in my UI for understanding the text,
+ID,Priority,I want to...,In orded to...,Deeper Example
+1,0,retrieve all passages references of a text at the root level,present what are the main parts of the text,
+2,0,retrieve all passages references of a text at any given level,know more about the architecture of a given node,
+3,0,retrieve all passages reference of a text in a traversing way,do not have to query every level one by one,
+4,0,retrieve siblings of a passage range,navigate from one passage range to another,
+5,0,retrieve siblings of a passage range,propose a semi-automatic way to browse texts,
+6,1,retrieve passages types,identify how to serve ranges based on types,A text is built on two architectures (book-poem-line; poem-line); I need to know where the architecture changes to build a well-thought table of content
+7,1,retrieve passages types,identify some ruptures in the narrative flow,One could argue that knowing we move from poem to poem means passages references are the lowest continuous unit of consolidated narratives. The last word of the poem 1 is not tied to the first word of poem 2.
+8,2,retrieve title of passages,build a more human-readable table of content, I do not want as a data consummer to have to parse XML TEI documents and be dependant on the scheme implemented for TOC building
+9,3,retrieve author of passages,display more in depth information,
+10,0,retrieve the ancestors of a passage identifier,I can provide link to broader views of the current passage,
+11,?,browse all passages references depending on a specific citation scheme,present a different view of a document,I want to be able to present a fac-simile view of a document and a canonical view of a document
+12,?,browse all passages filtered on some type,not display side citation system,I have a text in a repository where they allow people to cite notes but as a NLP researcher I do not care about these notes as they are not part of the original text
+13,?,retrieve the lang of passages,propose different tool in my UI for understanding the text,
