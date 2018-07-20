@@ -57,31 +57,37 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
     {
       "@type": "IriTemplateMapping",
       "variable": "collection_id",
+      "property": "hydra:freetextQuery",
       "required": true
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "passage",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "page",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "level",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "start",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "end",
+      "property": "hydra:freetextQuery",
       "required": false
     }
   ]
