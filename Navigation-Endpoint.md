@@ -51,7 +51,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
         "tei": "http://www.tei-c.org/ns/1.0"
   },  
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
+  "template": "/dts/api/navigation/?id={collection_id}{&passage}{&level}{&start}{&end}{&page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -116,9 +116,9 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc",
     "member": [
-      {"passage": "1"},
-      {"passage": "2"},
-      {"passage": "3"}
+      {"ref": "1"},
+      {"ref": "2"},
+      {"ref": "3"}
     ],
     "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
@@ -143,11 +143,22 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1",  "1.2", "2.1", "2.2", "3.1", "3.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=2",
+    "level": 2,
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"},
+      {"ref": "2.1"},
+      {"ref": "2.2"},
+      {"ref": "3.1"},
+      {"ref": "3.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
@@ -170,11 +181,17 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1", "1.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&passage=1",
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
@@ -197,11 +214,19 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1.1", "1.1.2", "1.2.1", "1.2.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&passage=1",
+    "member": [
+      {"ref": "1.1.1"},
+      {"ref": "1.1.2"},
+      {"ref": "1.2.1"},
+      {"ref": "1.2.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
@@ -224,11 +249,18 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1","2""3"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=0&start=1&end=3",
+    "member": [
+      {"ref": "1"},
+      {"ref": "2"},
+      {"ref": "3"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
@@ -251,11 +283,21 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=1&start=1&end=3",
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"},
+      {"ref": "2.1"},
+      {"ref": "2.2"},
+      {"ref": "3.1"},
+      {"ref": "3.2"},
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
@@ -278,11 +320,17 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": [{"start": "1.1.1", "end": "1.1.2"}, {"start": "1.2.1", "end": "1.2.2"}]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&passage=1&level=2&chunkSize=2",
+    "member": [
+      {"start": "1.1.1", "end": "1.1.2"},
+      {"start": "1.2.1", "end": "1.2.2"},
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
