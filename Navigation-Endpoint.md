@@ -109,11 +109,18 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1", "2", "3"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+    "member": [
+      {"passage": "1"},
+      {"passage": "2"},
+      {"passage": "3"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&passage}{&level}{&start}{&end}"
 }
 ```
 
