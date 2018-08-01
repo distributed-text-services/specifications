@@ -42,6 +42,20 @@ The response contains the following response headers:
 | Link | Gives relation to next and previous pages |
 | Content-Type | Content type of the response (By default : `application/tei+xml`)|
 
+#### Possible values and their signification for Link
+
+When applicable, the following links must be provided in the Link property of the header :
+
+| Name of the property | Description of its value |
+| -------------------- | ------------------------ |
+| prev | Previous passage of the document in the Document endpoint |
+| next | Next passage of the document in the Document endpoint |
+| up | Parent passage of the document in the Document endpoint |
+| first | First passage of the document in the Document endpoint  |
+| last | Last passage of the document in the Document endpoint |
+| contents | Link to the Navigation Endpoint for the current document |
+| collection | Link to the Collection endpoint for the current document |
+
 ### URI Template
 
 Here is a template of the URI for Document API. The route itself (`/dts/api/document/`) is up to the implementer.
@@ -51,11 +65,10 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
   "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
+        "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/document/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
+  "template": "/dts/api/document/?id={collection_id}&passage={passage}&start={start}&end={end}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -97,7 +110,7 @@ Retrieve the passage `1` of `bgu;11;2029`
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu;11;2029&passage=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&passage=3>; rel="next" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&passage=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&passage=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&passage=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
 
 #### Response
 
@@ -141,7 +154,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next" | 
+| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" | 
 
 #### Response
 
@@ -183,6 +196,7 @@ Retrieve the full document bgu;11;2029
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
+| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
 
 #### Response
 
