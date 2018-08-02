@@ -10,9 +10,9 @@ JSON wide attributes :
 
 Item properties :
 - `@base` is the URI of the Document API at which we can retrieve passages
-- `@id` is the ID if the current document
-- `passage` is a list of passages
-  - A list of passages can be made of single `ids` : `["a", "b", "1.1"]`
+- `@id` is the ID of the current request
+- `member` is a list of passages
+  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
   - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:level` defines the level of the reference given. 
