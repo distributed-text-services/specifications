@@ -16,6 +16,7 @@ Item properties :
   - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:level` defines the level of the reference given. 
+- `dts:passage` contains a URI template to the Document endpoint
 
 ## URI 
 
@@ -128,7 +129,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "2"},
       {"ref": "3"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -166,7 +167,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "3.1"},
       {"ref": "3.2"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -200,7 +201,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "1.1"},
       {"ref": "1.2"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -236,7 +237,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
       {"ref": "1.2.1"},
       {"ref": "1.2.2"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
 ```
 
@@ -271,7 +272,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "2"},
       {"ref": "3"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -309,7 +310,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "3.1"},
       {"ref": "3.2"},
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -344,7 +345,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
       {"start": "1.1.1", "end": "1.1.2"},
       {"start": "1.2.1", "end": "1.2.2"},
     ],
-    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&level}{&start}{&end}"
+    "dts:passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
 ```
 

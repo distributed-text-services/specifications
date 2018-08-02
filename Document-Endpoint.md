@@ -29,9 +29,9 @@ The documents endpoint supports the following query parameters:
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | identifier for a document |  GET    |
-| passage | passage identifier (used together with `id` can't be used with `start` and `end`) | n/a    |
-| start | (For range) Start of a range of passages (can't be used with `passage`) | GET |
-| end |  (For range) End of a range of passages (requires `start` and no `passage`) | GET |
+| ref | passage identifier (used together with `id` can't be used with `start` and `end`) | n/a    |
+| start | (For range) Start of a range of passages (can't be used with `ref`) | GET |
+| end |  (For range) End of a range of passages (requires `start` and no `ref`) | GET |
 
 ### Response Headers
 
@@ -68,7 +68,7 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
         "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/document/?id={collection_id}&passage={passage}&start={start}&end={end}",
+  "template": "/dts/api/document/?id={collection_id}&ref={ref}&start={start}&end={end}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -78,7 +78,7 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "passage",
+      "variable": "ref",
       "required": false
     },
     {
@@ -97,20 +97,20 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
 
 ## Examples
 
-### Retrieve a passage using `passage`
+### Retrieve a passage using `ref`
 
-Retrieve the passage `1` of `bgu;11;2029`
+Retrieve the passage `2` of `bgu;11;2029`
 
 #### Example of url : 
 
-- GET `/dts/api/documents/?id=bgu;11;2029&passage=2`
+- GET `/dts/api/documents/?id=bgu;11;2029&ref=2`
 
 #### Headers
 
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu;11;2029&passage=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&passage=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&passage=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
 
 #### Response
 
