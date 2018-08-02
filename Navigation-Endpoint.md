@@ -14,6 +14,8 @@ Item properties :
 - `passage` is a list of passages
   - A list of passages can be made of single `ids` : `["a", "b", "1.1"]`
   - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
+- `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
+- `dts:level` defines the level of the reference given. 
 
 ## URI 
 
@@ -22,7 +24,7 @@ Item properties :
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | identifier for a document |  GET    |
-| passage | passage identifier (used together with `id`) | GET    |
+| ref | passage identifier (used together with `id`) | GET    |
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
 | start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
@@ -119,6 +121,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
         "dts": "https://w3id.org/dts/api#",
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+    "dts:citeDepth" : 2,
+    "dts:level": 1,
     "member": [
       {"ref": "1"},
       {"ref": "2"},
@@ -152,7 +156,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
         "dts": "https://w3id.org/dts/api#",
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=2",
-    "level": 2,
+    "dts:citeDepth" : 2,
+    "dts:level": 2,
     "member": [
       {"ref": "1.1"},
       {"ref": "1.2"},
@@ -189,6 +194,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
         "dts": "https://w3id.org/dts/api#",
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
+    "dts:citeDepth" : 2,
+    "dts:level": 2,
     "member": [
       {"ref": "1.1"},
       {"ref": "1.2"}
@@ -199,11 +206,11 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 ### Descendants of a passage
 
-The client wants to retrieve a list of grand-children passage identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
+The client wants to retrieve a list of grand-children passage identifiers that are part of the document *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2`
+- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2`
 
 #### Headers
 
@@ -220,14 +227,16 @@ The client wants to retrieve a list of grand-children passage identifiers that a
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
     },
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
+    "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1",
+    "dts:citeDepth" : 3,
+    "dts:level": 3,
     "member": [
       {"ref": "1.1.1"},
       {"ref": "1.1.2"},
       {"ref": "1.2.1"},
       {"ref": "1.2.2"}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -255,6 +264,8 @@ The client wants to retrieve a list of passage identifiers which are between two
         "dts": "https://w3id.org/dts/api#",
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=0&start=1&end=3",
+    "dts:citeDepth" : 2,
+    "dts:level": 2,
     "member": [
       {"ref": "1"},
       {"ref": "2"},
@@ -288,6 +299,8 @@ The client wants to retrieve a list of passage identifiers which are between two
         "dts": "https://w3id.org/dts/api#",
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=1&start=1&end=3",
+    "dts:citeDepth" : 2,
+    "dts:level": 2,
     "member": [
       {"ref": "1.1"},
       {"ref": "1.2"},
@@ -302,11 +315,11 @@ The client wants to retrieve a list of passage identifiers which are between two
 
 ### Passages grouped by the provider 
 
-The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
+The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the document *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2&groupSize=2`
+- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2`
 
 #### Headers
 
@@ -324,12 +337,14 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
         "dts": "https://w3id.org/dts/api#",
         "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2&groupSize=2",
+    "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2",
+    "dts:citeDepth" : 3,
+    "dts:level": 3,
     "member": [
       {"start": "1.1.1", "end": "1.1.2"},
       {"start": "1.2.1", "end": "1.2.2"},
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
+    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&level}{&start}{&end}"
 }
 ```
 
