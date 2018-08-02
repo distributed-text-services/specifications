@@ -26,7 +26,7 @@ Item properties :
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
 | start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
-| chunkSize | Retrieve passages in groups of this size instead of single units | GET |
+| groupSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 
 
@@ -48,40 +48,45 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
   },  
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation/?id={collection_id}&passage={passage}&level={level}&start={start}&end={end}&page={page}",
+  "template": "/dts/api/navigation/?id={collection_id}{&ref}{&level}{&start}{&end}{&page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
       "@type": "IriTemplateMapping",
       "variable": "collection_id",
+      "property": "hydra:freetextQuery",
       "required": true
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "passage",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "page",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "level",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "start",
+      "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "end",
+      "property": "hydra:freetextQuery",
       "required": false
     }
   ]
@@ -109,11 +114,17 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1", "2", "3"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+    "member": [
+      {"ref": "1"},
+      {"ref": "2"},
+      {"ref": "3"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -136,11 +147,21 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1",  "1.2", "2.1", "2.2", "3.1", "3.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=2",
+    "level": 2,
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"},
+      {"ref": "2.1"},
+      {"ref": "2.2"},
+      {"ref": "3.1"},
+      {"ref": "3.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -150,7 +171,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&passage=1`
+- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1`
 
 #### Headers
 
@@ -163,11 +184,16 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1", "1.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -177,7 +203,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&passage=1&level=2`
+- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2`
 
 #### Headers
 
@@ -190,11 +216,18 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1.1", "1.1.2", "1.2.1", "1.2.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
+    "member": [
+      {"ref": "1.1.1"},
+      {"ref": "1.1.2"},
+      {"ref": "1.2.1"},
+      {"ref": "1.2.2"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -217,11 +250,17 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1","2""3"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=0&start=1&end=3",
+    "member": [
+      {"ref": "1"},
+      {"ref": "2"},
+      {"ref": "3"}
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -244,11 +283,20 @@ The client wants to retrieve a list of passage identifiers which are between two
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2"]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=1&start=1&end=3",
+    "member": [
+      {"ref": "1.1"},
+      {"ref": "1.2"},
+      {"ref": "2.1"},
+      {"ref": "2.2"},
+      {"ref": "3.1"},
+      {"ref": "3.2"},
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
@@ -258,7 +306,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&passage=1&level=2&chunkSize=2`
+- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2&groupSize=2`
 
 #### Headers
 
@@ -271,11 +319,17 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 ```json
 {
     "@context": {
-        "passage": "https://w3id.org/dts/api#/#passage"
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "tei": "http://www.tei-c.org/ns/1.0"
     },
-    "@base": "/dts/api/document/",
-    "@id":"urn:cts:greekLit:tlg0012.tlg001.opp-grc5",
-    "passage": [{"start": "1.1.1", "end": "1.1.2"}, {"start": "1.2.1", "end": "1.2.2"}]
+    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1&level=2&groupSize=2",
+    "member": [
+      {"start": "1.1.1", "end": "1.1.2"},
+      {"start": "1.2.1", "end": "1.2.2"},
+    ],
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&level}{&start}{&end}"
 }
 ```
 
