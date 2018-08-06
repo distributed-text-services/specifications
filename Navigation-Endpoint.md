@@ -11,12 +11,16 @@ JSON wide attributes :
 Item properties :
 - `@base` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID of the current request
-- `member` is a list of passages
-  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
-  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:level` defines the level of the reference given. 
 - `dts:passage` contains a URI template to the Document endpoint
+- `member` is a list of passages
+  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
+  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
+  - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"ref": "1.2", "dts:citeType": "Poem"}`
+  - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
+  - (Optional) `dts:metadata` contains metadata from other namespaces
+
 
 ## URI 
 
@@ -31,7 +35,7 @@ Item properties :
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
 | groupSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
-
+| metadata | Includes metadata dts:dublincore and dts:metadata fields | GET |
 
 ### Response Headers
 
@@ -353,6 +357,41 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 **Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
 
-### Retrieval of titles (**Future Draft Only**)
+### Retrieval of titles and additional metadata
 
-**Waiting for [Issue #80](https://github.com/distributed-text-services/collection-api/issues/80)**
+
+Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
+
+```json
+{
+    "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#"
+    },
+    "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
+    "dts:citeDepth" : 3,
+    "dts:level": 3,
+    "member": [
+      {"ref": "Av", "dts:dublincore": {
+        "dc:title": "Avertissement de l'Éditeur"
+      }},
+      {"ref": "Pr", "dts:dublincore": {
+        "dc:title": "Préface"
+      }},
+      {"ref": "1", "dts:dublincore": {
+        "dc:title": "Lettre 1",
+        "dc:author": "Cécile Volanges"
+      }},
+      {"ref": "2", "dts:dublincore": {
+        "dc:title": "Lettre 2",
+        "dc:author": "La Marquise de Merteuil"
+      }},
+      {"ref": "3", "dts:dublincore": {
+        "dc:title": "Lettre 3",
+        "dc:author": "Cécile Volanges"
+      }},
+    ],
+    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+}
+```

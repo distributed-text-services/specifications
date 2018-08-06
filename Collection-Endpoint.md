@@ -485,14 +485,14 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "dts:citeDepth": 2, 
     "dts:citeStructure": [
         {
-            "label": "poem",
+            "dts:citeType": "poem",
             "dts:citeStructure": [
                 {
-                    "label": "line"
+                    "dts:citeType": "line"
                 }
             ]
         }
-    ]
+    ],
     "members": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
