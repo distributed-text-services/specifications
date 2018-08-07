@@ -35,7 +35,7 @@ Item properties :
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
 | groupSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
-| metadata | Includes metadata dts:dublincore and dts:metadata fields | GET |
+| exclude | Exclude keys in members' object such as `exclude=dts:metadata` | GET |
 
 ### Response Headers
 
@@ -357,8 +357,19 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 **Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
 
-### Retrieval of titles and additional metadata
+### Retrieval of titles and generic metadata
 
+The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
+
+#### Example of url : 
+
+- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
 
 Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
 
@@ -367,30 +378,56 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
+        "dts": "https://w3id.org/dts/api#",
+        "foo": "http://foo.bar/ontology"
     },
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
     "dts:citeDepth" : 3,
     "dts:level": 3,
     "member": [
-      {"ref": "Av", "dts:dublincore": {
+      {
+        "ref": "Av", 
+        "dts:dublincore": {
         "dc:title": "Avertissement de l'Éditeur"
-      }},
-      {"ref": "Pr", "dts:dublincore": {
-        "dc:title": "Préface"
-      }},
-      {"ref": "1", "dts:dublincore": {
-        "dc:title": "Lettre 1",
-        "dc:author": "Cécile Volanges"
-      }},
-      {"ref": "2", "dts:dublincore": {
-        "dc:title": "Lettre 2",
-        "dc:author": "La Marquise de Merteuil"
-      }},
-      {"ref": "3", "dts:dublincore": {
-        "dc:title": "Lettre 3",
-        "dc:author": "Cécile Volanges"
-      }},
+        }
+      },
+      {
+        "ref": "Pr", 
+        "dts:dublincore": {
+          "dc:title": "Préface"
+        }
+      },
+      {
+        "ref": "1", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 1"
+        },
+        "dts:metadata": {
+          "foo:fictionalSender": "Cécile Volanges",
+          "foo:fictionalRecipient": "Sophie Carnay"
+        }
+      },
+      {
+        "ref": "2", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 2"
+        },
+        "dts:metadata": {
+          "foo:fictionalSender": "La Marquise de Merteuil",
+          "foo:fictionalRecipient": "Vicomte de Valmont"
+        }
+      },
+      {
+        "ref": "3", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 3"
+        },
+        "dts:metadata": {
+          "foo:fictionalSender": "Cécile Volanges",
+          "foo:fictionalRecipient": "Sophie Carnay"
+        }
+      },
+      // And so on
     ],
     "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
 }
