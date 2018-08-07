@@ -353,17 +353,13 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 }
 ```
 
-### Retrieval of typology of references (**Future Draft Only**)
+### Retrieval of typology of references 
 
-**Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
-
-### Retrieval of titles and generic metadata
-
-The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
+Some passages may have a metadata type. The `citeType` refers to the type of citable node has been evaluated as. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2`
+- `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
 
 #### Headers
 
@@ -382,8 +378,51 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "foo": "http://foo.bar/ontology"
     },
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
-    "dts:citeDepth" : 3,
-    "dts:level": 3,
+    "dts:citeDepth" : 1,
+    "dts:level": 1,
+    "dts:citeType": "letter",
+    "member": [
+      // The two following items are not letters : the data provider notes this different
+      { "ref": "Av", "dts:citeType": "preface"},
+      { "ref": "Pr", "dts:citeType": "preface"},
+      // Given the fact the following nodes have no citeType, they inherit of the root object citeType : letter
+      { "ref": "1" },
+      { "ref": "2" },
+      { "ref": "3" },
+      // And so on
+    ],
+    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+}
+```
+
+
+### Retrieval of titles and generic metadata
+
+The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
+
+#### Example of url : 
+
+- `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
+
+```json
+{
+    "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "foo": "http://foo.bar/ontology"
+    },
+    "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
+    "dts:citeDepth" : 1,
+    "dts:level": 1,
     "member": [
       {
         "ref": "Av", 
