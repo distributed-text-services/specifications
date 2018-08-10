@@ -19,7 +19,7 @@ Item properties :
   - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
   - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"ref": "1.2", "dts:citeType": "Poem"}`
   - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
-  - (Optional) `dts:metadata` contains metadata from other namespaces
+  - (Optional) `dts:extensions` contains metadata from other namespaces
 
 
 ## URI 
@@ -35,7 +35,7 @@ Item properties :
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
 | groupSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
-| exclude | Exclude keys in members' object such as `exclude=dts:metadata` | GET |
+| exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
 
 ### Response Headers
 
@@ -441,7 +441,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "dts:dublincore": {
           "dc:title": "Lettre 1"
         },
-        "dts:metadata": {
+        "dts:extensions": {
           "foo:fictionalSender": "Cécile Volanges",
           "foo:fictionalRecipient": "Sophie Carnay"
         }
@@ -451,7 +451,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "dts:dublincore": {
           "dc:title": "Lettre 2"
         },
-        "dts:metadata": {
+        "dts:extensions": {
           "foo:fictionalSender": "La Marquise de Merteuil",
           "foo:fictionalRecipient": "Vicomte de Valmont"
         }
@@ -461,7 +461,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "dts:dublincore": {
           "dc:title": "Lettre 3"
         },
-        "dts:metadata": {
+        "dts:extensions": {
           "foo:fictionalSender": "Cécile Volanges",
           "foo:fictionalRecipient": "Sophie Carnay"
         }
