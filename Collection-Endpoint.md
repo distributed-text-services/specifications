@@ -23,7 +23,7 @@ Item properties :
 - `@type` is either `Collection` or `Resource`
 - `totalItems` is the number of children contained by the object
 - (Required on Resource) `dts:citeDepth` declare the maximum depth of a readable resource.
-- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dct:description`, e.g. for internationalization.
+- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dc:description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
 - (Optional) `dts:dublincore` contains Dublin Core Terms metadata
 - (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
@@ -485,14 +485,14 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "dts:citeDepth": 2, 
     "dts:citeStructure": [
         {
-            "label": "poem",
+            "dts:citeType": "poem",
             "dts:citeStructure": [
                 {
-                    "label": "line"
+                    "dts:citeType": "line"
                 }
             ]
         }
-    ]
+    ],
     "members": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",

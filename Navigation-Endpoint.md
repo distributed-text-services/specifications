@@ -11,12 +11,16 @@ JSON wide attributes :
 Item properties :
 - `@base` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID of the current request
-- `member` is a list of passages
-  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
-  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:level` defines the level of the reference given. 
 - `dts:passage` contains a URI template to the Document endpoint
+- `member` is a list of passages
+  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
+  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
+  - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"ref": "1.2", "dts:citeType": "Poem"}`
+  - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
+  - (Optional) `dts:extensions` contains metadata from other namespaces
+
 
 ## URI 
 
@@ -31,7 +35,7 @@ Item properties :
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
 | groupSize | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
-
+| exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
 
 ### Response Headers
 
@@ -349,10 +353,121 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 }
 ```
 
-### Retrieval of typology of references (**Future Draft Only**)
+### Retrieval of typology of references 
 
-**Waiting for [Issue #78](https://github.com/distributed-text-services/collection-api/issues/78)**
+Some passages may have a metadata type. The `citeType` refers to the type of citable node has been evaluated as. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
 
-### Retrieval of titles (**Future Draft Only**)
+#### Example of url : 
 
-**Waiting for [Issue #80](https://github.com/distributed-text-services/collection-api/issues/80)**
+- `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
+
+```json
+{
+    "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "foo": "http://foo.bar/ontology"
+    },
+    "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
+    "dts:citeDepth" : 1,
+    "dts:level": 1,
+    "dts:citeType": "letter",
+    "member": [
+      // The two following items are not letters : the data provider notes this different
+      { "ref": "Av", "dts:citeType": "preface"},
+      { "ref": "Pr", "dts:citeType": "preface"},
+      // Given the fact the following nodes have no citeType, they inherit of the root object citeType : letter
+      { "ref": "1" },
+      { "ref": "2" },
+      { "ref": "3" },
+      // And so on
+    ],
+    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+}
+```
+
+
+### Retrieval of titles and generic metadata
+
+The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
+
+#### Example of url : 
+
+- `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
+
+#### Headers
+
+| Key | Value | 
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
+
+```json
+{
+    "@context": {
+        "@vocab": "https://www.w3.org/ns/hydra/core#",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#",
+        "foo": "http://foo.bar/ontology"
+    },
+    "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
+    "dts:citeDepth" : 1,
+    "dts:level": 1,
+    "member": [
+      {
+        "ref": "Av", 
+        "dts:dublincore": {
+        "dc:title": "Avertissement de l'Éditeur"
+        }
+      },
+      {
+        "ref": "Pr", 
+        "dts:dublincore": {
+          "dc:title": "Préface"
+        }
+      },
+      {
+        "ref": "1", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 1"
+        },
+        "dts:extensions": {
+          "foo:fictionalSender": "Cécile Volanges",
+          "foo:fictionalRecipient": "Sophie Carnay"
+        }
+      },
+      {
+        "ref": "2", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 2"
+        },
+        "dts:extensions": {
+          "foo:fictionalSender": "La Marquise de Merteuil",
+          "foo:fictionalRecipient": "Vicomte de Valmont"
+        }
+      },
+      {
+        "ref": "3", 
+        "dts:dublincore": {
+          "dc:title": "Lettre 3"
+        },
+        "dts:extensions": {
+          "foo:fictionalSender": "Cécile Volanges",
+          "foo:fictionalRecipient": "Sophie Carnay"
+        }
+      },
+      // And so on
+    ],
+    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+}
+```
