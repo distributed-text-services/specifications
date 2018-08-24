@@ -493,7 +493,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             ]
         }
     ],
-    "members": [
+    "member": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
             "title" : "Priapeia",
