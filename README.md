@@ -25,7 +25,7 @@ The DTS API provides the following core capabilities to clients:
 * Retrieve lists of collection members
 * Retrieve metadata about individual collection items
 * Retrieve lists of citeable passages within a text
-* Retrieve lists of citeable passages within atext as groups of client-defined sizes (e.g. groups of 10 lines)
+* Retrieve lists of citeable passages within a text as groups of client-defined sizes (e.g. groups of 10 lines)
 * Retrieve metadata about the citation structure of a document
 * Retrieve a single text passage at any level of the citation hierarchy
 * Retrieve a range of text passages with a clearly defined start and end passage
