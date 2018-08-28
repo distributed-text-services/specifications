@@ -60,7 +60,7 @@ The following individuals have contributed to this effort:
 
 ## Reference Implementations
 
-* The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation will be deployed at https://texts.alpheios.net/api/cts
+* The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation will be deployed at https://texts.alpheios.net/api/dts
 
 * ...
 
