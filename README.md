@@ -1,8 +1,8 @@
 # Distributed Text Services (DTS)
 
-## What
+*The DTS Specification is currently in Candidate Recommendation Status.*
 
-> The DTS Specification is currently in Candidate Recommendation Status.
+## What
 
 The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
 It specifies 3 distinct operation endpoints:
