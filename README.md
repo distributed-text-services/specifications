@@ -44,29 +44,19 @@ The DTS API imposes the following requirements on implementors:
 
 ## Who
 
-The following individuals have contributed to this effort.
+The following individuals have contributed to this effort:
 
-Bridget Almas
-
-Hugh Cayless
-
-Thibault Clérice
-
-Zachary Fletcher
-
-Vincent Jolivet
-
-Pietro Liuzzo
-
-Emmanuelle Morlock
-
-Jonathan Robie
-
-Matteo Romanello
-
-James Tauber
-
-Jeffrey C. Witt
+* Bridget Almas
+* Hugh Cayless
+* Thibault Clérice
+* Zachary Fletcher
+* Vincent Jolivet
+* Pietro Liuzzo
+* Emmanuelle Morlock
+* Jonathan Robie
+* Matteo Romanello
+* James Tauber
+* Jeffrey C. Witt
 
 ## Reference Implementations
 
