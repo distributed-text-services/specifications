@@ -4,7 +4,7 @@ description: The Distributed Text Services (DTS) Specification defines a Hyperme
 show_downloads: false
 menu:
   - title : "Entry Point"
-    url: "distributed-text-services-api.html"
+    url: "Entry.html"
   - title : "Collection Endpoint"
     url: "Collection-Endpoint.html"
   - title : "Navigation Endpoint"

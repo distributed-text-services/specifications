@@ -1,4 +1,4 @@
-# Distributed Text Services API - Collections Endpoint
+# Collections Endpoint
 
 The collections endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
 
@@ -138,17 +138,17 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 
 ### Sub-collection, not readable but small
 
-### Example of url : 
+#### Example of url : 
 
 - `/api/dts/collections/?id=lasciva_roma`
 
-### Headers
+#### Headers
 
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
-### Response
+#### Response
 
 ```json
 {

@@ -1,4 +1,4 @@
-# Distributed Text Services API : Document Endpoint
+# Document Endpoint
 
 The documents endpoint is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
 

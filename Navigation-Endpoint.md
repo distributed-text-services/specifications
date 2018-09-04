@@ -1,4 +1,4 @@
-# Distributed Text Services API - Navigation Endpoint
+# Navigation Endpoint
 
 The Navigation endpoint provides a list of passages that are available for a given resource. Its direction is parent-to-child by default.
 

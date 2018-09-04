@@ -1,6 +1,4 @@
-# Distributed Text Services API
-
-Status: nascent.  Not yet ready for implementation.
+# Generic Informations
 
 ## Vocabulary
 
@@ -34,15 +32,3 @@ If the client does a `GET` on the entry point URL, the following document is ret
   "navigation" : "/dts/api/navigation"
 }
 ```
-
-## Collections
-
-*See [Collection API documentation](Collection-Endpoint.md)*
-
-## Documents
-
-*See [Document API documentation](Document-API.md)*
-
-## Navigation
-
-*See [Navigation API documentation](Navigation-API.md)*
