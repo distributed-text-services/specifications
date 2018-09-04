@@ -22,9 +22,7 @@
       </header>
 
       <div id="banner">
-        <span id="logo"></span>
         <a href="{{ '' | relative_url }}" class="button">Home</a>
-        <a href="{{ link.url }}" class="button">{{link.title}}</a>
         {% for link in site.menu %}
             <a href="{{ link.url }}" class="button">{{link.title}}</a>
         {% endfor %}
