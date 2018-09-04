@@ -23,11 +23,12 @@
 
       <div id="banner">
         <span id="logo"></span>
-
+        <a href="{{ '' | relative_url }}">Home</a>
+        <a href="{{ link.url }}" class="button">{{link.title}}</a>
         {% for link in site.menu %}
             <a href="{{ link.url }}" class="button">{{link.title}}</a>
         {% endfor %}
-        <a href="{{ site.github.repository_url }}" class="button">>Contribute</a>
+        <a href="{{ site.github.repository_url }}" class="button">Contribute</a>
       </div><!-- end banner -->
 
     <div class="wrapper">
