@@ -7,11 +7,14 @@
 The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
 It specifies 3 distinct operation endpoints:
 
-- The [Collection Endpoint](Collection-Endpoint.md) is used to navigate the text collection contents 
+- The [Collection Endpoint](Collection-Endpoint.md) is used to navigate the text collection contents
 - The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
 - The [Document Endpoint](Document-Endpoint.md) is used to retrieve complete or partial texts
 
-The Collection and Navigation endpoints return JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document returns TEI/XML of the requested text or fragment.
+The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document is specified to return TEI/XML of the requested text or fragment.
+
+Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
+and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
 ## Why
 
@@ -60,9 +63,12 @@ The following individuals have contributed to this effort:
 
 ## Reference Implementations
 
-* The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation will be deployed at https://texts.alpheios.net/api/dts
+* The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation may be
+used by a wide variety of text publishers. It is currently deployed by:
+    * The Alpheios Project (https://alpheios.net) at http://texts.alpheios.net/api/dts
+    *  Ecole des Chartes
 
-* ...
+* The Betamasheft Project (http://betamasaheft.eu/)
 
 ## How to get involved
 
