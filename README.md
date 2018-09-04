@@ -11,7 +11,7 @@ It specifies 3 distinct operation endpoints:
 - The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
 - The [Document Endpoint](Document-Endpoint.md) is used to retrieve complete or partial texts
 
-The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document is specified to return TEI/XML of the requested text or fragment.
+The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
 Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
 and individual text publishers are encouraged to implement this API in their own projects where appropriate.
