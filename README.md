@@ -68,7 +68,7 @@ used by a wide variety of text publishers. It is currently deployed by:
     * The Alpheios Project (https://alpheios.net) at http://texts.alpheios.net/api/dts
     *  Ecole des Chartes
 
-* The Betamasheft Project (http://betamasaheft.eu/)
+* Beta maṣāḥǝft: Manuscripts of Ethiopia and Eritrea (http://betamasaheft.eu/)
 
 ## How to get involved
 
