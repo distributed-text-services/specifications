@@ -101,7 +101,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     },
     "@id": "general",
     "@type": "Collection",
-    "totalItems": "2",
+    "totalItems": 2,
     "title": "Collection Générale de l'École Nationale des Chartes",
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
@@ -115,21 +115,21 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
              "title" : "Cartulaires",
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
-             "totalItems" : "10"
+             "totalItems" : 10
         },
         {
              "@id" : "lasciva_roma",
              "title" : "Lasciva Roma",
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
-             "totalItems" : "1"
+             "totalItems" : 1
         },
         {
              "@id" : "lettres_de_poilus",
              "title" : "Correspondance des poilus",
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
-             "totalItems" : "10000"
+             "totalItems" : 10000
         }
     ]
 }
@@ -160,7 +160,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
     },
     "@id": "lasciva_roma",
     "@type": "Collection",
-    "totalItems": "2",
+    "totalItems": 2,
     "title" : "Lasciva Roma",
     "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
     "dts:dublincore": {
@@ -241,7 +241,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "@value": "Anonymous lascivious Poems "
         }]
     },
-    "totalItems" : "1",
+    "totalItems" : 1,
     "member": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -410,7 +410,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     },
     "@id": "general",
     "@type": "Collection",
-    "totalItems": "2",
+    "totalItems": 2,
     "title": "Collection Générale de l'École Nationale des Chartes",
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
@@ -420,7 +420,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     },
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
-    "totalItems" : "10000",
+    "totalItems" : 10000,
     "member": ["member 190 up to 200"],
     "view": {
         "@id": "/api/dts/collections/?id=lettres_de_poilus&page=19",
