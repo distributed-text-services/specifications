@@ -54,7 +54,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
   "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
   },  
   "@type": "IriTemplate",
   "template": "/dts/api/navigation/?id={collection_id}{&ref}{&level}{&start}{&end}{&page}",
@@ -123,7 +123,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc",
     "dts:citeDepth" : 2,
@@ -158,7 +158,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=2",
     "dts:citeDepth" : 2,
@@ -196,7 +196,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
     "dts:citeDepth" : 2,
@@ -230,7 +230,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1",
     "dts:citeDepth" : 3,
@@ -266,7 +266,7 @@ The client wants to retrieve a list of passage identifiers which are between two
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=0&start=1&end=3",
     "dts:citeDepth" : 2,
@@ -301,7 +301,7 @@ The client wants to retrieve a list of passage identifiers which are between two
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=1&start=1&end=3",
     "dts:citeDepth" : 2,
