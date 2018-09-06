@@ -2,8 +2,9 @@
 
 ## Vocabulary
 
-- Collection :
-- Readable Collection : 
+- Collection : an identifiable aggregation of digital textual resources which has meaning in a specific research context. 
+- Readable Collection : a Collection which represents an aggregation of readable text passages
+
 - Reference : Identifier of a citable node inside a readable collection
 
 ## Media Types
