@@ -2,16 +2,17 @@
 
 ## Vocabulary
 
-- Collection : an identifiable aggregation of digital textual resources which has meaning in a specific research context. 
-- Readable Collection : a Collection which represents an aggregation of readable text passages
+- *Collection* : an identifiable aggregation of digital resources which has meaning in a specific research context. Resources may be virtual or real.
 
-- Reference : Identifier of a citable node inside a readable collection
+- *Readable Collection* : a specific type of *Collection* which represents an aggregation of readable text passages (e.g. a structured text)
+
+- *Reference* : Identifier of a citable node inside a *Readable Collection* (aka text)
 
 ## Media Types
 
-The media type for DTS is JSON-LD, using Hydra conventions [http://www.hydra-cg.com](http://www.hydra-cg.com). The `@id` of any resource can be any URI, which may be a URL or a URI.
+The Collection and Navigation endpoints of the DTS API output LD+JSON adhering to Hydra conventions [http://www.hydra-cg.com](http://www.hydra-cg.com). The `@id` of any resource can be any URI, which may be a URL or a URI.
 
-Document content can be in any media type, including TEI, HTML, PDF, syntax trees, or image formats. Although, Document API **must support** the TEI Mediatype (`application/tei+xml`)
+The Document endpoint of the DTS API __must__ be able to return application/tei+xml.  Implementers of the API may return additional media-types for document content, including, HTML, PDF, syntax trees, or image formats.
 
 ## HTTP Status Codes
 
