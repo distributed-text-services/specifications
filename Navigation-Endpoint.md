@@ -102,9 +102,9 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
 
 ## Examples
 
-### Children of a text identifier
+### Passage References as children of a textual Resource
 
-The client wants to retrieve a list of passage identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5*.
+The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified as  *urn:cts:greekLit:tlg0012.tlg001.opp-grc5*.
 
 #### Example of url : 
 
@@ -137,9 +137,9 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 }
 ```
 
-### Descendants of a text identifier
+### Passage References as descendants of a textual Resource
 
-The client wants to retrieve a list of passage identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and can be found at the second level of the citation tree of the document.
+The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and can be found at the second level of the citation tree of the document.
 
 #### Example of url : 
 
@@ -175,9 +175,9 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 }
 ```
 
-### Children of a passage
+### Passage References as children of a Passage
 
-The client wants to retrieve a list of passage identifiers that are part of the document *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
+The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
 
 #### Example of url : 
 
@@ -209,9 +209,9 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 }
 ```
 
-### Descendants of a passage
+### Passage References as descendants of a Passage
 
-The client wants to retrieve a list of grand-children passage identifiers that are part of the document *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
+The client wants to retrieve a list of grand-children passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
 #### Example of url : 
 
@@ -245,7 +245,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 }
 ```
 
-### Ranges of references
+### Ranges of passage references
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
@@ -280,7 +280,7 @@ The client wants to retrieve a list of passage identifiers which are between two
 }
 ```
 
-### Descendant reference ranges
+### Descendant passage reference ranges
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
@@ -320,7 +320,7 @@ The client wants to retrieve a list of passage identifiers which are between two
 
 ### Passages grouped by the provider 
 
-The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the document *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
+The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
 #### Example of url : 
 
@@ -355,7 +355,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 ### Retrieval of typology of references 
 
-Some passages may have a metadata type. The `citeType` refers to the type of citable node has been evaluated as. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
+Some passages may have a metadata type. The `citeType` refers to the type of a citable node. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
 
 #### Example of url : 
 
