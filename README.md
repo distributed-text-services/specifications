@@ -66,7 +66,7 @@ The following individuals have contributed to this effort:
 * The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation may be
 used by a wide variety of text publishers. It is currently deployed by:
     * The Alpheios Project (https://alpheios.net) at http://texts.alpheios.net/api/dts
-    *  Ecole des Chartes
+    * École des Chartes ( http://dev.chartes.psl.eu/api/nautilus/dts and http://http://dev.chartes.psl.eu/dts-demo/ for a small interface based on it)
 
 * Beta maṣāḥǝft: Manuscripts of Ethiopia and Eritrea (http://betamasaheft.eu/)
 
