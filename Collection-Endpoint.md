@@ -437,7 +437,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 
 #### Example of url : 
 
-- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parent`
+- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parents`
 
 #### Headers
 

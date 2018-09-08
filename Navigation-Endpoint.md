@@ -9,7 +9,7 @@ Here is the scheme for the current draft. Everything that is not marked as Optio
 JSON wide attributes :
 
 Item properties :
-- `@base` is the URI of the Document API at which we can retrieve passages
+- `dts:passage` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID of the current request
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:level` defines the level of the reference given. 
@@ -33,7 +33,7 @@ Item properties :
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
 | start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
-| groupSize | Retrieve passages in groups of this size instead of single units | GET |
+| groupBy | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 | exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
 
@@ -62,19 +62,25 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/na
   "mapping": [
     {
       "@type": "IriTemplateMapping",
-      "variable": "collection_id",
+      "variable": "id",
       "property": "hydra:freetextQuery",
       "required": true
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "passage",
+      "variable": "ref",
       "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
       "variable": "page",
+      "property": "hydra:freetextQuery",
+      "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
+      "variable": "groupBy",
       "property": "hydra:freetextQuery",
       "required": false
     },
