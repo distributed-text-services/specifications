@@ -78,6 +78,8 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 
 ### Root collection
 
+This is an example of a top-level Collection that groups texts into 3 categories.
+
 #### Example of url : 
 
 - `/api/dts/collections/`
@@ -136,7 +138,9 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 ```
 
 
-### Sub-collection, not readable but small
+### Child collection containing a single work
+
+The example is a child of the parent root collection. It contains a single textual work as a member collection.
 
 #### Example of url : 
 
@@ -200,7 +204,10 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 }
 ```
 
-### Sub-collection, not readable but with readable members
+### Child collection representing a single work
+
+The example is a child collection. It represent a single textual work and its members are textual Resources that are individual expressions of that work. These Resources are therefore Readable Collections.
+
 
 #### Note
 
@@ -286,7 +293,8 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 }
 ```
 
-### Sub-collection readable
+### Child Readable Collection (i.e. a textual Resource) 
+This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: dts:references for retrieval of passage references and dts:passage for retrieval of the entire collection of text passages (i.e the full document itself).
 
 #### Example of url : 
 
@@ -385,7 +393,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```
 
 
-### Paginated sub-collection
+### Paginated Child Collection
+
+This is an example of a paginated request for a Child Collection's members.
 
 #### Example of url : 
 
@@ -433,7 +443,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 }
 ```
 
-### Querying parents
+### Parent Collection Query
+
+This is an example of a query for the parents of a Collection.
 
 #### Example of url : 
 
