@@ -18,7 +18,7 @@ JSON wide attributes :
 
 Item properties :
 
-- `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dct:title`, e.g. for internationalization.
+- `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dc:title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
 - `totalItems` is the number of children contained by the object
@@ -53,8 +53,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
   "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
+        "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
   "template": "/dts/api/collection/?id={collection_id}&page={page}",
@@ -98,8 +97,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id": "general",
     "@type": "Collection",
@@ -108,7 +106,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"fr" : "Collection Générale de l'École Nationale des Chartes"}
+            {"@lang": "fr", "@value": "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "member": [
@@ -159,8 +157,7 @@ The example is a child of the parent root collection. It contains a single textu
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id": "lasciva_roma",
     "@type": "Collection",
@@ -231,7 +228,6 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0",
     },
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
@@ -267,7 +263,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                     "dc:Text"
                 ],
                 "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-                "dct:dateCopyrighted": 1879,
+                "dc:dateCopyrighted": 1879,
                 "dc:creator": [
                     {"@lang": "en", "@value": "Anonymous"}
                 ],
@@ -312,10 +308,8 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 {
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dct": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "dc": "http://purl.org/dc/elements/1.1/",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
@@ -333,7 +327,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
             "dc:Text"
         ],
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-        "dct:dateCopyrighted": 1879,
+        "dc:dateCopyrighted": 1879,
         "dc:creator": [
             {"@lang": "en", "@value": "Anonymous"}
         ],
@@ -363,10 +357,9 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 {
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dct": "http://purl.org/dc/terms/",
+        "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "dc": "http://purl.org/dc/elements/1.1/",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "dc": "http://purl.org/dc/elements/1.1/"
     },
     "@id": "https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "@type" : "Resource",
@@ -413,10 +406,8 @@ This is an example of a paginated request for a Child Collection's members.
 {
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dct": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "dc": "http://purl.org/dc/elements/1.1/",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id": "general",
     "@type": "Collection",
@@ -425,7 +416,7 @@ This is an example of a paginated request for a Child Collection's members.
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"fr" : "Collection Générale de l'École Nationale des Chartes"}
+            {"@lang": "fr", "@value" : "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "@id" : "lettres_de_poilus",
@@ -463,10 +454,8 @@ This is an example of a query for the parents of a Collection.
 {
     "@context": {
         "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dct": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "dc": "http://purl.org/dc/elements/1.1/",
-        "tei": "http://www.tei-c.org/ns/1.0",
+        "dc": "http://purl.org/dc/terms/",
+        "dts": "https://w3id.org/dts/api#"
     },
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
@@ -480,11 +469,10 @@ This is an example of a query for the parents of a Collection.
             "@value": "Anonymous lascivious Poems "
         }],
         "dc:type": [
-            "http://chs.harvard.edu/xmlns/cts#edition",
-            "dc:Text"
+            "http://chs.harvard.edu/xmlns/cts#edition"
         ],
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-        "dct:dateCopyrighted": 1879,
+        "dc:dateCopyrighted": 1879,
         "dc:creator": [
             {"@lang": "en", "@value": "Anonymous"}
         ],
