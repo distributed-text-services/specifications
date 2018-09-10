@@ -1,6 +1,6 @@
 # Distributed Text Services (DTS)
 
-*The DTS Specification is currently in Candidate Recommendation Status.*
+*The DTS Specification is currently a First Public Working Draft.*
 
 ## What
 
