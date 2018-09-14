@@ -161,7 +161,7 @@ The example is a child of the parent root collection. It contains a single textu
     },
     "@id": "lasciva_roma",
     "@type": "Collection",
-    "totalItems": 2,
+    "totalItems": 3,
     "title" : "Lasciva Roma",
     "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
     "dts:dublincore": {
