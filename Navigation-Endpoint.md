@@ -12,6 +12,7 @@ Item properties :
 - `dts:passage` is the URI of the Document API at which we can retrieve passages
 - `@id` is the ID of the current request
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
+- `dts:citeType` defines the default type of references listed in `member`
 - `dts:level` defines the level of the reference given. 
 - `dts:passage` contains a URI template to the Document endpoint
 - `member` is a list of passages
@@ -381,7 +382,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "foo": "http://foo.bar/ontology"
+        "foo": "http://foo.bar/ontology#"
     },
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
     "dts:citeDepth" : 1,
@@ -424,7 +425,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#",
-        "foo": "http://foo.bar/ontology"
+        "foo": "http://foo.bar/ontology#"
     },
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
     "dts:citeDepth" : 1,
