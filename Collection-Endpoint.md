@@ -106,7 +106,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"@lang": "fr", "@value": "Collection Générale de l'École Nationale des Chartes"}
+            {"@language": "fr", "@value": "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "member": [
@@ -169,11 +169,11 @@ The example is a child of the parent root collection. It contains a single textu
             "Thibault Clérice", "http://orcid.org/0000-0003-1852-9204"
         ],
         "dc:title" : [
-            {"@lang": "la", "@value": "Lasciva Roma"},
+            {"@language": "la", "@value": "Lasciva Roma"},
         ],
         "dc:description": [
             {
-                "@lang": "en",
+                "@language": "en",
                 "@value": "Collection of primary sources of interest in the studies of Ancient World's sexuality"
             }
         ],
@@ -187,11 +187,11 @@ The example is a child of the parent root collection. It contains a single textu
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
                 "dc:creator": [
-                    {"@lang": "en", "@value": "Anonymous"}
+                    {"@language": "en", "@value": "Anonymous"}
                 ],
                 "dc:language": ["la", "en"],
                 "dc:description": [
-                    { "@lang": "en", "@value": "Anonymous lascivious Poems" }
+                    { "@language": "en", "@value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
@@ -235,12 +235,12 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "dts:dublincore": {
         "dc:type": ["http://chs.harvard.edu/xmlns/cts#work"],
         "dc:creator": [
-            {"@lang": "en", "@value": "Anonymous"}
+            {"@language": "en", "@value": "Anonymous"}
         ],
         "dc:language": ["la", "en"],
-        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
+        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "en",
+           "@language": "en",
             "@value": "Anonymous lascivious Poems "
         }]
     },
@@ -253,9 +253,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "description": "Priapeia based on the edition of Aemilius Baehrens",
             "totalItems": 0,
             "dts:dublincore": {
-                "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
+                "dc:title": [{"@language": "la", "@value": "Priapeia"}],
                 "dc:description": [{
-                   "@lang": "en",
+                   "@language": "en",
                    "@value": "Anonymous lascivious Poems "
                 }],
                 "dc:type": [
@@ -265,7 +265,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
                 "dc:dateCopyrighted": 1879,
                 "dc:creator": [
-                    {"@lang": "en", "@value": "Anonymous"}
+                    {"@language": "en", "@value": "Anonymous"}
                 ],
                 "dc:contributor": ["Aemilius Baehrens"],
                 "dc:language": ["la", "en"]
@@ -317,9 +317,9 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
     "dts:dublincore": {
-        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
+        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "en",
+           "@language": "en",
             "@value": "Anonymous lascivious Poems "
         }],
         "dc:type": [
@@ -329,7 +329,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
         "dc:dateCopyrighted": 1879,
         "dc:creator": [
-            {"@lang": "en", "@value": "Anonymous"}
+            {"@language": "en", "@value": "Anonymous"}
         ],
         "dc:contributor": ["Aemilius Baehrens"],
         "dc:language": ["la", "en"]
@@ -416,7 +416,7 @@ This is an example of a paginated request for a Child Collection's members.
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "dc:title": [
-            {"@lang": "fr", "@value" : "Collection Générale de l'École Nationale des Chartes"}
+            {"@language": "fr", "@value" : "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "@id" : "lettres_de_poilus",
@@ -463,9 +463,9 @@ This is an example of a query for the parents of a Collection.
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
     "dts:dublincore": {
-        "dc:title": [{"@lang": "la", "@value": "Priapeia"}],
+        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
         "dc:description": [{
-           "@lang": "en",
+           "@language": "en",
             "@value": "Anonymous lascivious Poems "
         }],
         "dc:type": [
@@ -474,7 +474,7 @@ This is an example of a query for the parents of a Collection.
         "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
         "dc:dateCopyrighted": 1879,
         "dc:creator": [
-            {"@lang": "en", "@value": "Anonymous"}
+            {"@language": "en", "@value": "Anonymous"}
         ],
         "dc:contributor": ["Aemilius Baehrens"],
         "dc:language": ["la", "en"]
@@ -502,11 +502,11 @@ This is an example of a query for the parents of a Collection.
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
                 "dc:creator": [
-                    {"@lang": "en", "@value": "Anonymous"}
+                    {"@language": "en", "@value": "Anonymous"}
                 ],
                 "dc:language": ["la", "en"],
                 "dc:description": [
-                    { "@lang": "en", "@value": "Anonymous lascivious Poems" }
+                    { "@language": "en", "@value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
