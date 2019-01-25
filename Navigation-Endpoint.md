@@ -32,8 +32,8 @@ Item properties :
 | id   | identifier for a document |  GET    |
 | ref | passage identifier (used together with `id`) | GET    |
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
-| start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
-| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
+| start | (For range) Start of the range passages (inclusive, not to be used with `ref`) | GET |
+| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `ref`) | GET |
 | groupBy | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 | exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
@@ -331,7 +331,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2`
+- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupBy=2`
 
 #### Headers
 

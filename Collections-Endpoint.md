@@ -28,7 +28,7 @@ Item properties :
 - (Optional) `dts:dublincore` contains Dublin Core Terms metadata
 - (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
 - (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
-- (Optional) `dts:passage` contains a link to the Passage API for the object
+- (Optional) `dts:passage` contains a link to the Documents API for the object
 - (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
 - (Optional) `dts:citeStructure` holds a declared citation tree, see [Sub-collection readable](#sub-collection-readable)
 
