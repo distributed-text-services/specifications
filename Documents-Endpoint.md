@@ -110,7 +110,7 @@ Retrieve the passage `2` of `bgu;11;2029`
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collections" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collection" | 
 
 #### Response
 
@@ -154,7 +154,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collections/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collections" | 
+| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collections/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" | 
 
 #### Response
 
@@ -196,7 +196,7 @@ Retrieve the full document bgu;11;2029
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collections" | 
+| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collection" | 
 
 #### Response
 
