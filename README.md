@@ -7,7 +7,7 @@
 The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
 It specifies 3 distinct operation endpoints:
 
-- The [Collection Endpoint](Collection-Endpoint.md) is used to navigate the text collection contents
+- The [Collections Endpoint](Collection-Endpoint.md) is used to navigate the text collection contents
 - The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
 - The [Document Endpoint](Document-Endpoint.md) is used to retrieve complete or partial texts
 
