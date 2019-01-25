@@ -1,11 +1,11 @@
-# Document Endpoint
+# Documents Endpoint
 
-The documents endpoint is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
+The Documents endpoint is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
 
 ## Default Scheme
 
-- Implementations of the DTS document endpoint **can** support as many response formats as the content provider wishes.
-- Implementations of the DTS document endpoint  **must**, at minimum, support an `application/tei+xml` response.
+- Implementations of the DTS Documents endpoint **can** support as many response formats as the content provider wishes.
+- Implementations of the DTS Documents endpoint  **must**, at minimum, support an `application/tei+xml` response.
 - The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
 - If the document or passage returned is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` element of the DTS Namespace (`https://w3id.org/dts/api#`) such as
 
@@ -24,7 +24,7 @@ The documents endpoint is used to access the data for documents, as opposed to m
 
 ### Query Parameters
 
-The documents endpoint supports the following query parameters:
+The Documents endpoint supports the following query parameters:
 
 | name | description                              | methods |
 |------|------------------------------------------|---------|
@@ -48,17 +48,17 @@ When applicable, the following links must be provided in the Link property of th
 
 | Name of the property | Description of its value |
 | -------------------- | ------------------------ |
-| prev | Previous passage of the document in the Document endpoint |
-| next | Next passage of the document in the Document endpoint |
-| up | Parent passage of the document in the Document endpoint |
-| first | First passage of the document in the Document endpoint  |
-| last | Last passage of the document in the Document endpoint |
+| prev | Previous passage of the document in the Documents endpoint |
+| next | Next passage of the document in the Documents endpoint |
+| up | Parent passage of the document in the Documents endpoint |
+| first | First passage of the document in the Documents endpoint  |
+| last | Last passage of the document in the Documents endpoint |
 | contents | Link to the Navigation Endpoint for the current document |
-| collection | Link to the Collection endpoint for the current document |
+| collections | Link to the Collections endpoint for the current document |
 
 ### URI Template
 
-Here is a template of the URI for Document API. The route itself (`/dts/api/document/`) is up to the implementer.
+Here is a template of the URI for Documents API. The route itself (`/dts/api/documents/`) is up to the implementer.
 
 ```json
 {
@@ -68,7 +68,7 @@ Here is a template of the URI for Document API. The route itself (`/dts/api/docu
         "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/document/?id={collection_id}&ref={ref}&start={start}&end={end}",
+  "template": "/dts/api/documents/?id={collection_id}&ref={ref}&start={start}&end={end}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -110,7 +110,7 @@ Retrieve the passage `2` of `bgu;11;2029`
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collections" | 
 
 #### Response
 
@@ -154,7 +154,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" | 
+| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collections/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collections" | 
 
 #### Response
 
@@ -196,7 +196,7 @@ Retrieve the full document bgu;11;2029
 | Key | Value | 
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" | 
+| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collections" | 
 
 #### Response
 

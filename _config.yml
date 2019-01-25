@@ -5,9 +5,9 @@ show_downloads: false
 menu:
   - title : "Entry Point"
     url: "Entry.html"
-  - title : "Collection Endpoint"
-    url: "Collection-Endpoint.html"
+  - title : "Collections Endpoint"
+    url: "Collections-Endpoint.html"
   - title : "Navigation Endpoint"
     url: "Navigation-Endpoint.html"
-  - title : "Document Endpoint"
-    url: "Document-Endpoint.html"
+  - title : "Documents Endpoint"
+    url: "Documents-Endpoint.html"

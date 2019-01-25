@@ -7,11 +7,11 @@
 The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
 It specifies 3 distinct operation endpoints:
 
-- The [Collections Endpoint](Collection-Endpoint.md) is used to navigate the text collection contents
+- The [Collections Endpoint](Collections-Endpoint.md) is used to navigate the text collection contents
 - The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
-- The [Document Endpoint](Document-Endpoint.md) is used to retrieve complete or partial texts
+- The [Documents Endpoint](Documents-Endpoint.md) is used to retrieve complete or partial texts
 
-The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document endpoint is specified to return TEI/XML of the requested text or fragment.
+The Collections and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Documents endpoint is specified to return TEI/XML of the requested text or fragment.
 
 Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
 and individual text publishers are encouraged to implement this API in their own projects where appropriate.
@@ -43,7 +43,7 @@ The DTS API enables its implementors to support:
 
 The DTS API imposes the following requirements on implementors:
 
-* Implementation of the Document endpoint requires the ability to express text as TEI/XML
+* Implementation of the Documents endpoint requires the ability to express text as TEI/XML
 
 ## Who
 

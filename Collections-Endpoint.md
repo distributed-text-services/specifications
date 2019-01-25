@@ -6,7 +6,7 @@ DTS does not specify URLs. Clients should discover URLs using navigation and lin
 
 ### Hydra Representation and Hierarchy
 
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping. 
+DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
 
 ## Scheme
 
@@ -41,12 +41,12 @@ The collections endpoint supports the following query parameters:
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | identifier for a collection or document. |  GET    |
-| page | page of the current collections members |  GET    |
+| page | page of the current collection's members |  GET    |
 | nav  | whether members of the collection are its `children` (default)  or `parents` | GET |
 
 ### URI Template
 
-Here is a template of the URI for Collection API. The route itself (`/dts/api/collection/`) is up to the implementer.
+Here is a template of the URI for Collections API. The route itself (`/dts/api/collections/`) is up to the implementer.
 
 ```json
 {
@@ -56,7 +56,7 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
         "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/collection/?id={collection_id}&page={page}",
+  "template": "/dts/api/collections/?id={collection_id}&page={page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
