@@ -10,9 +10,9 @@
 
 ## Media Types
 
-The Collection and Navigation endpoints of the DTS API output `application/ld+json` adhering to Hydra conventions [http://www.hydra-cg.com](http://www.hydra-cg.com). The `@id` of any resource can be any URI, which may be a URL or a URI.
+The Collections and Navigation endpoints of the DTS API output `application/ld+json` adhering to Hydra conventions [http://www.hydra-cg.com](http://www.hydra-cg.com). The `@id` of any resource can be any URI, which may be a URL or a URI.
 
-The Document endpoint of the DTS API __must__ be able to return `application/tei+xml`.  Implementers of the API may return additional media-types for document content, including, HTML, PDF, syntax trees, or image formats.
+The Documents endpoint of the DTS API __must__ be able to return `application/tei+xml`.  Implementers of the API may return additional media-types for document content, including, HTML, PDF, syntax trees, or image formats.
 
 ## Depth of secondary properties
 
@@ -27,7 +27,7 @@ In properties such as `dts:extensions` and `dts:dublincore`, the following rule 
 
 ## HTTP Status Codes
 
-Standard conventions for HTTP Status Codes are used.  No custom status codes are allowed.  The Document endpoint may report error codes in XML. See the individual endpoint specifications for detailed information.
+Standard conventions for HTTP Status Codes are used.  No custom status codes are allowed.  The Documents endpoint may report error codes in XML. See the individual endpoint specifications for detailed information.
 
 ## Error messages
 
@@ -43,7 +43,7 @@ Parts of the APIs whose response format is LD+JSON should follow the [Hydra stan
 }
 ```
 
-The **same** situation in the document API will be encoded in XML : 
+The **same** situation in the Documents API will be encoded in XML : 
 
 ```xml
 <error statusCode="429" xmlns="https://w3id.org/dts/api#">
@@ -69,4 +69,4 @@ If the client does a `GET` on the base API endpoint,, the following response is 
 }
 ```
 
-This response provides the base path for each of the 3 specified endpoints: collection, navigation and documents. All other resources can be discovered via navigation of individual endpoint responses.  Base paths to individual endpoints URLs shown in response payloads may vary from these base endpoint paths.
+This response provides the base path for each of the 3 specified endpoints: collections, navigation and documents. All other resources can be discovered via navigation of individual endpoint responses.  Base paths to individual endpoints URLs shown in response payloads may vary from these base endpoint paths.

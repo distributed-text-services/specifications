@@ -9,12 +9,12 @@ Here is the scheme for the current draft. Everything that is not marked as Optio
 JSON wide attributes :
 
 Item properties :
-- `dts:passage` is the URI of the Document API at which we can retrieve passages
+- `dts:passage` is the URI of the Documents API at which we can retrieve passages
 - `@id` is the ID of the current request
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:citeType` defines the default type of references listed in `member`
 - `dts:level` defines the level of the reference given. 
-- `dts:passage` contains a URI template to the Document endpoint
+- `dts:passage` contains a URI template to the Documents endpoint
 - `member` is a list of passages
   - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
   - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
@@ -32,8 +32,8 @@ Item properties :
 | id   | identifier for a document |  GET    |
 | ref | passage identifier (used together with `id`) | GET    |
 | level | Depth for passages we want to retrieve identifiers of  | GET    |
-| start | (For range) Start of the range passages (inclusive, not to be used with `passage`) | GET |
-| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `passage`) | GET |
+| start | (For range) Start of the range passages (inclusive, not to be used with `ref`) | GET |
+| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `ref`) | GET |
 | groupBy | Retrieve passages in groups of this size instead of single units | GET |
 | max | Allows for limiting the number of results and getting pagination | GET | 
 | exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
@@ -48,7 +48,7 @@ The response contains the following response headers:
 
 ### URI Template
 
-Here is a template of the URI for Collection API. The route itself (`/dts/api/navigation/`) is up to the implementer.
+Here is a template of the URI for Navigation API. The route itself (`/dts/api/navigation/`) is up to the implementer.
 
 ```json
 {
@@ -140,7 +140,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "2"},
       {"ref": "3"}
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -178,7 +178,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "3.1"},
       {"ref": "3.2"}
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -212,7 +212,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "1.1"},
       {"ref": "1.2"}
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -248,7 +248,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
       {"ref": "1.2.1"},
       {"ref": "1.2.2"}
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
 ```
 
@@ -283,7 +283,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "2"},
       {"ref": "3"}
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -321,7 +321,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "3.1"},
       {"ref": "3.2"},
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
 ```
 
@@ -331,7 +331,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 #### Example of url : 
 
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupSize=2`
+- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupBy=2`
 
 #### Headers
 
@@ -356,7 +356,7 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
       {"start": "1.1.1", "end": "1.1.2"},
       {"start": "1.2.1", "end": "1.2.2"},
     ],
-    "dts:passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
 ```
 
@@ -398,7 +398,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       { "ref": "3" },
       // And so on
     ],
-    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
 }
 ```
 
@@ -475,6 +475,6 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       },
       // And so on
     ],
-    "dts:passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
 }
 ```
