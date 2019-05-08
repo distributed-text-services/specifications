@@ -1,13 +1,24 @@
-# Documents Endpoint
+# Document Endpoint
 
-The Documents endpoint is used to access the data for documents, as opposed to metadata (which is found in collections).  The representation of a document is up to the implementation.
+The documents endpoint is used to access and modify the content of documents, as opposed to metadata (which is found in collections). Implementations must at least support reading documents using GET requests as described below. The other request methods (POST, PUT, DELETE) are not required and they may be implemented selectively. For example, an implementation could allow PUT operations to update the contents of a document, but not support the total removal of document sections using DELETE. if an implementation is going to allow modification of document contents please do so using these methods as described below. The API documentation for each implementation must clearly indicate which methods are supported for this endpoint.
 
-## Default Scheme
+## Default Request and Response Body Format
 
-- Implementations of the DTS Documents endpoint **can** support as many response formats as the content provider wishes.
-- Implementations of the DTS Documents endpoint  **must**, at minimum, support an `application/tei+xml` response.
-- The scheme for the `application/tei+xml` needs to be containing the `<TEI>` rootnode of the namespace `http://www.tei-c.org/ns/1.0`.
-- If the document or passage returned is a reconstruction, the reconstruction of the required fragment should be embedded in the `<fragment>` element of the DTS Namespace (`https://w3id.org/dts/api#`) such as
+Implementations of the DTS document endpoint  **must**, at minimum, return textual data in an XML format compliant with the Text Encoding Initiative (TEI) guidelines (`application/tei+xml` response format). The XML must be well formed and valid. This should be the default response format.
+
+Implementations **may** return requested data in as many other formats as the content provider wishes. Other formats should not be included in the default response, but should be returned (one format per request) when an alternate format is specified in the request.
+
+The root node of the XML response must be the `<TEI>` root element of the namespace `http://www.tei-c.org/ns/1.0`. So a response would normally look like this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <!-- XML of the document requested here -->
+</TEI>
+```
+If the request returns a complete document, it is returned directly inside this `<TEI>` element.
+
+If the data to be returned is not a complete document, the textual data should be embedded in the `<fragment>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -17,48 +28,56 @@ The Documents endpoint is used to access the data for documents, as opposed to m
   </dts:fragment>
 </TEI>
 ```
-- If the request returns a complete document, it is returned directly, without a `dts:fragment` element.
-- There is no limitation to what can be contained by `dts:fragment` or what its siblings can be. The only limiting factor is that `dts:fragment` should contain the requested fragment. This permits an implementation to return contextual material elsewhere in the document alongside the requested fragment.  
+There is no limitation as to what can be contained by `dts:fragment` or what its siblings can be provided they are well formed and valid. The only limiting factor is that `dts:fragment` should contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment. Note, though, that most metadata should be accessed through the `collection` endpoint instead.
 
-## URI 
+For requests that include a document as the request body (`PUT` and `POST`) this request body should follow the same guidelines. An implementation **must**, as the default, accept TEI-compliant XML documents and fragments as described above. Implementations **may** also allow a request body in any other format, but only when a format is specified via the `format` query parameter.
+
+## Preserving the Integrity of Edited Documents
+
+Implementations of the DTS specification need not allow any write, update, or delete operations. If they do, however, this raises questions around how to maintain the integrity of the document on the server.
+
+### Validating Changes to Documents
+
+Because of its flexibility, at some points this specification relies on clients to ensure that the XML they submit is correctly structured. This requires more than simply that clients submit valid TEI XML when creating or editing a text segment. It is strongly recommended that servers implementing these extended methods offer robust validation of any submitted XML. This should include validating that the submitted text or fragment
+
+- is well-formed XML
+- satsfies the requirements of the TEI schema
+- is consistent with the citation structure of the document being edited
+- is consistent with the specific application of the TEI specification being used by the implementing project
+
+Failure to meet any of these criteria should result in a failed request and an error response that pinpoints the problem in the submitted text as specifically as possible.
+
+### Restricting the Scope of Editing Operations
+
+This burden of validation can be mitigated by restricting editing operations to one bottom-level segment of the document at a time. In a document with a three-level structural hierarchy of book, paragraph, and line, this would mean that only one line could be edited or deleted at a time. Such a restriction would allow the server to easily control the XML document structure. It would also, though, make some larger-scale editing operations unwieldy.
+
+This specification leaves the choice to enforce editing restrictions like this up to the implementer. If such restrictions are imposed, any request that is rejected as a result must be accompanied by a clear error message. The error message must (a) explain the restriction, and (b) provide a URL where the restriction is documented.
+
+## URI
 
 ### Query Parameters
 
-The Documents endpoint supports the following query parameters:
+The documents endpoint supports the following query parameters:
 
 | name | description                              | methods |
 |------|------------------------------------------|---------|
-| id   | identifier for a document |  GET    |
-| ref | passage identifier (used together with `id` can't be used with `start` and `end`) | n/a    |
-| start | (For range) Start of a range of passages (can't be used with `ref`) | GET |
-| end |  (For range) End of a range of passages (requires `start` and no `ref`) | GET |
+| id	| (Required) identifier for a document	| GET, POST, PUT, DELETE |
+| ref   | passage identifier (used together with `id`; can’t be used with `start` and `end`)	| GET, PUT, DELETE |
+| start	| (For range) Start of a range of passages (can’t be used with `ref`)	| GET, PUT, DELETE |
+| end	| (For range) End of a range of passages (requires `start` and no `ref`)	| GET, PUT, DELETE |
+| after | (Either this or `before` required for POST) passage after which the new segment should be inserted | POST |
+| before | (Either this or `after` required for POST) passage after which the new segment should be inserted | POST |
+| token	 | (May be required) Authentication token for access control	| POST, PUT, DELETE |
 
-### Response Headers
+Note that one must either provide a "ref" parameter __or__ a pair of "start" and "end" parameters. A request cannot combine "ref" with the other two. If, say, a "ref" and a "start" are both provided this should cause the request to fail.
 
-The response contains the following response headers:
+Two parameters are used only when creating new document sections using a `POST` request: `after` and `before`. These allow one to specify where a new text segment should be inserted. One or the other of `after` and `post` must be included in a POST request.
 
-| name | description |
-|------|-------------|
-| Link | Gives relation to next and previous pages |
-| Content-Type | Content type of the response (By default : `application/tei+xml`)|
-
-#### Possible values and their signification for Link
-
-When applicable, the following links must be provided in the Link property of the header :
-
-| Name of the property | Description of its value |
-| -------------------- | ------------------------ |
-| prev | Previous passage of the document in the Documents endpoint |
-| next | Next passage of the document in the Documents endpoint |
-| up | Parent passage of the document in the Documents endpoint |
-| first | First passage of the document in the Documents endpoint  |
-| last | Last passage of the document in the Documents endpoint |
-| contents | Link to the Navigation Endpoint for the current document |
-| collections | Link to the Collections endpoint for the current document |
+Where the implementation needs to control who can access, create, or modify server data, the `token` parameter also allows for token-based authentication (as with OAuth 2.0) if desired. It is up to the implementation to decide how such tokens should be generated and processed.
 
 ### URI Template
 
-Here is a template of the URI for Documents API. The route itself (`/dts/api/documents/`) is up to the implementer.
+Here is a template of the URI for Document API. The route itself (here `/dts/api/document/`) is up to the implementer.
 
 ```json
 {
@@ -68,7 +87,7 @@ Here is a template of the URI for Documents API. The route itself (`/dts/api/doc
         "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/documents/?id={collection_id}&ref={ref}&start={start}&end={end}",
+  "template": "/dts/api/document/?id={document_id}&ref={ref}&start={start}&end={end}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -90,29 +109,118 @@ Here is a template of the URI for Documents API. The route itself (`/dts/api/doc
       "@type": "IriTemplateMapping",
       "variable": "end",
       "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
+      "variable": "after",
+      "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
+      "variable": "before",
+      "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
+      "variable": "token",
+      "required": false
     }
   ]
 }
 ```
 
-## Examples
+## GET Requests on the Document Endpoint
 
-### Retrieve a passage using `ref`
+### GET query parameters
 
-Retrieve the passage `2` of `bgu;11;2029`
+The only strictly required parameter for a GET documents request is `id`. If neither `before` nor `after` is supplied, the server should interpret the request as supplying the initial form of a new document. In that case, the request should fail if (a) some text already exists for that document, or (b) the request body contains a `<dts:fragment>` element.
 
-#### Example of url : 
+### GET request body
+
+A GET request should not include a body. If one is included it should be ignored.
+
+### GET Responses
+
+#### Status codes
+
+A successful GET request to the Documents endpoint should return the status code `200(OK)`.
+
+If a GET request is unsuccessful because of problems with the request parameters, the return status code should be `400(Bad Request)` or a custom status code in the 4XX series signaling a more specific error.
+
+#### Successful response headers
+
+The response after a successful GET request contains the following response headers:
+
+| name | description |
+|------|-------------|
+| Link | Gives relation to next and previous pages |
+| Content-Type | Content type of the response body (by default `application/tei+xml`)|
+
+##### Link header
+
+When applicable, the following links must be provided in the 'Link' header:
+
+| Name of the property | Description of its value |
+| -------------------- | ------------------------ |
+| prev | Previous passage of the document in the Document endpoint |
+| next | Next passage of the document in the Document endpoint |
+| up | Parent passage of the document in the Document endpoint |
+| first | First passage of the document in the Document endpoint  |
+| last | Last passage of the document in the Document endpoint |
+| contents | Link to the Navigation Endpoint for the current document |
+| collection | Link to the Collection endpoint for the current document |
+
+#### Successful response body
+
+The response body after a successful GET request should contain an XML object representing the requested text segment. This XML should be formatted as described above under "Default Request and Response Format".
+
+#### Unsuccessful response headers
+
+An unsuccessful GET request should return the following headers:
+
+| name | description |
+|------|-------------|
+| Location | The URL for the `Document` endpoint documentation |
+| Content-type | Content type of the response body (by default `application/tei+xml`) |
+
+#### Unsuccessful response body
+
+If a GET response returns an error code, the response body should contain an XML object following the DTS specification for XML status responses (https://w3id.org/dts/api). For example, this would be a well-formed response body for a `400(Bad Request)` error:
+
+```xml
+<error statusCode="400" xmlns="https://w3id.org/dts/api">
+  <title>Invalid request parameters</title>
+  <description>The query parameters were not correct.</description>
+</error>
+```
+
+For a `400(Bad Request)` error, the `<description>` should provide as much information as possible about which submitted data was missing or unacceptable. It should indicate whether:
+- there were missing required query parameters
+- any query parameters held unacceptable values, such as a document id that does not match any document on the server
+- the query parameters were acceptable but no such section exists for the requested document
+
+It is strongly recommended that projects implement more specific 4XX-series error responses to handle specific  errors. In such cases the `<description>` of the error response should include both an explanation of the issue and the URL for the necessary documentation.
+
+### GET Example 1: Retrieve a passage using `ref`
+
+Retrieve the passage `2` of the document labeled by the identifier `bgu;11;2029`.
+
+#### GET request url
 
 - GET `/dts/api/documents/?id=bgu;11;2029&ref=2`
 
-#### Headers
+#### Successful GET response status
 
-| Key | Value | 
+- 200(OK)
+
+#### Successful GET response headers
+
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collection" | 
+| Link | </dts/api/documents/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/documents/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/documents/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" |
 
-#### Response
+#### Successful GET response body
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -136,27 +244,31 @@ Retrieve the passage `2` of `bgu;11;2029`
       </fileDesc>
    </teiHeader>
    <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
-    <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος 
+    <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος
    </dts:fragment>
 </TEI>
 ```
 
-### Retrieve a passage using start and end
+### GET Example 2: Retrieve a passage using `start` and `end`
 
-Retrieve the passages 1.1.1 to the passage 1.1.2
+Retrieve the passages 1.1.1 to the passage 1.1.2 of the document labeled by the identifier `urn:cts:latinLit:phi1318.phi001.perseus-lat1`.
 
-#### Example of url : 
+#### GET request url
 
 - GET `/dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.1.1&end=1.1.2`
 
-#### Headers
+#### Successful GET response status
 
-| Key | Value | 
+- 200(OK)
+
+#### Successful GET response headers
+
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collections/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" | 
+| Link | </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/documents/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" |
 
-#### Response
+#### Successful GET response body
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -182,23 +294,26 @@ Retrieve the passages 1.1.1 to the passage 1.1.2
 </TEI>
 ```
 
+### GET Example 3: Retrieve a full document
 
-### Retrieve a full document
+Retrieve the full document labeled by the identifier `bgu;11;2029`
 
-Retrieve the full document bgu;11;2029
-
-#### Example of url : 
+#### GET request url
 
 - GET `/dts/api/documents/?id=bgu;11;2029`
 
-#### Headers
+#### Successful GET response status
 
-| Key | Value | 
+- 200(OK)
+
+#### Successful GET response headers
+
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collections/?id=bgu;11;2029>; rel="collection" | 
+| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" |
 
-#### Response
+#### Successful GET response body
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -249,19 +364,491 @@ Retrieve the full document bgu;11;2029
             <placeName>Dionysias</placeName>
          </head>
          <div xml:lang="grc" type="edition" xml:space="preserve"><ab>
-    <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος 
+    <lb n="1"/><expan>τετελ<ex>ώνηται</ex></expan> <expan>δι<ex>ὰ</ex></expan> <expan>πύλ<ex>ης</ex></expan> Διονυσιάδος
 
-    <lb n="2"/>λιμένος Μέμφεως Ζώσιμος 
+    <lb n="2"/>λιμένος Μέμφεως Ζώσιμος
 
-    <lb n="3"/><expan><supplied reason="lost">ἐ</supplied><unclear>ξ</unclear>ά<ex>γων</ex></expan> <supplied reason="lost"><expan>ἐ<ex>πὶ</ex></expan> </supplied><expan><supplied reason="lost">κα</supplied>μ<ex>ή</ex>λ<ex>οις</ex></expan> δυσὶ <num value="2"/> ἐλαίου <expan>μετ<ex>ρητὰς</ex></expan> ἐννέα <num value="9"/> 
+    <lb n="3"/><expan><supplied reason="lost">ἐ</supplied><unclear>ξ</unclear>ά<ex>γων</ex></expan> <supplied reason="lost"><expan>ἐ<ex>πὶ</ex></expan> </supplied><expan><supplied reason="lost">κα</supplied>μ<ex>ή</ex>λ<ex>οις</ex></expan> δυσὶ <num value="2"/> ἐλαίου <expan>μετ<ex>ρητὰς</ex></expan> ἐννέα <num value="9"/>
 
-    <lb n="4"/><gap reason="lost" quantity="4" unit="character"/><unclear>ρ</unclear>αχ<add place="above">ε</add> τεσσεράκοντα πέντε <num value="45"/> 
+    <lb n="4"/><gap reason="lost" quantity="4" unit="character"/><unclear>ρ</unclear>αχ<add place="above">ε</add> τεσσεράκοντα πέντε <num value="45"/>
 
-    <lb n="5"/><supplied reason="lost"><expan><ex>ἔτους</ex></expan> </supplied><gap reason="lost" quantity="1" unit="character"/><supplied reason="lost"> Ἀντ</supplied>ωνείνου καὶ Οὐήρου τῶν κυρίων 
+    <lb n="5"/><supplied reason="lost"><expan><ex>ἔτους</ex></expan> </supplied><gap reason="lost" quantity="1" unit="character"/><supplied reason="lost"> Ἀντ</supplied>ωνείνου καὶ Οὐήρου τῶν κυρίων
 
     <lb n="6"/><supplied reason="lost">Σεβασ</supplied>τῶν Μεσορὴ ἑκκαιδεκάτῃ. </ab></div>
       </body>
    </text>
 </TEI>
 
+```
+
+## POST Requests on the Document Endpoint  
+
+The POST method of the Documents endpoint allows for creation of new textual passages in a resource. __This method requires that the document already has a metadata record accessible via the Collections endpoint__.
+
+Note that this method should __not__ be used to modify existing segments of text. In other words, if the specified reference label already exists in the document on the server, this method should return an error and refuse to perform the requested operation. If, for example, a document already has a line 6 following the existing line 5, then POST cannot be used to insert new or added text in that existing line 6. Modification of the text in existing document segments must be done using the PUT method instead.
+
+### POST Query parameters
+
+The only strictly required parameters for a POST Documents request are `id` and (if supported) `token`. If neither `before` nor `after` is supplied, the server should interpret the request as supplying the initial form of a new document. In that case, the request should fail if (a) some text already exists for that document, or (b) the request body contains a `<dts:fragment>` element.
+
+In most cases, though, the request will be inserting a new structural segment into a document that already contains some segments. In such instances, the query must include either a `before` or an `after` parameter to indicate where the new text segment will be inserted.
+
+**Neither the `ref` parameter nor the pair of `start`/`end` parameters should be provided in a POST Documents request. The reference information for the inserted segment(s) should be included using the standard TEI attributes in the XML of the request body.**
+
+Note that the `after` or `before` reference should also determine the depth of the insertion in the document's citation structure. The lowest structural level specified in the `after` or `before` reference is the level at which the contents of the XML `<dts:fragment>` will be inserted. In other words, the new segment will be taken to be a sibling to the segment specified in that reference.
+
+### POST Request Body
+
+The body of the POST request must be a properly formed `<TEI>` root node containing TEI compliant XML. See the further specifications under "Default Request and Response Format" above.
+
+Note that in most cases the actual text to be inserted is the __contents__ of the inner `<fragment>` element in the request body. The only exception to this rule is where no structural segment has yet been created for a document, in which case the entire `<TEI>` rootnode (along with all its contents) will be accepted as the initial form of the document.
+
+### POST Responses
+
+#### Status codes
+
+A successful POST request to the Documents endpoint should return the status code `201(Created)`.
+
+If a POST request is unsuccessful because of problems with the request content (i.e., parameters or request body), then the return status code should be `400(Bad Request)` or a custom status code in the 4XX series signaling a more specific error.
+
+A POST request should also return `409(Conflict)` if it would create a new initial form of a document for which some segments already exist (even if those segments are empty). This would happen when no `after` or `before` parameter is supplied, but at least one segment of the document already exists on the server (even if it contains only an empty string).
+
+A POST Documents request also may not result in a text segment whose reference identifier is the same as that of an existing segment. If, for example, a document already includes a segment "4.23.8", then a POST request which would result in a *second* segment "4.23.8" should fail and return `409(Conflict)`.
+
+#### Successful response headers
+
+The response headers after a successful POST Documents request should include a `Location` value. This should be the URL where the newly inserted text segment(s) can be retrieved via a GET request. The response should also include a `Content-type` header with a value of "application/tei+xml".
+
+
+The response should also include a `Link` header as detailed in the core documentation for the Documents endpoint. This `Link` gives URL references for the previous and next segments of the document, a URL for the document's navigation structure, and a URL for the document's Collections metadata. __If no previous or next segment exists, those parts of the `Link` header should give the URL for the newly created segment instead.__ If the request has created multiple segments, the `next` value for the `Link` header should be the last created segment, and the `previous` value should be the first created segment.
+
+#### Successful response body
+
+The response body after a successful POST request should contain an XML object representing the newly created text segment (and any children). This should be identical to the response a client would receive using a GET request to the `Location` indicated in the response header. This will also mean that in most successful requests the XML contained in the response body will be identical to the object sent by the client in the POST.
+
+#### Unsuccessful response headers
+
+In an unsuccessful request, the response headers should include a `Location` whose value is the URL for the Documents endpoint documentation. The response should also include a `Content-type` header with a value of "application/tei+xml".
+
+#### Unsuccessful response body
+
+If a response returns an error code, the response body should contain an XML object following the DTS specification for XML status responses (https://w3id.org/dts/api). For example, this would be a well-formed response body for a `400(Bad Request)` error:
+
+```xml
+<error statusCode="400" xmlns="https://w3id.org/dts/api">
+  <title>Improperly Formed Request Body</title>
+  <description>The body of a POST request to the Documents endpoint must be properly formed XML. If it is submitting the initial text for a new document, the request body must be a <TEI> rootnode with properly formed and schema-compliant children.</description>
+</error>
+```
+
+For a `400(Bad Request)` error, the `<description>` should provide as much information as possible about which submitted data was missing or unacceptable. It should indicate whether:
+- there were missing required query parameters
+- any query parameters held unacceptable values
+- the request body did not have properly formed XML
+- the request body was properly formed but carried unacceptable values
+
+It is strongly recommended that projects implement more specific 4XX-series error responses to handle more specific validation errors such as
+- XML that fails to satisfy the TEI schema
+- XML that conflicts with the current document's citation structure
+- XML that violates other project-specific conventions for implementing the TEI specification
+In such cases the `<description>` of the error response should include both an explanation of the issue and the URL for the necessary documentation.
+
+If a response returns a status of `409(Conflict)` then the XML `<description>` element should contain an indication that the request would result in a duplicate segment in the document's citation structure.
+
+### POST Example 1: Creating the initial text for a new document
+
+In this example we will submit the first structural segments to constitute a new document. Prior to this operation no segments exist for the document on the server. This first POST request only creates verses 1-2 of chapter 1 in the document identified by the URN `urn:cts:ancJewLit:1Enoch`.
+
+Note that a metadata record for the document must already have been added via the Collections endpoint. This is the only way to establish a valid identifier for the document, which is then used for the Documents POST request.
+
+Note too that a `<teiHeader>` element precedes the main `<text>` element. If a `<teiHeader>` is included with the initial form of the document, its metadata should be extracted and integrated with the data accessible via the Collections endpoint (in JSON-LD format).
+
+#### POST request URL
+Notice that this request omits the usual `before` or `after` parameters.
+
+- `/api/dts/documents/?id=urn:cts:ancJewLit:1Enoch&token=XXXXX`
+
+#### POST request body
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <text xml:lang="Ethiopic">
+      <body>
+        <div n="1" xml:id="1En1" type="Chapter">
+          <div n="1:1" xml:id="1En1:1" type="Verse">
+            <app xml:id="1">
+              <rdg wit="#Bertalotto #p"> ቃለ፡​በረከት፡​ዘሄኖከ፡​ዘከመ፡​ባረከ፡​ኅሩያነ፡​ወጻድቃነ፡​እለ፡​ሀለዉ፡​ይኩኑ፡​በዕለተ፡​ምንዳቤ፡​ለአሰስሎ፡​ኵሎ፡​እኩያን፡​ወረሲዓን፡​</rdg>
+            </app>
+          </div>
+          <div n="1:2" xml:id="1En1:2" type="Verse">
+            <app xml:id="2">
+              <rdg wit="#Bertalotto #p">ወአውሥአ፡​ሄኖክ፡​ወይቤ፡​ብእሲ፡​ጻድቅ፡​ዘእምኀበ፡​እግዚአብሔር፡​እንዘ፡​አዕይንቲሁ፡​ክሡታት፡​ወይሬኢ፡​</rdg>
+            </app>
+            <app xml:id="3">
+              <rdg wit="#p">ራዕየ፡​</rdg>
+              <rdg wit="#Bertalotto">ራእየ፡​</rdg>
+            </app>
+            <app xml:id="4">
+              <rdg wit="#Bertalotto #p">ቅዱሰ፡​ዘበሰማያት፡​ዘአርአዩኒ፡​መላእክት፡​ወሰማዕኩ፡​እምኀቤሆሙ፡​ኵሎ፡​ወአእመርኩ፡​አነ፡​ዘእሬኢ፡​ወአኮ፡​ለዝ፡​ትውልድ፡​አላ፡​ለዘ፡​ይመጽኡ፡​ትውልድ፡​ርሑቃን፡​</rdg>
+            </app>
+          </div>
+        </div>
+      </body>
+    </text>
+</TEI>
+```
+
+#### Successful POST response status
+
+- 201(Created)
+
+#### Successful POST response headers
+
+| key | Value |
+| --- | ----- |
+| Location      | /api/dts/documents?id=urn:cts:ancJewLit:1Enoch |
+| Link          | </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:1>; rel="first", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:1>; rel="prev", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:2>; rel="next", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:2>; rel="last", </api/dts/navigation?id=urn:cts:ancJewLit:1Enoch>; rel="contents", </api/dts/collections?id=urn:cts:ancJewLit:1Enoch>; rel="collection"|
+| Content-Type  | application/tei+xml             |
+
+#### Successful POST response body
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <text xml:lang="Ethiopic">
+      <body>
+        <div n="1" xml:id="1En1" type="Chapter">
+          <div n="1:1" xml:id="1En1:1" type="Verse">
+            <app xml:id="1">
+              <rdg wit="#Bertalotto #p"> ቃለ፡​በረከት፡​ዘሄኖከ፡​ዘከመ፡​ባረከ፡​ኅሩያነ፡​ወጻድቃነ፡​እለ፡​ሀለዉ፡​ይኩኑ፡​በዕለተ፡​ምንዳቤ፡​ለአሰስሎ፡​ኵሎ፡​እኩያን፡​ወረሲዓን፡​</rdg>
+            </app>
+          </div>
+          <div n="1:2" xml:id="1En1:2" type="Verse">
+            <app xml:id="2">
+              <rdg wit="#Bertalotto #p">ወአውሥአ፡​ሄኖክ፡​ወይቤ፡​ብእሲ፡​ጻድቅ፡​ዘእምኀበ፡​እግዚአብሔር፡​እንዘ፡​አዕይንቲሁ፡​ክሡታት፡​ወይሬኢ፡​</rdg>
+            </app>
+            <app xml:id="3">
+              <rdg wit="#p">ራዕየ፡​</rdg>
+              <rdg wit="#Bertalotto">ራእየ፡​</rdg>
+            </app>
+            <app xml:id="4">
+              <rdg wit="#Bertalotto #p">ቅዱሰ፡​ዘበሰማያት፡​ዘአርአዩኒ፡​መላእክት፡​ወሰማዕኩ፡​እምኀቤሆሙ፡​ኵሎ፡​ወአእመርኩ፡​አነ፡​ዘእሬኢ፡​ወአኮ፡​ለዝ፡​ትውልድ፡​አላ፡​ለዘ፡​ይመጽኡ፡​ትውልድ፡​ርሑቃን፡​</rdg>
+            </app>
+          </div>
+        </div>
+      </body>
+    </text>
+</TEI>
+```
+
+### POST Example 2: Creating a new section of text in an existing document
+
+In this example we will create a new text segment in the existing document `urn:cts:ancJewLit:1Enoch`. Initially we created the document with just verses 1 and 2 of chapter 1. We will now add a third verse to that same first chapter.
+
+#### POST request URL
+- `/api/dts/documents?id=urn:cts:ancJewLit:1Enoch&after=1:2&token=XXXXX`
+
+#### POST request body
+
+Note that since some text already exists for this document, the new segment is submitted in a `<dts:fragment>` element.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
+    <div n="1:3" xml:id="1En1:3" type="Verse">
+        <app xml:id="5">
+          <rdg wit="#Bertalotto #p">በእንተ፡​ኅሩያን፡​እቤ፡​ወአውሣእኩ፡​በእንቲአሆሙ፡​ምስለ፡​ዘይወጽእ፡​ቅዱስ፡​</rdg>
+        </app>
+        <app xml:id="6">
+          <rdg wit="#p">ወዓቢይ፡​</rdg>
+          <rdg wit="#Bertalotto">ወዐቢይ፡​</rdg>
+        </app>
+        <app xml:id="7">
+          <rdg wit="#Bertalotto #p">እማኅደሩ</rdg>
+        </app>
+    </div>
+  </dts:fragment>
+</TEI>
+```
+
+#### Successful POST response status
+
+- `201(Created)`
+
+#### Successful POST response headers
+
+| key | Value |
+| --- | ----- |
+| Location      | /api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:3 |
+| Link          | </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:1>; rel="first", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:2>; rel="prev", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:3>; rel="next", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:3>; rel="last", </api/dts/navigation?id=urn:cts:ancJewLit:1Enoch>; rel="contents", </api/dts/collections?id=urn:cts:ancJewLit:1Enoch>; rel="collection"|
+| Content-Type  | application/tei+xml               |
+
+#### Successful POST response body
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
+    <div n="1:3" xml:id="1En1:3" type="Verse">
+        <app xml:id="5">
+          <rdg wit="#Bertalotto #p">በእንተ፡​ኅሩያን፡​እቤ፡​ወአውሣእኩ፡​በእንቲአሆሙ፡​ምስለ፡​ዘይወጽእ፡​ቅዱስ፡​</rdg>
+        </app>
+        <app xml:id="6">
+          <rdg wit="#p">ወዓቢይ፡​</rdg>
+          <rdg wit="#Bertalotto">ወዐቢይ፡​</rdg>
+        </app>
+        <app xml:id="7">
+          <rdg wit="#Bertalotto #p">እማኅደሩ</rdg>
+        </app>
+    </div>
+  </dts:fragment>
+</TEI>
+```
+
+## PUT Requests on the Document Endpoint  
+
+The `PUT` method of the Document endpoint allows for modification of existing textual passages in a resource.
+
+Note that this method should __not__ be used to create new structural segments of text. For example, if the citation structure of the document already contains a section "5.7.31" then the `PUT` method may be used to modify that section. If section "5.7.31" does not already exist in the document on the server, an attempt to edit that segment using `PUT` should result in an error response. The `POST` method must first be used to add that segment to the document. Likewise, `PUT` should never result in the deletion of a segment in the document's citation structure. Of course, other XML entities below lowest level of a document's citation structure may be freely added or removed by the `PUT` method.
+
+### PUT Query parameters
+
+The three required parameters for a `PUT` Document request are `id`, `token` (if supported by the implementation), and `ref`. Only one structural segment of the document may be modified in a single `PUT` request.
+
+The `ref` reference determines the structural depth of the modification. Suppose a document has a three-level citation structure represented in XML by nested `<div>` elements. A `PUT` request with a `ref` of "3.16.8" will replace just one `<div>` element at the lowest structural level. If the request is instead sent with a `ref` parameter of "3.16", the submitted `<div>` element will replace the second-level `<div>` with the identifier "3.16". In the latter case, the submitted `<div>` element will need to contain the same series of nested `<div>` elements that represent the existing bottom-level segments in the server's version of the file: "3.16.1", "3.16.2", "3.16.3", etc. It is recommended that implementations check the submitted text before performing upper-level modifications like this, to ensure that no lower-level structural segments are being created or destroyed. Alternately, a client may avoid this issue by only making `PUT` requests at the lowest level of the document's citation structure.
+
+### PUT Request Body
+
+The body of the `PUT` request must be wrapped in a TEI rootnode containing a `<dts:fragment>` entity. See the further specifications under "Default Request and Response Body Format" above.
+
+The contents of this `<dts:fragment>` must be a single XML element (along with its enclosed text and/or children) representing the modified form of the target document section. This single element inside the `<dts:fragment>` will replace the corresponding XML element in the document on the server.   
+
+The text/XML submitted in the body of a Document's `PUT` request will completely replace the XML entity representing the identified text segment. So the submitted fragment __must include the outer element__ identified by the "ref" value. If you identify your submitted text as a modified version of line "12", and if each line is represented by a TEI `<ln>` element, you would include the opening and closing tags `<ln xml:id="16">` and `</ln>` around the changed content. This is to allow modification of the attributes on the outer element tag.
+
+### PUT Responses
+
+#### Status codes
+
+If the specified section of the document is successfully modified, the response status should be `200(OK)`.
+
+If no structural section exists with an identifier matching the `ref` parameter in the request, the response status should be `404(Not Found)`. If there is some other problem with the request data, the response status should be `400(Bad Request)` or a custom status code in the 4XX series signaling a more specific error.
+
+#### Successful response headers
+
+The response headers after a successful `PUT` request should include the following headers:
+
+| name | description |
+|------|-------------|
+| Location | The URL where the newly modified document section can be retrieved via a `GET` request |
+| Link | Gives relation to next and previous pages |
+| Content-Type | Content type of the response body (by default `application/tei+xml`)|
+
+The `Link` header should be structured just as in Document `GET` responses (see above).
+
+#### Successful response body
+
+In a successful `PUT` request, the response body should be an XML object with the same structure as the body of a `GET` response, but containing the the newly modified contents of the specified text section. This allows the client to quickly recognize whether the correct information was updated on the server. In most cases it will also mean that the response body is identical to the body submitted in the `PUT` request.
+
+#### Unsuccessful response headers
+
+The response after an unsuccessful `PUT` request should include the following headers:
+
+| name | description |
+|------|-------------|
+| Location | The URL for the `Document` endpoint documentation |
+| Content-type | Content type of the response body (by default `application/tei+xml`) |
+
+#### Unsuccessful response body
+
+If a response returns an error code, the response body should contain an XML object following the DTS specification for XML status responses (https://w3id.org/dts/api). For example, this would be a well-formed response body for a `400(Bad Request)` error:
+
+```xml
+<error statusCode="400" xmlns="https://w3id.org/dts/api">
+  <title>Improperly Formed Request Body</title>
+  <description>The body of a POST request to the Document endpoint must be properly formed XML.</description>
+</error>
+```
+
+If a response returns a status of `404(Not Found)` then the `<description>` contents should indicate that no section with the requested `ref` identifier exists and that the section must be created before it can be modified.
+
+If the status code is `400(Bad Request)` then the `<description>` should clarify which parts of the request data were not acceptable.
+
+### PUT Example 1: Changing the child elements in a bottom-level section
+
+In this example we will change the contents of the section with the reference "1:3" in the document with the id "urn:cts:ancJewLit:1Enoch". Since this document is a critical edition, that section contains a series of TEI `<app>` elements, each of which contains a set of parallel `<rdg>` elements with alternate textual variants. In the middle `<app>` element we will add a third `<rdg>` option that is empty, representing a manuscript which lacks any corresponding words.
+
+#### PUT request URL
+
+- `/api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:3&token=XXXXX`
+
+#### PUT request body
+
+If you compare this with the initial XML submitted in the `POST` Example 1 above, you will notice that the modification in this case involves changes to the XML child elements, not just to the text they contain. This is permissible since those child elements are below the lowest *structural* level of the document (i.e., the lowest level that can be referenced in the document's standard referencing scheme).
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
+    <div n="1:3" xml:id="1En1:3" type="Verse">
+        <app xml:id="5">
+          <rdg wit="#Bertalotto #p">በእንተ፡​ኅሩያን፡​እቤ፡​ወአውሣእኩ፡​በእንቲአሆሙ፡​ምስለ፡​ዘይወጽእ፡​ቅዱስ፡​</rdg>
+        </app>
+        <app xml:id="6">
+          <rdg wit="#p">ወዓቢይ፡​</rdg>
+          <rdg wit="#Bertalotto">ወዐቢይ፡​</rdg>
+          <rdg wit="#a"></rdg>
+        </app>
+        <app xml:id="7">
+          <rdg wit="#Bertalotto #p">እማኅደሩ</rdg>
+        </app>
+    </div>
+  </dts:fragment>
+</TEI>
+```
+
+##### Successful PUT response status
+
+- `201(Created)`
+
+##### Successful PUT response headers
+
+| key | value |
+| --- | ----- |
+| Link          | </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:2>; rel="prev", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:4>; rel="next", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=145:12>; rel="last", </api/dts/navigation?id=urn:cts:ancJewLit:1Enoch>; rel="contents", </api/dts/collections?id=urn:cts:ancJewLit:1Enoch>; rel="collection"|
+| Content-Type  | application/tei+xml               |
+
+##### Successful PUT response body
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
+    <div n="1:3" xml:id="1En1:3" type="Verse">
+        <app xml:id="5">
+          <rdg wit="#Bertalotto #p">በእንተ፡​ኅሩያን፡​እቤ፡​ወአውሣእኩ፡​በእንቲአሆሙ፡​ምስለ፡​ዘይወጽእ፡​ቅዱስ፡​</rdg>
+        </app>
+        <app xml:id="6">
+          <rdg wit="#p">ወዓቢይ፡​</rdg>
+          <rdg wit="#Bertalotto">ወዐቢይ፡​</rdg>
+          <rdg wit="#a"></rdg>
+        </app>
+        <app xml:id="7">
+          <rdg wit="#Bertalotto #p">እማኅደሩ</rdg>
+        </app>
+    </div>
+  </dts:fragment>
+</TEI>
+```
+
+## DELETE on the Document Endpoint  
+
+The `DELETE` method of the Document endpoint allows for removal of a segment of text from a document. Note that the `DELETE` operation removes the specified segments entirely from the document's reference structure. So if you `DELETE` the segment designated "12.6.2" from a document, there should thereafter be no line "2" in section "12.6" of the server document. If, instead, you simply want to remove the text of a segment, leaving the segment itself in the document structure, you should use the `PUT` method to replace the text with an empty string.
+
+### DELETE Query Parameters
+
+The query parameters that *must* be accepted for a DELETE request are the `id` of the document, `token` (if supported by the implementation), and the same three parameters used in GET requests: `ref`, `start`, and `end`.
+
+Multiple structural segments of the document may be deleted simultaneously. The `start` and `end` parameters should be used as described above for the Document `GET` method, but with one key difference: __both__ a `start` and an `end` parameter must be provided. This is to prevent the accidental deletion of everything before or after the provided reference. If a `start` parameter is provided without a corresponding `end` (or vice versa), the request should trigger an error.
+
+Note that the depth of the reference provided in the `ref` (or `start`/`end`) parameters determines the depth of the delete operation. If a document has three structural levels, and a `DELETE` request is submitted with a `ref` of "12.6", then *all* of the second-level section "12.6" will be removed from its structure. If a `ref` of "12" is submitted for that same document, all of the top-level section "12" will be removed.
+
+### DELETE Request Body
+
+`DELETE` requests do not include a body, so the request body should be empty.
+
+### DELETE Responses
+
+#### Status codes
+
+With a `DELETE` request the returned status code should vary depending on on whether the operation has already concluded when the response is sent. If the deletion is done synchronously, and is finished at response time, the returned status code should be `200(OK)`. If the request simply began an asynchronous deletion process, still incomplete at response time, then the response should return `202(Accept)`.
+
+If no item exists with the `id` specified in the request URL, the response status should be `404(Not Found)`. Similarly, if the document contains no structural segment matching the specific `ref` (or `start`/`end`) value, the response should return `404(Not Found)`. If there is some other problem with the request data, the response status should be `400(Bad Request)` or a custom status code in the 4XX series signaling a more specific error.
+
+#### Successful response headers
+
+ The response for a successful `DELETE` request should include the following headers:
+
+| name | description |
+|------|-------------|
+| Link | Gives relation to next and previous pages |
+| Content-Type | Content type of the response body (by default `application/tei+xml`)|
+
+The `Link` header should be structured as specified above for Document `GET` requests.
+
+Unlike with other methods `POST` and `PUT` requests, the response headers after a successful `DELETE` request should *not* include a `Location` header.
+
+#### Successful response body
+
+In a successful `DELETE` request, the response body should be an XML object with the same structure as a `GET` response, but containing the old contents of the deleted text section. This allows the client to quickly recognize whether the correct segment(s) was removed on the server.
+
+#### Unsuccessful response headers
+
+The response after an unsuccessful `DELETE` request should include the following headers:
+
+| name | description |
+|------|-------------|
+| Location | The URL for the `Document` endpoint documentation |
+| Content-type | Content type of the response body (by default `application/tei+xml`) |
+
+#### Unsuccessful response body
+
+If a response returns an error code, the response body should contain an XML object following the DTS specification for XML status responses (https://w3id.org/dts/api). For example, this would be a well-formed response body for a `400(Bad Request)` error:
+
+```xml
+<error statusCode="404" xmlns="https://w3id.org/dts/api">
+  <title>Segment Not Found</title>
+  <description>The document you requested does exist, but no structural segment exists corresponding to the reference in your request.</description>
+</error>
+```
+
+If a response returns a status of `404(Not Found)` then the `description` value should indicate whether the problem arose from the requested `id` value or the requested `ref` value. In other words, does the requested document not exist on the server, or does that document not contain the requested structural segment(s)?
+
+If the status code is `400(Bad Request)` then the `<description>` should clarify which parts of the request data were not acceptable.
+
+### DELETE Example 1: Removing a Segment from a Document
+
+In this example we will use a `DELETE` request to remove the section with the reference "1:3" from the document with the `id` "urn:cts:ancJewLit:1Enoch". Since this document is a critical edition, that section contains XML markup for the variant readings as well as the text of each reading. This will be a synchronous DELETE operation, so the successful response code will be `200(OK)`.
+
+#### DELETE request URL
+
+- `/api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:3&token=XXXXX`
+
+#### DELETE request body
+
+No body should be sent with the `DELETE` request.
+
+#### Successful DELETE response status
+
+- `200(OK)`
+
+#### Successful DELETE response headers
+
+| key | Value |
+| --- | ----- |
+| Link          | </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:2>; rel="prev", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=1:4>; rel="next", </api/dts/documents?id=urn:cts:ancJewLit:1Enoch&ref=145:12>; rel="last", </api/dts/navigation?id=urn:cts:ancJewLit:1Enoch>; rel="contents", </api/dts/collections?id=urn:cts:ancJewLit:1Enoch>; rel="collection"|
+| Content-Type  | application/ld+json             |
+
+#### successful DELETE response body
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:fragment xmlns:dts="https://w3id.org/dts/api#">
+    <div n="1:3" xml:id="1En1:3" type="Verse">
+        <app xml:id="5">
+          <rdg wit="#Bertalotto #p">በእንተ፡​ኅሩያን፡​እቤ፡​ወአውሣእኩ፡​በእንቲአሆሙ፡​ምስለ፡​ዘይወጽእ፡​ቅዱስ፡​</rdg>
+        </app>
+        <app xml:id="6">
+          <rdg wit="#p">ወዓቢይ፡​</rdg>
+          <rdg wit="#Bertalotto">ወዐቢይ፡​</rdg>
+          <rdg wit="#a"></rdg>
+        </app>
+        <app xml:id="7">
+          <rdg wit="#Bertalotto #p">እማኅደሩ</rdg>
+        </app>
+    </div>
+  </dts:fragment>
+</TEI>
 ```
