@@ -651,7 +651,7 @@ When XML is accepted, the body of the `PUT` request must be wrapped in a TEI roo
 
 The contents of this `<dts:fragment>` must be a single XML element (along with its enclosed text and/or children) representing the modified form of the target document section. This single element inside the `<dts:fragment>` will replace the corresponding XML element in the document on the server.   
 
-The text/XML submitted in the body of a Document's `PUT` request will completely replace the XML entity representing the identified text segment. So the submitted fragment __must include the outer element__ identified by the "ref" value. If you identify your submitted text as a modified version of line "12", and if each line is represented by a TEI `<ln>` element, you would include the opening and closing tags `<ln xml:id="12">` and `</ln>` around the changed content. By including this outer tag in the `PUT` body we allow modification to be made to that outer element's attributes.
+The text/XML submitted in the body of a Document's `PUT` request will completely replace the XML entity representing the identified text segment. So the submitted fragment __must include the outer element__ identified by the "ref" value. If you identify your submitted text as a modified version of line "12", and if each line is represented by a TEI `<l>` element, you would include the opening and closing tags `<l xml:id="12">` and `</l>` around the changed content. By including this outer tag in the `PUT` body we allow modification to be made to that outer element's attributes.
 
 ### PUT Responses
 
@@ -734,7 +734,7 @@ If you compare this with the initial XML submitted in the `POST` Example 1 [abov
 
 ##### Successful PUT response status
 
-- `201(Created)`
+- `200(OK)`
 
 ##### Successful PUT response headers
 
