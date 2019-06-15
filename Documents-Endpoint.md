@@ -70,9 +70,9 @@ The Document endpoint supports the following query parameters:
 | token	 | (May be required) Authentication token for access control	| POST, PUT, DELETE |
 | format | (Optional) Specifies a data format for response/request body other than the default	| GET, POST, PUT, DELETE |
 
-Note that one must either provide a "ref" parameter __or__ a pair of "start" and "end" parameters. A request cannot combine "ref" with the other two. If, say, a "ref" and a "start" are both provided this should cause the request to fail.
+Note that for GET requests one may either provide a "ref" parameter __or__ a pair of "start" and "end" parameters. A request cannot combine "ref" with the other two. If, say, a "ref" and a "start" are both provided this should cause the request to fail.
 
-Two parameters are used only when creating new document sections using a `POST` request: `after` and `before`. These allow one to specify where a new text segment should be inserted. One or the other of `after` and `post` must be included in a `POST` request.
+Two parameters are used only when creating new document sections using a `POST` request: `after` and `before`. These allow one to specify where a new text segment should be inserted. One or the other of `after` and `post` must be included in a `POST` request unless one is creating the first text segment in a new document.
 
 Where the implementation needs to control who can access, create, or modify server data, the `token` parameter also allows for token-based authentication (as with OAuth 2.0) if desired. It is up to the implementation to decide how such tokens should be generated and processed.
 
@@ -147,7 +147,13 @@ For the sake of simplicity and usability the DTS guidelines do not allow for bat
 
 ### GET query parameters
 
-The only strictly required parameter for a `GET` Document request is `id`. If neither `before` nor `after` is supplied, the server should interpret the request as supplying the initial form of a new document. In that case, the request should fail if (a) some text already exists for that document, or (b) the request body contains a `<dts:fragment>` element.
+The only strictly required parameter for a `GET` Document request is `id`. This value specifies the document to be queried. If no particular reference is specified with other parameters, the response should return the entire document. If only one structural segment of the document is desired, this should be specified using the `ref` parameter. The `ref` value may specify a segment at any structural level of the document. For example, in a document segmented in two structural levels (book and line), a `ref` value of "5" should return all of book 5. A `ref` value of "5.2" should return just line 2 from book 5.
+
+If a continuous sequence of structural segments is being requested, then no `ref` value should be specified. Instead, the `start` and `end` parameters should specify the first and last segments of the sequence to be returned. If only `start` is specified, with no `end` value, the request should be understood as having an implicit `end` parameter specifying the last structural segment of the document. In other words, a request with a `start` value of "5.2" and no explicit `end` value should return all of the document from 5.2 (inclusive) to the end. Likewise, if only an `end` parameter is specified, the server should understand an implicit `start` pointing to the first segment of the document.
+
+As with `ref`, the level of specificity in the `start` and `ref` values should determine the structural level used to demarcate the segments returned. A query with "start=5.2&end=6.1" should return every line from 5.2 to 6.1 (inclusive). A query with "start=5&end=6" should return every line from the beginning of book 5 to the end of book 6 (inclusive).
+
+No request should include both a `ref` parameter and either `start` or `end`. Any request that does include both should prompt a `400(Bad Request)` error.
 
 ### GET request body
 
@@ -163,7 +169,7 @@ If a `GET` request is unsuccessful because of problems with the request paramete
 
 If a `GET` request is unsuccessful because the specified id matches no document on the server, the return status code should be `404(Not Found)`
 
-#### Successful response headers
+#### Successful GET response headers
 
 The response after a successful `GET` request contains the following response headers:
 
@@ -171,6 +177,7 @@ The response after a successful `GET` request contains the following response he
 |------|-------------|
 | Link | Gives relation to next and previous pages |
 | Content-Type | Content type of the response body (by default `application/tei+xml`)|
+<!-- FIXME: Does Hydra require Link to point to documentation? -->
 
 ##### Link header
 
@@ -196,7 +203,7 @@ An unsuccessful `GET` request should return the following headers:
 
 | name | description |
 |------|-------------|
-| Location | The URL for the `Document` endpoint documentation |
+| Link | The URL for the `Document` endpoint documentation |
 | Content-type | Content type of the response body (by default `application/tei+xml`) |
 
 #### Unsuccessful response body
@@ -435,7 +442,7 @@ A `POST` Document request also may not result in a text segment whose reference 
 
 #### Successful response headers
 
-The response headers after a successful `POST` Document request should include a `Location` value. This should be the URL where the newly inserted text segment(s) can be retrieved via a `GET` request. The response should also include a `Content-type` header with a value of "application/tei+xml".
+The response headers after a successful `POST` Document request should include a `Location` value. This should be the URL where the newly inserted text segment(s) can be retrieved via a `GET` request. The response should also include a `Content-type` header with a value of "application/tei+xml". Finally, a `Link` header should specify the URL for the machine-readable endpoint documentation.
 
 #### Successful response body
 
@@ -443,7 +450,7 @@ The response body after a successful `POST` request should contain an XML object
 
 #### Unsuccessful response headers
 
-In an unsuccessful request, the response headers should include a `Location` whose value is the URL for the Document endpoint documentation. The response should also include a `Content-type` header with a value of "application/tei+xml".
+In an unsuccessful request, the response headers should include a `Link` whose value is the URL for the Document endpoint documentation. The response should also include a `Content-type` header with a value of "application/tei+xml".
 
 #### Unsuccessful response body
 
@@ -525,6 +532,7 @@ Notice that this request omits the usual `before` or `after` parameters.
 | --- | ----- |
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch |
 | Content-Type  | application/tei+xml             |
+| Link | The URL for the `Document` endpoint documentation |
 
 #### Successful POST response body
 
@@ -599,6 +607,7 @@ Note that since some text already exists for this document, the new segment is s
 | --- | ----- |
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch&ref=1:3 |
 | Content-Type  | application/tei+xml               |
+| Link | The URL for the `Document` endpoint documentation |
 
 #### Successful POST response body
 
@@ -659,6 +668,7 @@ The response headers after a successful `PUT` request should include the followi
 | name | description |
 |------|-------------|
 | Location | The URL where the newly modified document section can be retrieved via a `GET` request |
+| Link | The URL for the `Document` endpoint documentation |
 | Content-Type | Content type of the response body (by default `application/tei+xml`)|
 
 #### Successful response body
@@ -671,7 +681,7 @@ The response after an unsuccessful `PUT` request should include the following he
 
 | name | description |
 |------|-------------|
-| Location | The URL for the `Document` endpoint documentation |
+| Link | The URL for the `Document` endpoint documentation |
 | Content-type | Content type of the response body (by default `application/tei+xml`) |
 
 #### Unsuccessful response body
@@ -786,6 +796,8 @@ The response for a successful `DELETE` request should include a "Content-Type" h
 
 Unlike with other methods, the response headers after a successful `DELETE` request should *not* include a `Location` header.
 
+A "Link" header should also be included specifying the URL for the machine-readable API documentation.
+
 #### Successful response body
 
 In a successful `DELETE` request, the response body should be an XML object with the same structure as a `GET` response (see [above](#default-request-and-response-body-format)), but containing the old contents of the deleted text section. This allows the client to quickly recognize whether the correct segment(s) was removed on the server.
@@ -793,6 +805,8 @@ In a successful `DELETE` request, the response body should be an XML object with
 #### Unsuccessful response headers
 
 The response after an unsuccessful `DELETE` request should include a "Content-type" header with the value "application/tei+xml" unless a non-default format has been specified in the request.
+
+A "Link" header should also be included specifying the URL for the machine-readable API documentation.
 
 #### Unsuccessful response body
 
@@ -830,6 +844,7 @@ No body should be sent with the `DELETE` request.
 | key | Value |
 | --- | ----- |
 | Content-Type  | application/ld+json             |
+| Link | The URL for the `Document` endpoint documentation |
 
 #### successful DELETE response body
 
