@@ -1,16 +1,16 @@
 # Organization
 
-Currently, the Distributed Text Services is not legally formalized as an organization (outside of the Github Organization and the Google Group).
+The Distributed Text Services is a organized and led by a community of volunteers. It is not currently a legal entity. Decisions are made collectively by the Technical Committee. Members of this committee share ownership of the GitHub repository and the Google Group. The committee also is responsible for the evolution and documentation of the specification itself.
 
 Although, the Distributed Text Services specifications is lead by a [Technical Committee](#technical_committee). It is responsible for the evolution and documentation of the specifications.
 
 
 ## Technical Committee
 
-* The **Technical committee** is responsible for voting on feature requests and bugs
-* Once the initial committee is established, the committee itself is responsible for approving new members to the committee
-*  New feature requests must be voted on by the technical committee in order to be approved as additions to the spec.
-* Committee members have 1 month after a feature request is officially opened for voting to provide their vote.  If you don't vote within that time frame, it is the same as voting yes. The exception is feature requests opened for voting in July and August. The voting period for these is extended to 2 months.
+* The **Technical committee** is responsible for voting on feature requests and bugs.
+* Having been established, the committee itself is now responsible for approving new members to the committee.
+*  New feature requests must be voted on by the technical committee in order to be approved as additions to the specification.
+* Committee members have 1 month after a feature request is officially opened for voting to provide their vote. Not submitting a vote within that time frame is the same as voting yes. An exception is made for feature requests opened for voting in July and August. The voting period for these is extended to 2 months.
 * Decisions are normally made by consensus.  If there is need for a vote, the chair
 is responsible for determining a fair process and ensuring adequately informed
 discussion ahead of time.
@@ -28,11 +28,11 @@ the decision, and there is general approval for the decision.
 
 ### Chair of the Technical Committee
 
-The chair is responsible to run the meetings, create agendas, ensure that issues are adequately understood before decisions are made, and seek decisions by consensus whenever possible. The chair also ensures that decisions are adequately recorded and assigns and tracks action items.
+The chair has the responsibility to run the meetings, create agendas, ensure that issues are adequately understood before decisions are made, and seek decisions by consensus whenever possible. The chair also ensures that decisions are adequately recorded and assigns and tracks action items.
 
 ### Ambassador
 
-* distinguishes important contributor to the community.
+* distinguishes a member of the community who makes material contributions to the effort.
 * comments on documentation, stays abreast of decisions, provides use cases.
 
 ### Contributor
@@ -62,7 +62,7 @@ Technical committee minutes can be found at [github.com/distributed-text-service
 
 ### *Question:* What about excused absences?
 
-Recorded.  If it ever comes to a question of whether someone should be kicked off, we can decide how to take it into account.
+Excused absences are recorded and may be taken into account if a decision to remove a committee member needs to be made.
 
 ### *Question:* How flexible are we on dates?
 
