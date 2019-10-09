@@ -1,13 +1,35 @@
-theme: jekyll-theme-leap-day
-title: Distributed Text Services Specifications
+remote_theme: "mmistakes/minimal-mistakes@4.16.4"
+
+title: Distributed Text Services
 description: The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
-show_downloads: false
-menu:
-  - title : "Entry Point"
-    url: "Entry.html"
-  - title : "Collections Endpoint"
-    url: "Collections-Endpoint.html"
-  - title : "Navigation Endpoint"
-    url: "Navigation-Endpoint.html"
-  - title : "Documents Endpoint"
-    url: "Documents-Endpoint.html"
+repository: "distributed-text-services/specifications"
+search: true
+search_full_content: true
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+defaults:   
+  # _posts
+  - scope:
+      path: ""
+      type: page
+    values:
+      layout: single
+      share: true
+      author_profile: false
+      related: false
+      toc: true
+      toc_label: "Table of Contents"
+      toc_icon: "cog"
+      toc_level: 3
+      toc_left: true
+      sidebar: false
+      classes: wide
+
+bradcrumbs: true
+breadcrumb_home_label : "Home"
+breadcrumb_separator  : "/"
