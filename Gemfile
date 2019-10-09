@@ -14,4 +14,8 @@ group :jekyll_plugins do
   gem "jemoji"
   gem "jekyll-include-cache"
   gem "jekyll-algolia"
+  gem "jekyll-octicons"
+  gem "jekyll-font-awesome-sass"
 end
+# Added at 2019-10-09 09:53:47 +0200 by thibault:
+gem "pkg-config", "~> 1.3"

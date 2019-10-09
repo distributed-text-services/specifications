@@ -8,3 +8,7 @@ main:
     url: "Navigation-Endpoint.html"
   - title : "Document"
     url: "Documents-Endpoint.html"
+  - title : "Organization"
+    url: "Organization.html"
+  - title : "Workshops"
+    url: "https://distributed-text-services.github.io/workshops"
