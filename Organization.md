@@ -1,21 +1,15 @@
 # Organization
 
-The Distributed Text Services is a organized and led by a community of volunteers. It is not currently a legal entity. Decisions are made collectively by the Technical Committee. Members of this committee share ownership of the GitHub repository and the Google Group. The committee also is responsible for the evolution and documentation of the specification itself.
-
-Although, the Distributed Text Services specifications is lead by a [Technical Committee](#technical_committee). It is responsible for the evolution and documentation of the specifications.
-
+The Distributed Text Services is a organized and led by a community of volunteers. It is not currently a legal entity. Decisions are made collectively by the [Technical Committee](#technical_committee). Members of this committee share ownership of the GitHub repository and the Google Group. The committee also is responsible for the evolution and documentation of the specification itself.
 
 ## Technical Committee
 
 * The **Technical committee** is responsible for voting on feature requests and bugs.
 * Having been established, the committee itself is now responsible for approving new members to the committee.
-*  New feature requests must be voted on by the technical committee in order to be approved as additions to the specification.
+* New feature requests must be voted on by the technical committee in order to be approved as additions to the specification.
 * Committee members have 1 month after a feature request is officially opened for voting to provide their vote. Not submitting a vote within that time frame is the same as voting yes. An exception is made for feature requests opened for voting in July and August. The voting period for these is extended to 2 months.
-* Decisions are normally made by consensus.  If there is need for a vote, the chair
-is responsible for determining a fair process and ensuring adequately informed
-discussion ahead of time.
-* Consensus means that there is adequate representation, nobody cannot live with
-the decision, and there is general approval for the decision.
+* Decisions are normally made by consensus.  If there is need for a vote, the chair is responsible for determining a fair process and ensuring adequately informed discussion ahead of time.
+* Consensus means that there is adequate representation, nobody cannot live with the decision, and there is general approval for the decision.
 
 ## Roles
 
