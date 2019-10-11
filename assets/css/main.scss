@@ -3,9 +3,7 @@
 ---
 @charset "utf-8";
 
-$fa-font-path: "fonts/font-awesome/";
-
-@import 'font-awesome';
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
