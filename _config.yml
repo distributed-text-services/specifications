@@ -1,4 +1,5 @@
 remote_theme: "mmistakes/minimal-mistakes@4.16.4"
+minimal_mistakes_skin: "contrast"
 
 title: Distributed Text Services
 description: The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
@@ -12,6 +13,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+  - jekyll-font-awesome-sass
 defaults:   
   # _posts
   - scope:

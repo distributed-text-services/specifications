@@ -1,10 +1,15 @@
 # Distributed Text Services (DTS)
 
+[<i class="fa fa-comments"></i> Google group](https://groups.google.com/forum/#!forum/distributed-text-services){: .btn .btn--info .btn--x--small}
+[<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small} 
+[<i class="fa fa-file-code"></i> Check Source and Propose Changes](https://github.com/distributed-text-services/specifications){: .btn .btn--info .btn--x--small}
+
 *The DTS Specification is currently a First Public Working Draft.*
 
-## What
+## Quick Introduction
 
-The Distributed Text Services (DTS) Specification defines a Hypermedia-Driven Web API for working with collections of text as machine-actionable data.
+**The Distributed Text Services (DTS) Specification defines an API for working with collections of text as machine-actionable data.**
+
 It specifies 3 distinct operation endpoints:
 
 - The [Collections Endpoint](Collections-Endpoint.md) is used to navigate the text collection contents
@@ -16,7 +21,7 @@ The Collections and Navigation endpoints are specified to return  LD+JSON adheri
 Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
 and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
-## Why
+## History
 
 The Distributed Text Services effort has been inspired, informed and influenced by the [Canonical Text Services protocol](http://cite-architecture.github.io/cts/) (CTS). CTS has allowed many classical, canonical texts encoded in TEI to be made available in a machine-actionable, linked open data fashion. However, the CTS API is tightly coupled to the CTS URN identifier system which does not support citation systems used by more modern content or other forms of writing, such as papyri or inscriptions. The API also does not adhere to modern community standards for Web APIs.
 
@@ -45,22 +50,6 @@ The DTS API imposes the following requirements on implementors:
 
 * Implementation of the Documents endpoint requires the ability to express text as TEI/XML
 
-## Who
-
-The following individuals have contributed to this effort:
-
-* Bridget Almas
-* Hugh Cayless
-* Thibault Clérice
-* Zachary Fletcher
-* Vincent Jolivet
-* Pietro Liuzzo
-* Emmanuelle Morlock
-* Jonathan Robie
-* Matteo Romanello
-* James Tauber
-* Jeffrey C. Witt
-
 ## Reference Implementations
 
 * The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation may be
@@ -69,9 +58,4 @@ used by a wide variety of text publishers. It is currently deployed by:
     * École des Chartes ( http://dev.chartes.psl.eu/api/nautilus/dts and http://http://dev.chartes.psl.eu/dts-demo/ for a small interface based on it)
 
 * Beta maṣāḥǝft: Manuscripts of Ethiopia and Eritrea (http://betamasaheft.eu/)
-
-## How to get involved
-
-Send a request to join https://groups.google.com/forum/#!forum/distributed-text-services
-
 
