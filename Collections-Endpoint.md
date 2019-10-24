@@ -21,7 +21,9 @@ Item properties :
 - `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dc:title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
-- `totalItems` is the number of children contained by the object
+- `totalItems` - total number of items that you can find in the members property
+- `dts:totalChildren` - total number of members that you will find if you do nav=children
+- `dts:totalParents` - total number of members that you will find if you do nav=parents
 - (Required on Resource) `dts:citeDepth` declare the maximum depth of a readable resource.
 - (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dc:description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
@@ -102,6 +104,8 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "@id": "general",
     "@type": "Collection",
     "totalItems": 2,
+    "dts:totalParents": 0,
+    "dts:totalChildren": 2,
     "title": "Collection Générale de l'École Nationale des Chartes",
     "dts:dublincore": {
         "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
@@ -115,21 +119,27 @@ This is an example of a top-level Collection that groups texts into 3 categories
              "title" : "Cartulaires",
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
-             "totalItems" : 10
+             "totalItems" : 10,
+             "dts:totalParents": 1,
+             "dts:totalChildren": 10
         },
         {
              "@id" : "lasciva_roma",
              "title" : "Lasciva Roma",
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
-             "totalItems" : 1
+             "totalItems" : 1,
+             "dts:totalParents": 1,
+             "dts:totalChildren": 1
         },
         {
              "@id" : "lettres_de_poilus",
              "title" : "Correspondance des poilus",
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
-             "totalItems" : 10000
+             "totalItems" : 10000,
+             "dts:totalParents": 1,
+             "dts:totalChildren": 10000
         }
     ]
 }
@@ -162,6 +172,8 @@ The example is a child of the parent root collection. It contains a single textu
     "@id": "lasciva_roma",
     "@type": "Collection",
     "totalItems": 3,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 3,
     "title" : "Lasciva Roma",
     "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
     "dts:dublincore": {
@@ -195,7 +207,9 @@ The example is a child of the parent root collection. It contains a single textu
                 ],
             },
             "@type" : "Collection",
-            "totalItems": 1
+            "totalItems": 1,
+            "dts:totalParents": 1,
+            "dts:totalChildren": 1
         }
     ]
 }
@@ -245,6 +259,8 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
         }]
     },
     "totalItems" : 1,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 1,
     "member": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -252,6 +268,8 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "title" : "Priapeia",
             "description": "Priapeia based on the edition of Aemilius Baehrens",
             "totalItems": 0,
+            "dts:totalParents": 1,
+            "dts:totalChildren": 0,
             "dts:dublincore": {
                 "dc:title": [{"@language": "la", "@value": "Priapeia"}],
                 "dc:description": [{
@@ -316,6 +334,8 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "title" : "Priapeia",
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 0,
     "dts:dublincore": {
         "dc:title": [{"@language": "la", "@value": "Priapeia"}],
         "dc:description": [{
@@ -365,6 +385,8 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "@type" : "Resource",
     "title" : "Bucolica",
     "totalItems": 0,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 0,
     "dts:passage": "/api/dts/documents?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "dts:references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "dts:download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
@@ -409,19 +431,18 @@ This is an example of a paginated request for a Child Collection's members.
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#"
     },
-    "@id": "general",
-    "@type": "Collection",
-    "totalItems": 2,
-    "title": "Collection Générale de l'École Nationale des Chartes",
-    "dts:dublincore": {
-        "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
-        "dc:title": [
-            {"@language": "fr", "@value" : "Collection Générale de l'École Nationale des Chartes"}
-        ]
-    },
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
     "totalItems" : 10000,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 10000,
+    "title": "Lettres de Poilus",
+    "dts:dublincore": {
+        "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
+        "dc:title": [
+            {"@language": "fr", "@value" : "Lettres de Poilus"}
+        ]
+    },
     "member": ["member 190 up to 200"],
     "view": {
         "@id": "/api/dts/collections/?id=lettres_de_poilus&page=19",
@@ -436,7 +457,7 @@ This is an example of a paginated request for a Child Collection's members.
 
 ### Parent Collection Query
 
-This is an example of a query for the parents of a Collection.
+This is an example of a query for the parents of a Collection. Note that, in this context, `totalItems` == `totalParents` 
 
 #### Example of url : 
 
@@ -461,7 +482,9 @@ This is an example of a query for the parents of a Collection.
     "@type" : "Resource",
     "title" : "Priapeia",
     "description": "Priapeia based on the edition of Aemilius Baehrens",
-    "totalItems": 0,
+    "totalItems": 1,
+    "dts:totalParents": 1,
+    "dts:totalChildren": 0,
     "dts:dublincore": {
         "dc:title": [{"@language": "la", "@value": "Priapeia"}],
         "dc:description": [{
@@ -510,7 +533,9 @@ This is an example of a query for the parents of a Collection.
                 ],
             },
             "@type" : "Collection",
-            "totalItems": 1
+            "totalItems": 1,
+            "dts:totalParents": 1,
+            "dts:totalChildren": 1,
         }
     ]
 }
