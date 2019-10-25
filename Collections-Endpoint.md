@@ -21,7 +21,7 @@ Item properties :
 - `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dc:title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
-- `totalItems` - total number of items that you can find in the members property
+- `totalItems` - total number of items that you can find in the members property (irrespective of pagination)
 - `dts:totalChildren` - total number of members that you will find if you do nav=children
 - `dts:totalParents` - total number of members that you will find if you do nav=parents
 - (Required on Resource) `dts:citeDepth` declare the maximum depth of a readable resource.
