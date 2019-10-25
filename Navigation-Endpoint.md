@@ -16,10 +16,10 @@ Item properties :
 - `dts:level` defines the level of the reference given. 
 - `dts:passage` contains a URI template to the Documents endpoint
 - `member` is a list of passages
-  - A list of passages can be made of single `ids` : `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`
-  - A list of passages can be made of ranges : `[{"start": "a", "end": "b"}]`
-  - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"ref": "1.2", "dts:citeType": "Poem"}`
-  - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
+  - A list of passages can be made of single `ids` : `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`
+  - A list of passages can be made of ranges : `[{"dts:start": "a", "dts:end": "b"}]`
+  - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"dts:ref": "1.2", "dts:citeType": "Poem"}`
+  - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"dts:ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
   - (Optional) `dts:extensions` contains metadata from other namespaces
 
 
@@ -69,7 +69,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "ref",
+      "variable": "dts:ref",
       "property": "hydra:freetextQuery",
       "required": false
     },
@@ -93,13 +93,13 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "start",
+      "variable": "dts:start",
       "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "end",
+      "variable": "dts:end",
       "property": "hydra:freetextQuery",
       "required": false
     }
@@ -136,9 +136,9 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "dts:citeDepth" : 2,
     "dts:level": 1,
     "member": [
-      {"ref": "1"},
-      {"ref": "2"},
-      {"ref": "3"}
+      {"dts:ref": "1"},
+      {"dts:ref": "2"},
+      {"dts:ref": "3"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
@@ -171,12 +171,12 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "dts:citeDepth" : 2,
     "dts:level": 2,
     "member": [
-      {"ref": "1.1"},
-      {"ref": "1.2"},
-      {"ref": "2.1"},
-      {"ref": "2.2"},
-      {"ref": "3.1"},
-      {"ref": "3.2"}
+      {"dts:ref": "1.1"},
+      {"dts:ref": "1.2"},
+      {"dts:ref": "2.1"},
+      {"dts:ref": "2.2"},
+      {"dts:ref": "3.1"},
+      {"dts:ref": "3.2"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
@@ -209,8 +209,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
     "dts:citeDepth" : 2,
     "dts:level": 2,
     "member": [
-      {"ref": "1.1"},
-      {"ref": "1.2"}
+      {"dts:ref": "1.1"},
+      {"dts:ref": "1.2"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
@@ -243,10 +243,10 @@ The client wants to retrieve a list of grand-children passage identifiers that a
     "dts:citeDepth" : 3,
     "dts:level": 3,
     "member": [
-      {"ref": "1.1.1"},
-      {"ref": "1.1.2"},
-      {"ref": "1.2.1"},
-      {"ref": "1.2.2"}
+      {"dts:ref": "1.1.1"},
+      {"dts:ref": "1.1.2"},
+      {"dts:ref": "1.2.1"},
+      {"dts:ref": "1.2.2"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
@@ -279,9 +279,9 @@ The client wants to retrieve a list of passage identifiers which are between two
     "dts:citeDepth" : 2,
     "dts:level": 2,
     "member": [
-      {"ref": "1"},
-      {"ref": "2"},
-      {"ref": "3"}
+      {"dts:ref": "1"},
+      {"dts:ref": "2"},
+      {"dts:ref": "3"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
@@ -314,12 +314,12 @@ The client wants to retrieve a list of passage identifiers which are between two
     "dts:citeDepth" : 2,
     "dts:level": 2,
     "member": [
-      {"ref": "1.1"},
-      {"ref": "1.2"},
-      {"ref": "2.1"},
-      {"ref": "2.2"},
-      {"ref": "3.1"},
-      {"ref": "3.2"},
+      {"dts:ref": "1.1"},
+      {"dts:ref": "1.2"},
+      {"dts:ref": "2.1"},
+      {"dts:ref": "2.2"},
+      {"dts:ref": "3.1"},
+      {"dts:ref": "3.2"},
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
 }
@@ -353,8 +353,8 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
     "dts:citeDepth" : 3,
     "dts:level": 3,
     "member": [
-      {"start": "1.1.1", "end": "1.1.2"},
-      {"start": "1.2.1", "end": "1.2.2"},
+      {"dts:start": "1.1.1", "dts:end": "1.1.2"},
+      {"dts:start": "1.2.1", "dts:end": "1.2.2"},
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
 }
@@ -390,12 +390,12 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
     "dts:citeType": "letter",
     "member": [
       // The two following items are not letters : the data provider notes this different
-      { "ref": "Av", "dts:citeType": "preface"},
-      { "ref": "Pr", "dts:citeType": "preface"},
+      { "dts:ref": "Av", "dts:citeType": "preface"},
+      { "dts:ref": "Pr", "dts:citeType": "preface"},
       // Given the fact the following nodes have no citeType, they inherit of the root object citeType : letter
-      { "ref": "1" },
-      { "ref": "2" },
-      { "ref": "3" },
+      { "dts:ref": "1" },
+      { "dts:ref": "2" },
+      { "dts:ref": "3" },
       // And so on
     ],
     "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
@@ -432,19 +432,19 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
     "dts:level": 1,
     "member": [
       {
-        "ref": "Av", 
+        "dts:ref": "Av", 
         "dts:dublincore": {
         "dc:title": "Avertissement de l'Éditeur"
         }
       },
       {
-        "ref": "Pr", 
+        "dts:ref": "Pr", 
         "dts:dublincore": {
           "dc:title": "Préface"
         }
       },
       {
-        "ref": "1", 
+        "dts:ref": "1", 
         "dts:dublincore": {
           "dc:title": "Lettre 1"
         },
@@ -454,7 +454,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         }
       },
       {
-        "ref": "2", 
+        "dts:ref": "2", 
         "dts:dublincore": {
           "dc:title": "Lettre 2"
         },
@@ -464,7 +464,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         }
       },
       {
-        "ref": "3", 
+        "dts:ref": "3", 
         "dts:dublincore": {
           "dc:title": "Lettre 3"
         },
