@@ -59,26 +59,26 @@ This specification leaves the choice to enforce editing restrictions like this u
 
 The Document endpoint supports the following query parameters:
 
-| name | description                              | methods |
+| Name | Description                              | Methods |
 |------|------------------------------------------|---------|
-| id	| (Required) identifier for a document	| GET, POST, PUT, DELETE |
-| ref   | passage identifier (used together with `id`; can’t be used with `start` and `end`)	| GET, PUT, DELETE |
+| id	| (Required) Identifier for a document. Where possible this should be a URI	| GET, POST, PUT, DELETE |
+| ref   | Passage identifier (used together with `id`; can’t be used with `start` and `end`)	| GET, PUT, DELETE |
 | start	| (For range) Start of a range of passages (can’t be used with `ref`)	| GET, PUT, DELETE |
 | end	| (For range) End of a range of passages (requires `start` and no `ref`)	| GET, PUT, DELETE |
-| after | (Optional) passage after which the new segment should be inserted | POST |
-| before | (Optional) passage after which the new segment should be inserted | POST |
-| token	 | (May be required) Authentication token for access control	| POST, PUT, DELETE |
+| after | (Optional) Passage after which the new segment should be inserted | POST |
+| before | (Optional) Passage after which the new segment should be inserted | POST |
+| token	 | (May be required by implementation) Authentication token for access control	| POST, PUT, DELETE |
 | format | (Optional) Specifies a data format for response/request body other than the default	| GET, POST, PUT, DELETE |
 
-Note that for GET requests one may either provide a "ref" parameter __or__ a pair of "start" and "end" parameters. A request cannot combine "ref" with the other two. If, say, a "ref" and a "start" are both provided this should cause the request to fail.
+Note that for GET requests one may either provide a `ref` parameter __or__ a pair of `start` and `end` parameters. A request cannot combine `ref` with the other two. If, say, a `ref` and a `start` are both provided this should cause the request to fail.
 
-Two parameters are used only when creating new document sections using a `POST` request: `after` and `before`. These allow one to specify where a new text segment should be inserted. One or the other of `after` and `post` must be included in a `POST` request unless one is creating the first text segment in a new document.
+Two parameters are used only when creating new document sections using a POST request: `after` and `before`. These allow one to specify where a new text segment should be inserted. One or the other of `after` and `before` must be included in a POST request unless one is creating the first text segment in a new document.
 
 Where the implementation needs to control who can access, create, or modify server data, the `token` parameter also allows for token-based authentication (as with OAuth 2.0) if desired. It is up to the implementation to decide how such tokens should be generated and processed.
 
 ### URI Template
 
-Here is a template of the URI for Document API. The route itself (here `/dts/api/document/`) is up to the implementer.
+Here is a template of the URI for the Document API. The route itself (here `/dts/api/document/`) is up to the implementer.
 
 ```json
 {
@@ -88,7 +88,7 @@ Here is a template of the URI for Document API. The route itself (here `/dts/api
         "dts": "https://w3id.org/dts/api#"
   },
   "@type": "IriTemplate",
-  "template": "/dts/api/document/?id={document_id}&ref={ref}&start={start}&end={end}",
+  "template": "/dts/api/document/?id={document_id}&dts:ref={dts:ref}&start={start}&end={end}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -98,7 +98,7 @@ Here is a template of the URI for Document API. The route itself (here `/dts/api
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "ref",
+      "variable": "dts:ref",
       "required": false
     },
     {
@@ -175,9 +175,8 @@ The response after a successful `GET` request contains the following response he
 
 | name | description |
 |------|-------------|
-| Link | Gives relation to next and previous pages |
+| Link | Gives location of api documentation as well as links to neighbouring document segments and other related api endpoints |
 | Content-Type | Content type of the response body (by default `application/tei+xml`)|
-<!-- FIXME: Does Hydra require Link to point to documentation? -->
 
 ##### Link header
 
@@ -185,13 +184,14 @@ When applicable, the following links must be provided in the 'Link' header:
 
 | Name of the property | Description of its value |
 | -------------------- | ------------------------ |
+| http://www.w3.org/ns/hydra/core#apiDocumentation | The URL for the Hydra-compliant machine-readable documentation for this implementation of the Document endpoint |
 | prev | Previous passage of the document in the Document endpoint |
 | next | Next passage of the document in the Document endpoint |
 | up | Parent passage of the document in the Document endpoint |
 | first | First passage of the document in the Document endpoint  |
-| last | Last passage of the document in the Document endpoint |
-| contents | Link to the Navigation Endpoint for the current document |
-| collection | Link to the Collection endpoint for the current document |
+| last | The URL for the last passage of the document in the Document endpoint |
+| contents | The URL for the Navigation Endpoint for the current document |
+| collection | The URL for the Collection endpoint for the current document |
 
 #### Successful response body
 
@@ -203,7 +203,7 @@ An unsuccessful `GET` request should return the following headers:
 
 | name | description |
 |------|-------------|
-| Link | The URL for the `Document` endpoint documentation |
+| Link | The URL for the Hydra-compliant machine-readable `Document` endpoint documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation |
 | Content-type | Content type of the response body (by default `application/tei+xml`) |
 
 #### Unsuccessful response body
@@ -226,11 +226,11 @@ It is strongly recommended that projects implement more specific 4XX-series erro
 
 ### GET Example 1: Retrieve a passage using `ref`
 
-Retrieve the passage `2` of the document labeled by the identifier `bgu;11;2029`.
+Retrieve the passage `2` of the document labeled by the identifier `https://papyri.info/ddbdp/bgu;11;2029/source`.
 
 #### GET request url
 
-- GET `/dts/api/document/?id=bgu;11;2029&ref=2`
+- GET `/dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=2`
 
 #### Successful GET response status
 
@@ -241,7 +241,7 @@ Retrieve the passage `2` of the document labeled by the identifier `bgu;11;2029`
 | Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/document/?id=bgu;11;2029&ref=1>; rel="prev", </dts/api/document/?id=bgu;11;2029&ref=3>; rel="next", </dts/api/document/?id=bgu;11;2029&ref=6>; rel="last", </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=1>; rel="prev", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=3>; rel="next", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=6>; rel="last", </dts/api/navigation/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="contents", </dts/api/collection/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="collection" |
 
 #### Successful GET response body
 
@@ -289,7 +289,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2 of the document labeled by the 
 | Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" |
 
 #### Successful GET response body
 
@@ -319,11 +319,11 @@ Retrieve the passages 1.1.1 to the passage 1.1.2 of the document labeled by the 
 
 ### GET Example 3: Retrieve a full document
 
-Retrieve the full document labeled by the identifier `bgu;11;2029`
+Retrieve the full document labeled by the identifier `https://papyri.info/ddbdp/bgu;11;2029/source`
 
 #### GET request url
 
-- GET `/dts/api/document/?id=bgu;11;2029`
+- GET `/dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source`
 
 #### Successful GET response status
 
@@ -334,7 +334,7 @@ Retrieve the full document labeled by the identifier `bgu;11;2029`
 | Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/navigation/?id=bgu;11;2029>; rel="contents", </dts/api/collection/?id=bgu;11;2029>; rel="collection" |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/navigation/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="contents", </dts/api/collection/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="collection" |
 
 #### Successful GET response body
 
@@ -442,7 +442,7 @@ A `POST` Document request also may not result in a text segment whose reference 
 
 #### Successful response headers
 
-The response headers after a successful `POST` Document request should include a `Location` value. This should be the URL where the newly inserted text segment(s) can be retrieved via a `GET` request. The response should also include a `Content-type` header with a value of "application/tei+xml". Finally, a `Link` header should specify the URL for the machine-readable endpoint documentation.
+The response headers after a successful `POST` Document request should include a `Location` value. This should be the URL where the newly inserted text segment(s) can be retrieved via a `GET` request. The response should also include a `Content-type` header with a value of "application/tei+xml". Finally, a `Link` header should specify the URL for the machine-readable endpoint documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation".
 
 #### Successful response body
 
@@ -450,7 +450,7 @@ The response body after a successful `POST` request should contain an XML object
 
 #### Unsuccessful response headers
 
-In an unsuccessful request, the response headers should include a `Link` whose value is the URL for the Document endpoint documentation. The response should also include a `Content-type` header with a value of "application/tei+xml".
+In an unsuccessful request, the response headers should include a `Link` whose value is the URL for the Document endpoint documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation". The response should also include a `Content-type` header with a value of "application/tei+xml".
 
 #### Unsuccessful response body
 
@@ -532,7 +532,9 @@ Notice that this request omits the usual `before` or `after` parameters.
 | --- | ----- |
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch |
 | Content-Type  | application/tei+xml             |
-| Link | The URL for the `Document` endpoint documentation |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" |
+<!-- FIXME: Should we change the sample urls to something more obviously arbitrary, 
+like https://www.example.com/exampleapi ? -->
 
 #### Successful POST response body
 
@@ -607,7 +609,7 @@ Note that since some text already exists for this document, the new segment is s
 | --- | ----- |
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch&ref=1:3 |
 | Content-Type  | application/tei+xml               |
-| Link | The URL for the `Document` endpoint documentation |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" |
 
 #### Successful POST response body
 
@@ -668,7 +670,7 @@ The response headers after a successful `PUT` request should include the followi
 | name | description |
 |------|-------------|
 | Location | The URL where the newly modified document section can be retrieved via a `GET` request |
-| Link | The URL for the `Document` endpoint documentation |
+| Link | The URL for the `Document` endpoint documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation" (e.g., </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation") |
 | Content-Type | Content type of the response body (by default `application/tei+xml`)|
 
 #### Successful response body
@@ -681,7 +683,7 @@ The response after an unsuccessful `PUT` request should include the following he
 
 | name | description |
 |------|-------------|
-| Link | The URL for the `Document` endpoint documentation |
+| Link | The URL for the `Document` endpoint documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation" (e.g., </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation") |
 | Content-type | Content type of the response body (by default `application/tei+xml`) |
 
 #### Unsuccessful response body
@@ -741,6 +743,7 @@ If you compare this with the initial XML submitted in the `POST` Example 1 [abov
 | key | value |
 | --- | ----- |
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch&ref=1:3 |
+| Link          | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" |
 | Content-Type  | application/tei+xml               |
 
 ##### Successful PUT response body
@@ -796,7 +799,7 @@ The response for a successful `DELETE` request should include a "Content-Type" h
 
 Unlike with other methods, the response headers after a successful `DELETE` request should *not* include a `Location` header.
 
-A "Link" header should also be included specifying the URL for the machine-readable API documentation.
+A "Link" header should also be included specifying the URL for the machine-readable API documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation".
 
 #### Successful response body
 
@@ -806,7 +809,7 @@ In a successful `DELETE` request, the response body should be an XML object with
 
 The response after an unsuccessful `DELETE` request should include a "Content-type" header with the value "application/tei+xml" unless a non-default format has been specified in the request.
 
-A "Link" header should also be included specifying the URL for the machine-readable API documentation.
+A "Link" header should also be included specifying the URL for the machine-readable API documentation with a "rel" value of "http://www.w3.org/ns/hydra/core#apiDocumentation".
 
 #### Unsuccessful response body
 
@@ -844,7 +847,7 @@ No body should be sent with the `DELETE` request.
 | key | Value |
 | --- | ----- |
 | Content-Type  | application/ld+json             |
-| Link | The URL for the `Document` endpoint documentation |
+| Link          | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" |
 
 #### successful DELETE response body
 
