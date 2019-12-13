@@ -52,10 +52,25 @@ The DTS API imposes the following requirements on implementors:
 
 ## Reference Implementations
 
-* The Capitains (https://capitains.org) suite of tools and guidelines will fully support the DTS API. This implementation may be
-used by a wide variety of text publishers. It is currently deployed by:
-    * The Alpheios Project (https://alpheios.net) at http://texts.alpheios.net/api/dts
-    * École des Chartes ( http://dev.chartes.psl.eu/api/nautilus/dts and http://http://dev.chartes.psl.eu/dts-demo/ for a small interface based on it)
+The following open source libraries implement the DTS API:
 
-* Beta maṣāḥǝft: Manuscripts of Ethiopia and Eritrea (http://betamasaheft.eu/)
+* [TEI Publisher client](https://teipublisher.com/exist/apps/tei-publisher/doc/blog/tei-publisher-50.xml)
+  * Implementation of the DTS API + a Client interface to the API
+  * Currently supports browsing collections and document retrieval, but not navigation. 
+* [MyCapytain](https://github.com/Capitains/MyCapytain/tree/3.0.0) + [Nautlius](https://github.com/Capitains/Nautilus/tree/dts-draft-1)
+  * MyCapytain is a Python library that implements the DTS data model and Nautlius is a Python library that implements the DTS API Endpoints backed by the MyCapytain libary. Both operate on TEI text collections that adhere to the [Capitains Guideines](http://capitains.org/pages/guidelines)
+* [Perseids DTS API](https://github.com/perseids-project/dts-api/)
+  * Ruby on Rails implementation of the DTS API . Operates on TEI text collections that adhere to the [Capitains Guideines](http://capitains.org/pages/guidelines)
+
+## Known Corpora Accessible via the DTS API
+* Ecole Nationale des Chartes http://dev.chartes.psl.eu/api/nautilus/dts and http://http://dev.chartes.psl.eu/dts-demo/
+  * A small collection of contemporaneous and medieval French literature. The contemporaneous texts are lightly marked up, and the medieval texts are finely annotated.  Uses the MyCapytain/Nautilus libraries.
+* Alpheios http://texts.alpheios.net/api/dts
+  * A small collection of Latin and Greek texts that have been aligned with linguistic annotations for learning ancient languages. Uses the MyCapytain/Nautilus libraries.
+* Perseids https://dts.perseids.org/
+  * Serves all textual resources available from Perseus within the Ancient Greek and Latin corpora as well as some resources in Hebrew and Farsi.
+* Beta maṣāḥǝft http://betamasaheft.eu/
+  * Collection of written artefacts from the highlands of Ethiopia and Eritrea mainly in Gǝʿǝz (Classical Ethiopic). In the collection are present both transcriptions of manuscripts and editions of textual units. The scarce availability of transcriptions as well as available editions means that the actual text contents are few in comparison with the textual units and written artefacts identified and described.
+* Epigraphische Datenbank Heidelberg https://edh-www.adw.uni-heidelberg.de/api/dts/
+  * A corpus of 80,000 short texts from the Latin epigraphic databases.
 
