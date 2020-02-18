@@ -58,9 +58,9 @@ The following open source libraries implement the DTS API:
   * Implementation of the DTS API + a Client interface to the API
   * Currently supports browsing collections and document retrieval, but not navigation. 
 * [MyCapytain](https://github.com/Capitains/MyCapytain/tree/3.0.0) + [Nautlius](https://github.com/Capitains/Nautilus/tree/dts-draft-1)
-  * MyCapytain is a Python library that implements the DTS data model and Nautlius is a Python library that implements the DTS API Endpoints backed by the MyCapytain libary. Both operate on TEI text collections that adhere to the [Capitains Guideines](http://capitains.org/pages/guidelines)
+  * MyCapytain is a Python library that implements the DTS data model and Nautlius is a Python library that implements the DTS API Endpoints backed by the MyCapytain libary. Both operate on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
 * [Perseids DTS API](https://github.com/perseids-project/dts-api/)
-  * Ruby on Rails implementation of the DTS API . Operates on TEI text collections that adhere to the [Capitains Guideines](http://capitains.org/pages/guidelines)
+  * Ruby on Rails implementation of the DTS API . Operates on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
 
 ## Known Corpora Accessible via the DTS API
 * Ecole Nationale des Chartes http://dev.chartes.psl.eu/api/nautilus/dts and http://http://dev.chartes.psl.eu/dts-demo/
