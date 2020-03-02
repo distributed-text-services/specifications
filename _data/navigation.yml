@@ -10,5 +10,7 @@ main:
     url: "Documents-Endpoint.html"
   - title : "Organization"
     url: "Organization.html"
+  - title : "Cookbook"
+    url: "Cookbook.html"
   - title : "Workshops"
     url: "https://distributed-text-services.github.io/workshops"
