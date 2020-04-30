@@ -39,7 +39,7 @@ Yes.
 
 Yes.
 
-## Does DTS support text citation hierarchies text citation hierarchies which vary within a document?
+## Does DTS support text citation hierarchies which vary within a document?
 
 Yes.
 

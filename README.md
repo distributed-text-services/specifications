@@ -6,15 +6,15 @@
 
 *The DTS Specification is currently a First Public Working Draft.*
 
-## Quick Introduction
+## What is DTS?
 
 **The Distributed Text Services (DTS) Specification defines an API for working with collections of text as machine-actionable data.**
 
-Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR). 
+Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR).  
 
-DTS is meant to enable _machine-consumption_ of text collections, such as for development of user-interfaces or for data analysis. 
+DTS enables _machine-consumption_ of digital text collections, and can be used by consumers of these collections in a variety of ways, such as for data analysis and the development of user-interfaces, tools and services. 
 
-DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below) and individual text publishers are encouraged to implement this API in their own projects where appropriate.
+DTS is a _specification_ for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below) and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
 See the [FAQ](FAQ.html) for more information and a list of frequently asked questions about DTS.
 
@@ -22,9 +22,9 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- The [Collections Endpoint](Collections-Endpoint.md) is used to navigate the text collection contents
-- The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
-- The [Documents Endpoint](Documents-Endpoint.md) is used to retrieve complete or partial texts
+- Navigation _across texts_ is supported by the [Collections Endpoint](Collections-Endpoint.md) 
+- Navigation _within a text_ is supported by the [Navigation Endpoint](Navigation-Endpoint.md) 
+- Retrieval of complete or partial texts is supported by the [Documents Endpoint](Documents-Endpoint.md) 
 
 The Collections and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Documents endpoint is specified to return TEI/XML of the requested text or fragment.
 
