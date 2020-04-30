@@ -1,6 +1,8 @@
 # main links
 main:
-  - title : "General"
+  - title: "FAQ"
+    url: "FAQ.html"
+  - title : "Basics"
     url: "Entry.html"
   - title : "Collection"
     url: "Collections-Endpoint.html"
