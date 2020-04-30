@@ -1,4 +1,4 @@
-# Basics
+# General Information
 
 ## Vocabulary
 
