@@ -10,11 +10,13 @@
 
 **The Distributed Text Services (DTS) Specification defines an API for working with collections of text as machine-actionable data.**
 
-You might considering implementing the DTS API if you publish a collection of digital texts that you want to make Findable, Accessible, Interoperable and Reusable (FAIR). DTS is primarily meant to enable machine-consumption of text.
+Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR). 
+
+DTS is meant to enable _machine-consumption_ of text collections, such as for development of user-interfaces or for data analysis. 
 
 DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below) and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
-See the [FAQ](FAQ.html) for a list of frequently asked questions about DTS.
+See the [FAQ](FAQ.html) for more information and a list of frequently asked questions about DTS.
 
 ## Supported Operations
 
