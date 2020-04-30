@@ -10,7 +10,15 @@
 
 **The Distributed Text Services (DTS) Specification defines an API for working with collections of text as machine-actionable data.**
 
-It specifies 3 distinct operation endpoints:
+You might considering implementing the DTS API if you publish a collection of digital texts that you want to make Findable, Accessible, Interoperable and Reusable (FAIR). DTS is primarily meant to enable machine-consumption of text.
+
+DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below) and individual text publishers are encouraged to implement this API in their own projects where appropriate.
+
+See the [FAQ](FAQ.html) for a list of frequently asked questions about DTS.
+
+## Supported Operations
+
+DTS specifies 3 distinct operation endpoints:
 
 - The [Collections Endpoint](Collections-Endpoint.md) is used to navigate the text collection contents
 - The [Navigation Endpoint](Navigation-Endpoint.md) is used to navigate within a single text document
@@ -18,8 +26,7 @@ It specifies 3 distinct operation endpoints:
 
 The Collections and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Documents endpoint is specified to return TEI/XML of the requested text or fragment.
 
-Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
-and individual text publishers are encouraged to implement this API in their own projects where appropriate.
+## Capabilities
 
 The DTS API provides the following core capabilities to clients:
 
@@ -31,17 +38,6 @@ The DTS API provides the following core capabilities to clients:
 * Retrieve a single text passage at any level of the citation hierarchy
 * Retrieve a range of text passages with a clearly defined start and end passage
 * Retrieve an entire text
-
-The DTS API enables its implementors to support:
-
-* any identifier scheme for collections and documents which can expressed safely as a URL parameter
-* collections of collections
-* text citation hierarchies of multiple levels
-* text citation hierarchies which vary within a document
-
-The DTS API imposes the following requirements on implementors:
-
-* Implementation of the Documents endpoint requires the ability to express text as TEI/XML
 
 ## Reference Implementations
 
