@@ -21,13 +21,6 @@ The Collections and Navigation endpoints are specified to return  LD+JSON adheri
 Note that DTS is a *specification* for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below)
 and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
-## History
-
-The Distributed Text Services effort has been inspired, informed and influenced by the [Canonical Text Services protocol](http://cite-architecture.github.io/cts/) (CTS). CTS has allowed many classical, canonical texts encoded in TEI to be made available in a machine-actionable, linked open data fashion. However, the CTS API is tightly coupled to the CTS URN identifier system which does not support citation systems used by more modern content or other forms of writing, such as papyri or inscriptions. The API also does not adhere to modern community standards for Web APIs.
-
-To address these limitations and enable standardized, machine-actionable operations across a wide variety of texts, a group of interested scholars and technologists have collaborated to develop the Distributed Text Services specification. We hope this will become a community-supported standard for achieving interoperability
-and shared services and tools for working with digital text collections.
-
 The DTS API provides the following core capabilities to clients:
 
 * Retrieve lists of collection members
