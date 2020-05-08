@@ -1,12 +1,14 @@
 # main links
 main:
-  - title : "General"
+  - title: "FAQ"
+    url: "FAQ.html"
+  - title: "Endpoint Basics"
     url: "Entry.html"
-  - title : "Collection"
+  - title: "Collection"
     url: "Collections-Endpoint.html"
-  - title : "Navigation"
+  - title: "Navigation"
     url: "Navigation-Endpoint.html"
-  - title : "Document"
+  - title: "Document"
     url: "Documents-Endpoint.html"
   - title : "Organization"
     url: "Organization.html"

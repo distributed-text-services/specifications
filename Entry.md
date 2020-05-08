@@ -1,4 +1,4 @@
-# General Information
+# Endpoint Basics
 
 ## Vocabulary
 
