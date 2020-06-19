@@ -1,6 +1,24 @@
 # Frequently Asked Questions about DTS
 
-## How does DTS support FAIR data practices?
+## What is DTS?
+
+DTS is an API for collections of TEI documents.
+
+## Why does TEI need an API for collections?
+
+DTS provides a standard way for clients to interact with collections of TEI documents. A standard API allows users to access many text collections using the same client software. It also allows editors to publish text collections in a usable way that existing clients can use.
+
+## Where can I download DTS and start using it?
+
+You can’t.  DTS defines the way that programs communicate with each other. An end-user will use this software.  For software developers, there are libraries that support DTS, they are listed [here](../index.html#reference-implementations).
+
+## What can clients do with these documents?
+
+Anything the client knows how to do with textual data. For instance, this data can be presented to users in a reading environment, analyzed for linguistic, literary, and discourse features, or presented in tools that allow users to annotate the text to create useful data.
+
+## Will DTS help make my texts FAIR?
+
+Yes! Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR).
 
 DTS supports FAIR data practices for textual data by:
 
@@ -9,6 +27,16 @@ DTS supports FAIR data practices for textual data by:
 * enabling expression of metadata separate from the textual content itself
 * providing documented (but unconstrained) access to the information about the structure of a textual resource, down to the level of a citation 
 * enabling detailed specification of relations among textual resources
+
+## What kind of API is DTS?
+
+DTS is a REST API that works a lot like a web browser.  When client software makes a request, the server responds by giving it a document.  The client can use the information in this document to make further requests. The API is defined purely in terms of Web requests using HTTP and the documents and headers that the server provides in response to those requests.  This means that DTS is language independent, easy to debug, and scales well to large numbers of users. For API geeks, here are the buzzwords: DTS is a pure hypermedia-centric REST API, defined in terms of HTTP conventions.  
+
+DTS is built like you would build a website: everything is discoverable, sorted so that users (clients) can easily find what they want. On top of that, it uses vocabularies that are linked and shared and which you can find all over the web of data.
+
+## What is Hydra?  Why Hydra?
+
+Hydra provides a good framework for building REST APIs.  We wanted to use a standard instead of starting from scratch. We wanted good support for JSON and pure hypermedia-based APIs. Hydra provides core functionality and provides extensibility that allows us to customize to fit our model.  (We tried three or four other approaches before choosing Hydra.  We know there are religious debates about APIs, this one worked well for our use cases.)
 
 ## If I implement the DTS API for my text collection what does it enable?
 
@@ -22,10 +50,6 @@ Implementing the DTS API enables consumers of the data to easily retrieve:
 * A single text passage at any level of the citation hierarchy
 * A range of text passages with a clearly defined start and end passage
 * An entire text
-
-## Is DTS software that is ready to use?
-
-DTS is a _specification_ for an API and not in and of itself an implementation of that API. Reference Implementations are available and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
 ## What identifier schemes does DTS require and support?
 
