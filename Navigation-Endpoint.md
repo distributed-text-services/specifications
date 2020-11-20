@@ -13,7 +13,7 @@ Item properties :
 - `@id` is the ID of the current request
 - `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
 - `dts:citeType` defines the default type of references listed in `member`
-- `dts:level` defines the level of the reference given. 
+- `dts:level` defines the level of the reference given.
 - `dts:passage` contains a URI template to the Documents endpoint
 - `member` is a list of passages
   - A list of passages can be made of single `ids` : `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`
@@ -21,9 +21,10 @@ Item properties :
   - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"dts:ref": "1.2", "dts:citeType": "Poem"}`
   - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"dts:ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
   - (Optional) `dts:extensions` contains metadata from other namespaces
+- `dts:parent` is the ID of the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the parent is the document as a whole, or if the `Navigation` request is already being made at the top of the document structure, this value should be the ID of the document with no `ref` parameter.
 
 
-## URI 
+## URI
 
 ### Query Parameters
 
@@ -35,7 +36,7 @@ Item properties :
 | start | (For range) Start of the range passages (inclusive, not to be used with `ref`) | GET |
 | end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `ref`) | GET |
 | groupBy | Retrieve passages in groups of this size instead of single units | GET |
-| max | Allows for limiting the number of results and getting pagination | GET | 
+| max | Allows for limiting the number of results and getting pagination | GET |
 | exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
 
 ### Response Headers
@@ -56,7 +57,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
         "@vocab": "https://www.w3.org/ns/hydra/core#",
         "dc": "http://purl.org/dc/terms/",
         "dts": "https://w3id.org/dts/api#"
-  },  
+  },
   "@type": "IriTemplate",
   "template": "/dts/api/navigation/?id={collection_id}{&ref}{&level}{&start}{&end}{&page}",
   "variableRepresentation": "BasicRepresentation",
@@ -113,13 +114,13 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 
 The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified as  *urn:cts:greekLit:tlg0012.tlg001.opp-grc5*.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -140,7 +141,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"dts:ref": "2"},
       {"dts:ref": "3"}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "dts:parent": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"
 }
 ```
 
@@ -148,13 +150,13 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and can be found at the second level of the citation tree of the document.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&level=2`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -178,7 +180,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"dts:ref": "3.1"},
       {"dts:ref": "3.2"}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "dts:parent": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"
 }
 ```
 
@@ -186,13 +189,13 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its passage `1`.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -212,7 +215,8 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"dts:ref": "1.1"},
       {"dts:ref": "1.2"}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "dts:parent": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"
 }
 ```
 
@@ -220,13 +224,13 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 The client wants to retrieve a list of grand-children passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -248,7 +252,8 @@ The client wants to retrieve a list of grand-children passage identifiers that a
       {"dts:ref": "1.2.1"},
       {"dts:ref": "1.2.2"}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
+    "dts:parent": "/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2"
 }
 ```
 
@@ -256,13 +261,13 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&level=0&start=1&end=3`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -291,13 +296,13 @@ The client wants to retrieve a list of passage identifiers which are between two
 
 The client wants to retrieve a list of passage identifiers which are between two milestones.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&level=2&start=1&end=3`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -325,17 +330,17 @@ The client wants to retrieve a list of passage identifiers which are between two
 }
 ```
 
-### Passages grouped by the provider 
+### Passages grouped by the provider
 
 The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&level=2&groupBy=2`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -360,17 +365,17 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 }
 ```
 
-### Retrieval of typology of references 
+### Retrieval of typology of references
 
 Some passages may have a metadata type. The `citeType` refers to the type of a citable node. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -398,7 +403,8 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       { "dts:ref": "3" },
       // And so on
     ],
-    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "dts:parent":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v"
 }
 ```
 
@@ -407,13 +413,13 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
 
 The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -432,19 +438,19 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
     "dts:level": 1,
     "member": [
       {
-        "dts:ref": "Av", 
+        "dts:ref": "Av",
         "dts:dublincore": {
         "dc:title": "Avertissement de l'Éditeur"
         }
       },
       {
-        "dts:ref": "Pr", 
+        "dts:ref": "Pr",
         "dts:dublincore": {
           "dc:title": "Préface"
         }
       },
       {
-        "dts:ref": "1", 
+        "dts:ref": "1",
         "dts:dublincore": {
           "dc:title": "Lettre 1"
         },
@@ -454,7 +460,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         }
       },
       {
-        "dts:ref": "2", 
+        "dts:ref": "2",
         "dts:dublincore": {
           "dc:title": "Lettre 2"
         },
@@ -464,7 +470,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
         }
       },
       {
-        "dts:ref": "3", 
+        "dts:ref": "3",
         "dts:dublincore": {
           "dc:title": "Lettre 3"
         },
@@ -475,6 +481,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       },
       // And so on
     ],
-    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}"
+    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "dts:parent":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v"
 }
 ```
