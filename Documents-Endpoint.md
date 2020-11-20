@@ -187,7 +187,7 @@ When applicable, the following links must be provided in the 'Link' header:
 | http://www.w3.org/ns/hydra/core#apiDocumentation | The URL for the Hydra-compliant machine-readable documentation for this implementation of the Document endpoint |
 | prev | Previous passage of the document in the Document endpoint |
 | next | Next passage of the document in the Document endpoint |
-| up | Parent passage of the document in the Document endpoint |
+| up | Parent passage of the document in the Document endpoint. If the current request is already for the entire document, no `up` link will be provided. If the only parent is the entire document, the `up` value will link to the document as a whole. |
 | first | First passage of the document in the Document endpoint  |
 | last | The URL for the last passage of the document in the Document endpoint |
 | contents | The URL for the Navigation Endpoint for the current document |
@@ -241,7 +241,7 @@ Retrieve the passage `2` of the document labeled by the identifier `https://papy
 | Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=1>; rel="prev", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=3>; rel="next", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=6>; rel="last", </dts/api/navigation/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="contents", </dts/api/collection/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="collection" |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=1>; rel="prev", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=3>; rel="next", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source&ref=6>; rel="last", </dts/api/document/?id=https://papyri.info/ddbdp/bgu;11;2029/source>;rel="up", </dts/api/navigation/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="contents", </dts/api/collection/?id=https://papyri.info/ddbdp/bgu;11;2029/source>; rel="collection" |
 
 #### Successful GET response body
 
@@ -289,7 +289,7 @@ Retrieve the passages 1.1.1 to the passage 1.1.2 of the document labeled by the 
 | Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/tei+xml |
-| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" |
+| Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=1.2.1&end=1.2.2>; rel="next", </dts/api/document/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&start=5.5.5&end=5.5.6>; rel="last", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1&ref=1.2>; rel="up", </dts/api/navigation/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="contents", </dts/api/collection/?id=urn:cts:latinLit:phi1318.phi001.perseus-lat1>; rel="collection" |
 
 #### Successful GET response body
 
@@ -404,7 +404,7 @@ Retrieve the full document labeled by the identifier `https://papyri.info/ddbdp/
 
 ```
 
-## POST Requests on the Document Endpoint  
+## POST Requests on the Document Endpoint
 
 The `POST` method of the Document endpoint allows for creation of new textual passages in a resource. __This method requires that the document already has a metadata record accessible via the Collection endpoint__.
 
@@ -533,7 +533,7 @@ Notice that this request omits the usual `before` or `after` parameters.
 | Location      | /api/dts/document?id=urn:cts:ancJewLit:1Enoch |
 | Content-Type  | application/tei+xml             |
 | Link | </dts/api/document/documentation>; rel="http://www.w3.org/ns/hydra/core#apiDocumentation" |
-<!-- FIXME: Should we change the sample urls to something more obviously arbitrary, 
+<!-- FIXME: Should we change the sample urls to something more obviously arbitrary,
 like https://www.example.com/exampleapi ? -->
 
 #### Successful POST response body
@@ -633,7 +633,7 @@ Note that since some text already exists for this document, the new segment is s
 </TEI>
 ```
 
-## PUT Requests on the Document Endpoint  
+## PUT Requests on the Document Endpoint
 
 The `PUT` method of the Document endpoint allows for modification of existing textual passages in a resource.
 
@@ -651,7 +651,7 @@ As with `POST` requests, it is recommended that implementations accept TEI-compl
 
 When XML is accepted, the body of the `PUT` request must be wrapped in a TEI rootnode containing a `<dts:fragment>` entity. See the further specifications under "[Default Request and Response Body Format](#default-request-and-response-body-format)" above.
 
-The contents of this `<dts:fragment>` must be a single XML element (along with its enclosed text and/or children) representing the modified form of the target document section. This single element inside the `<dts:fragment>` will replace the corresponding XML element in the document on the server.   
+The contents of this `<dts:fragment>` must be a single XML element (along with its enclosed text and/or children) representing the modified form of the target document section. This single element inside the `<dts:fragment>` will replace the corresponding XML element in the document on the server.
 
 The text/XML submitted in the body of a Document's `PUT` request will completely replace the XML entity representing the identified text segment. So the submitted fragment __must include the outer element__ identified by the "ref" value. If you identify your submitted text as a modified version of line "12", and if each line is represented by a TEI `<l>` element, you would include the opening and closing tags `<l xml:id="12">` and `</l>` around the changed content. By including this outer tag in the `PUT` body we allow modification to be made to that outer element's attributes.
 
@@ -769,7 +769,7 @@ If you compare this with the initial XML submitted in the `POST` Example 1 [abov
 </TEI>
 ```
 
-## DELETE on the Document Endpoint  
+## DELETE on the Document Endpoint
 
 The `DELETE` method of the Document endpoint allows for removal of a segment of text from a document. Note that the `DELETE` operation removes the specified segments entirely from the document's reference structure. So if you `DELETE` the segment designated "12.6.2" from a document, there should thereafter be no line "2" in section "12.6" of the server document. If, instead, you simply want to remove the text of a segment, leaving the segment itself in the document structure, you should use the `PUT` method to replace the text with an empty string.
 
