@@ -1,27 +1,35 @@
 # Navigation Endpoint
 
-The Navigation endpoint provides a list of passages that are accessible for navigation from a given reference within a resource. Responses from the Navigation endpoint assume by default that the user is traversing the document downward in the citation tree. A request to the Navigation endpoint specifies a reference within a resource, and the response lists the references that are immediately above or below that reference point in the citation tree. The response also identifies the parent reference of that current node.
+The Navigation endpoint provides a JSON object listing passages that are accessible for navigation from a given reference within a resource. While the Collection endpoint allows for traversing of collections and their constituent Resources, the Navigation endpoint is used for traversing the internal citation tree of an individual Resource.
 
-## Scheme
+Responses from the Navigation endpoint assume by default that the user is traversing the document downward in the citation tree. A request to the Navigation endpoint specifies a reference within a resource, and the response lists the references that are immediately above or below that reference point in the citation tree. The response also identifies the parent reference of that current node.
 
-Here is the scheme for the current draft. Everything that is not marked as Optional is mandatory.
+## Scheme for Navigation Endpoint Responses
 
-JSON wide attributes :
+These are the JSON properties allowed in the object returned from a Navigation request. All top-level properties are mandatory.
 
-Item properties :
-- `dts:passage` is the URI of the Documents API at which we can retrieve passages
-- `@id` is the ID of the current request
-- `dts:citeDepth` defines the maximum depth of the document, *e.g.* if the a document has up to three levels, `dts:citeDepth` should be three
-- `dts:citeType` defines the default type of references listed in `member`
-- `dts:level` defines the level of the reference given.
-- `dts:passage` contains a URI template to the Documents endpoint
-- `member` is a list of passages
-  - A list of passages can be made of single `ids` : `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`
-  - A list of passages can be made of ranges : `[{"dts:start": "a", "dts:end": "b"}]`
-  - (Optional) `dts:citeType` contains information about passage type for each member. *e.g.* `{"dts:ref": "1.2", "dts:citeType": "Poem"}`
-  - (Optional) `dts:dublincore` contains Dublin Core Terms metadata for each passage : `{"dts:ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}`
-  - (Optional) `dts:extensions` contains metadata from other namespaces
-- `dts:parent` is the unique ID for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter.
+| name |  description                              |
+| ---- | -----------------------------------------|
+| `@id` | the ID of the current request. This value should be the request URL including any query parameters. |
+| `dts:citeDepth` | a number defining the maximum depth of the document's citation tree. *E.g.*, if the a document has up to three levels, `dts:citeDepth` should be the number 3. |
+| `dts:citeType` | defines the default type of references listed in `member`. |
+| `dts:level` | a number identifying the hierarchical level of the references listed in `member`, counted relative to the top of the document's citation tree. *E.g.*, if a the returned references are at the second hierarchical level (like `{"dts:ref": "1.1"}`) then the `dts:level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
+| `dts:passage` | the URI template to the Documents endpoint at which the text of passages corresponding to these references can be retrieved. |
+| `dts:parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `dts:parent` should have a value of [null]. |
+| `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `dts:ref` values: `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`. Or the list can contain ranges with `dts:start` and `dts:end` values in place of `dts:ref` values: `[{"dts:start": "a", "dts:end": "b"}, {"dts:start": "1.1", "dts:end": "1.3"}]` |
+
+
+Within the `member` list, each object may have the following properties:
+
+| name | constraint | description                              |
+| ---- | ---------- | -----------------------------------------|
+| `dts:ref` | required unless `dts:start` and `dts:end` supplied | the unique passage identifier for one node in the citation structure of the Resource |
+| `dts:start` | required if `dts:ref` is not present; requires that `dts:end` is also supplied | the unique passage identifier for the first member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `dts:end` | required if `dts:ref` is not present; requires that `dts:start` is also supplied | the unique passage identifier for the last member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `dts:citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"dts:ref": "1.2", "dts:citeType": "Poem"}` |
+| `dts:dublincore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{dts:ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}` |
+| `dts:extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
+
 
 ### Unique `ref` identifiers
 
@@ -33,21 +41,22 @@ The format for the returned `dts:parent` value will depend on where the current 
 
 - If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `dts:parent` should be the array `[null]`.
 - If the requested `ref` identifies **one of the top level** of the resource's hierarchical divisions, the `dts:parent` property should be an object identifying the document as a whole and specifying that its `@type` is a "Resource". For example: `{"@type": "Resource", "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc5"}`
-- If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `dts:parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "Reference". For example: `{"@type": "Reference", "dts:ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
+- If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `dts:parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "CitableUnit". For example: `{"@type": "CitableUnit", "dts:ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
+- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `dts:parent` value for a range request should again be the array `[null]`. If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
 
 
-## URI
+## URI for Navigation Endpoint Requests
 
 ### Query Parameters
 
 | name | description                              | methods |
 |------|------------------------------------------|---------|
-| id   | identifier for a document |  GET    |
-| ref | passage identifier (used together with `id`) | GET    |
-| level | Depth for passages we want to retrieve identifiers of  | GET    |
-| start | (For range) Start of the range passages (inclusive, not to be used with `ref`) | GET |
-| end |  (For range) End of the range of passages (inclusive, requires `start`, not to be used with `ref`) | GET |
-| groupBy | Retrieve passages in groups of this size instead of single units | GET |
+| id   | the unique identifier (normally a URN) for the Resource being navigated |  GET    |
+| ref | (NOT used with `start` and `end`) a single passage identifier providing the point of reference for the Navigation request within the Resource. Such identifiers should be unique within a given Resource. | GET    |
+| start | (NOT used if a `ref` is specified, requires `end` as well) Start of the range passages to serve as the reference point for the Navigation request. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
+| end |  (NOT used if a `ref` is specified, requires `start` as well) End of the range of passages to serve as the reference point for the Navigation request. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
+| level | the depth (as a number) for reference identifiers to be retrieved, relative to the specified `ref` or `start`/`end` values. *E.g.*, if a request should return the children of the passage "1.2", then the `ref` parameter should be "1.2" and the `level` parameter should be `2`. This parameter **does not** indicate the absolute depth of the references in the Resource's citation tree.| GET    |
+| groupBy | Retrieve passages in groups of this size instead of single units. This would normally mean that the `member` list returned would be a list of ranges, each of which contains this number of passages. | GET |
 | max | Allows for limiting the number of results and getting pagination | GET |
 | exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
 
@@ -271,7 +280,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 
 ### Example 5: Requesting children of a lower-level structural division
 
-The client wants to retrieve a list of child passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage "1.1". The returned parent is the direct parent (or parents) of the specified reference ("1.1"). Since it is not the document as a whole, the parent `@type` is "Reference" rather than "Resource".
+The client wants to retrieve a list of child passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage "1.1". The returned parent is the direct parent (or parents) of the specified reference ("1.1"). Since it is not the document as a whole, the parent `@type` is "CitableUnit" rather than "Resource".
 
 #### Example of url :
 
@@ -300,13 +309,15 @@ The client wants to retrieve a list of child passage identifiers that are part o
       {"dts:ref": "1.1.2"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
-    "dts:parent": {"@type": "Reference", "dts:ref": "1"}
+    "dts:parent": {"@type": "CitableUnit", "dts:ref": "1"}
 }
 ```
 
-### Example 6: Requesting a ranges of passage references between milestones
+### Example 6: Requesting a range of passage references between milestones
 
 The client wants to retrieve a list of passage identifiers which are between two milestones. In this case there is no single parent node shared by the whole requested range, so no parent is returned. Since the reference list to be returned is at the *same* structural level as the supplied milestones, the `level` query parameter is "0".
+
+<!---FIXME: parent retrieval requires separate requests !-->
 
 #### Example of url :
 
@@ -329,7 +340,7 @@ The client wants to retrieve a list of passage identifiers which are between two
     },
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&level=0&start=1&end=3",
     "dts:citeDepth" : 2,
-    "dts:level": 2,
+    "dts:level": 1,
     "member": [
       {"dts:ref": "1"},
       {"dts:ref": "2"},
