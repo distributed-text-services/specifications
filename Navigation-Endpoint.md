@@ -15,7 +15,7 @@ These are the JSON properties allowed in the object returned from a Navigation r
 | `dts:citeType` | defines the default type of references listed in `member`. |
 | `dts:level` | a number identifying the hierarchical level of the references listed in `member`, counted relative to the top of the document's citation tree. *E.g.*, if a the returned references are at the second hierarchical level (like `{"dts:ref": "1.1"}`) then the `dts:level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
 | `dts:passage` | the URI template to the Documents endpoint at which the text of passages corresponding to these references can be retrieved. |
-| `dts:parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `dts:parent` should have a value of [null]. |
+| `dts:parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `dts:parent` should have a value of "null". |
 | `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `dts:ref` values: `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`. Or the list can contain ranges with `dts:start` and `dts:end` values in place of `dts:ref` values: `[{"dts:start": "a", "dts:end": "b"}, {"dts:start": "1.1", "dts:end": "1.3"}]` |
 
 
@@ -39,10 +39,10 @@ Note that all identifiers used as a `dts:ref` value must be unique within the cu
 
 The format for the returned `dts:parent` value will depend on where the current `ref` stands in the resource's hierarchical structure.
 
-- If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `dts:parent` should be the array `[null]`.
+- If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `dts:parent` should be "null".
 - If the requested `ref` identifies **one of the top level** of the resource's hierarchical divisions, the `dts:parent` property should be an object identifying the document as a whole and specifying that its `@type` is a "Resource". For example: `{"@type": "Resource", "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc5"}`
 - If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `dts:parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "CitableUnit". For example: `{"@type": "CitableUnit", "dts:ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
-- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `dts:parent` value for a range request should again be the array `[null]`. If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
+- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `dts:parent` value for a range request should again be the array "null". If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
 
 
 ## URI for Navigation Endpoint Requests
@@ -163,7 +163,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"dts:ref": "3"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": [null]
+    "dts:parent": null
 }
 ```
 
@@ -347,7 +347,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"dts:ref": "3"}
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": [null]
+    "dts:parent": null
 }
 ```
 
@@ -386,7 +386,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"dts:ref": "3.2"},
     ],
     "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": [null]
+    "dts:parent": null
 }
 ```
 
@@ -465,7 +465,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       // And so on
     ],
     "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
-    "dts:parent": [null]
+    "dts:parent": null
 }
 ```
 
@@ -543,6 +543,6 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       // And so on
     ],
     "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
-    "dts:parent": [null]
+    "dts:parent": null
 }
 ```
