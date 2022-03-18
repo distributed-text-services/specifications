@@ -24,7 +24,7 @@ Item properties :
 - `totalItems` - total number of items that you can find in the members property (irrespective of pagination)
 - `dts:totalChildren` - total number of members that you will find if you do nav=children
 - `dts:totalParents` - total number of members that you will find if you do nav=parents
-- (Required on Resource) `dts:citeDepth` declare the maximum depth of a readable resource.
+- (Required on Resource) `dts:maxCiteDepth` declare the maximum depth of a readable resource.
 - (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dc:description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
 - (Optional) `dts:dublincore` contains Dublin Core Terms metadata
@@ -34,7 +34,7 @@ Item properties :
 - (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
 - (Optional) `dts:citeStructure` holds a declared citation tree, see [Sub-collection readable](#sub-collection-readable)
 
-## URI 
+## URI
 
 ### Query Parameters
 
@@ -81,14 +81,14 @@ Here is a template of the URI for Collections API. The route itself (`/dts/api/c
 
 This is an example of a top-level Collection that groups texts into 3 categories.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/`
 - `/api/dts/collections/?id=general`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -150,13 +150,13 @@ This is an example of a top-level Collection that groups texts into 3 categories
 
 The example is a child of the parent root collection. It contains a single textual work as a member collection.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/?id=lasciva_roma`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -222,15 +222,15 @@ The example is a child collection. It represent a single textual work and its me
 
 #### Note
 
-Although, this is optional, the expansion of `@type:Resource`'s metadata is advised to avoid multiple API calls. 
+Although, this is optional, the expansion of `@type:Resource`'s metadata is advised to avoid multiple API calls.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -291,7 +291,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
             "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
             "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-            "dts:citeDepth": 2,
+            "dts:maxCiteDepth": 2,
             "dts:citeStructure": [
                 {
                     "dts:citeType": "poem",
@@ -307,16 +307,16 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 }
 ```
 
-### Child Readable Collection (i.e. a textual Resource) 
+### Child Readable Collection (i.e. a textual Resource)
 This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: dts:references for retrieval of passage references and dts:passage for retrieval of the entire collection of text passages (i.e the full document itself).
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -357,7 +357,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "dts:citeDepth": 2, 
+    "dts:maxCiteDepth": 2,
     "dts:citeStructure": [
         {
             "dts:citeType": "poem",
@@ -390,7 +390,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "dts:passage": "/api/dts/documents?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "dts:references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "dts:download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
-    "dts:citeDepth": 2, 
+    "dts:maxCiteDepth": 2,
     "dts:citeStructure": [
         {
             "dts:citeType": "front"
@@ -412,13 +412,13 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 This is an example of a paginated request for a Child Collection's members.
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/?id=lettres_de_poilus&page=19`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -457,15 +457,15 @@ This is an example of a paginated request for a Child Collection's members.
 
 ### Parent Collection Query
 
-This is an example of a query for the parents of a Collection. Note that, in this context, `totalItems` == `totalParents` 
+This is an example of a query for the parents of a Collection. Note that, in this context, `totalItems` == `totalParents`
 
-#### Example of url : 
+#### Example of url :
 
 - `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parents`
 
 #### Headers
 
-| Key | Value | 
+| Key | Value |
 | --- | ----- |
 | Content-Type | Content-Type: application/ld+json |
 
@@ -505,7 +505,7 @@ This is an example of a query for the parents of a Collection. Note that, in thi
     "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "dts:citeDepth": 2, 
+    "dts:maxCiteDepth": 2,
     "dts:citeStructure": [
         {
             "dts:citeType": "poem",
