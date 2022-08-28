@@ -18,21 +18,21 @@ JSON wide attributes :
 
 Item properties :
 
-- `title` is a single string.   Additional descriptions may be placed in `dts:dublincore` using `dc:title`, e.g. for internationalization.
+- `title` is a single string.   Additional descriptions may be placed in `dublincore` using `title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
 - `totalItems` - total number of items that you can find in the members property (irrespective of pagination)
-- `dts:totalChildren` - total number of members that you will find if you do nav=children
-- `dts:totalParents` - total number of members that you will find if you do nav=parents
-- (Required on Resource) `dts:maxCiteDepth` declare the maximum depth of a readable resource.
-- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dts:dublincore` using `dc:description`, e.g. for internationalization.
+- `totalChildren` - total number of members that you will find if you do nav=children
+- `totalParents` - total number of members that you will find if you do nav=parents
+- (Required on Resource) `maxCiteDepth` declare the maximum depth of a readable resource.
+- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dublincore` using `description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
-- (Optional) `dts:dublincore` contains Dublin Core Terms metadata
-- (Optional) `dts:extensions` contains any supplementary information provided by other ontologies/domains
-- (Optional) `dts:references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
-- (Optional) `dts:passage` contains a link to the Documents API for the object
-- (Optional) `dts:download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
-- (Optional) `dts:citeStructure` holds a declared citation tree, see [Sub-collection readable](#sub-collection-readable)
+- (Optional) `dublincore` contains Dublin Core Terms metadata
+- (Optional) `extensions` contains any supplementary information provided by other ontologies/domains
+- (Optional) `references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
+- (Optional) `passage` contains a link to the Documents API for the object
+- (Optional) `download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
+- (Optional) `citeStructure` holds a declared citation tree, see [Sub-collection readable](#sub-collection-readable)
 
 ## URI
 
@@ -52,11 +52,7 @@ Here is a template of the URI for Collections API. The route itself (`/dts/api/c
 
 ```json
 {
-  "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-  },
+  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
   "template": "/dts/api/collections/?id={collection_id}&page={page}",
   "variableRepresentation": "BasicRepresentation",
@@ -96,21 +92,17 @@ This is an example of a top-level Collection that groups texts into 3 categories
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "general",
     "@type": "Collection",
     "totalItems": 2,
-    "dts:totalParents": 0,
-    "dts:totalChildren": 2,
+    "totalParents": 0,
+    "totalChildren": 2,
     "title": "Collection Générale de l'École Nationale des Chartes",
-    "dts:dublincore": {
-        "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
-        "dc:title": [
-            {"@language": "fr", "@value": "Collection Générale de l'École Nationale des Chartes"}
+    "dublincore": {
+        "publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
+        "title": [
+            {"lang": "fr", "value": "Collection Générale de l'École Nationale des Chartes"}
         ]
     },
     "member": [
@@ -120,8 +112,8 @@ This is an example of a top-level Collection that groups texts into 3 categories
              "description": "Collection de cartulaires d'Île-de-France et de ses environs",
              "@type" : "Collection",
              "totalItems" : 10,
-             "dts:totalParents": 1,
-             "dts:totalChildren": 10
+             "totalParents": 1,
+             "totalChildren": 10
         },
         {
              "@id" : "lasciva_roma",
@@ -129,8 +121,8 @@ This is an example of a top-level Collection that groups texts into 3 categories
              "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
              "@type" : "Collection",
              "totalItems" : 1,
-             "dts:totalParents": 1,
-             "dts:totalChildren": 1
+             "totalParents": 1,
+             "totalChildren": 1
         },
         {
              "@id" : "lettres_de_poilus",
@@ -138,8 +130,8 @@ This is an example of a top-level Collection that groups texts into 3 categories
              "description": "Collection de lettres de poilus entre 1917 et 1918",
              "@type" : "Collection",
              "totalItems" : 10000,
-             "dts:totalParents": 1,
-             "dts:totalChildren": 10000
+             "totalParents": 1,
+             "totalChildren": 10000
         }
     ]
 }
@@ -164,29 +156,25 @@ The example is a child of the parent root collection. It contains a single textu
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "lasciva_roma",
     "@type": "Collection",
     "totalItems": 3,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 3,
+    "totalParents": 1,
+    "totalChildren": 3,
     "title" : "Lasciva Roma",
     "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
-    "dts:dublincore": {
-        "dc:creator": [
+    "dublincore": {
+        "creator": [
             "Thibault Clérice", "http://orcid.org/0000-0003-1852-9204"
         ],
-        "dc:title" : [
-            {"@language": "la", "@value": "Lasciva Roma"},
+        "title" : [
+            {"lang": "la", "value": "Lasciva Roma"},
         ],
-        "dc:description": [
+        "description": [
             {
-                "@language": "en",
-                "@value": "Collection of primary sources of interest in the studies of Ancient World's sexuality"
+                "lang": "en",
+                "value": "Collection of primary sources of interest in the studies of Ancient World's sexuality"
             }
         ],
     },
@@ -194,22 +182,22 @@ The example is a child of the parent root collection. It contains a single textu
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
             "title" : "Priapeia",
-            "dts:dublincore": {
-                "dc:type": [
+            "dublincore": {
+                "type": [
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
-                "dc:creator": [
-                    {"@language": "en", "@value": "Anonymous"}
+                "creator": [
+                    {"lang": "en", "value": "Anonymous"}
                 ],
-                "dc:language": ["la", "en"],
-                "dc:description": [
-                    { "@language": "en", "@value": "Anonymous lascivious Poems" }
+                "language": ["la", "en"],
+                "description": [
+                    { "lang": "en", "value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
             "totalItems": 1,
-            "dts:totalParents": 1,
-            "dts:totalChildren": 1
+            "totalParents": 1,
+            "totalChildren": 1
         }
     ]
 }
@@ -238,29 +226,25 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
     "title" : "Priapeia",
-    "dts:dublincore": {
-        "dc:type": ["http://chs.harvard.edu/xmlns/cts#work"],
-        "dc:creator": [
-            {"@language": "en", "@value": "Anonymous"}
+    "dublincore": {
+        "type": ["http://chs.harvard.edu/xmlns/cts#work"],
+        "creator": [
+            {"lang": "en", "value": "Anonymous"}
         ],
-        "dc:language": ["la", "en"],
-        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
-        "dc:description": [{
-           "@language": "en",
-            "@value": "Anonymous lascivious Poems "
+        "language": ["la", "en"],
+        "title": [{"lang": "la", "value": "Priapeia"}],
+        "description": [{
+           "lang": "en",
+            "value": "Anonymous lascivious Poems "
         }]
     },
     "totalItems" : 1,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 1,
+    "totalParents": 1,
+    "totalChildren": 1,
     "member": [
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
@@ -268,36 +252,36 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "title" : "Priapeia",
             "description": "Priapeia based on the edition of Aemilius Baehrens",
             "totalItems": 0,
-            "dts:totalParents": 1,
-            "dts:totalChildren": 0,
-            "dts:dublincore": {
-                "dc:title": [{"@language": "la", "@value": "Priapeia"}],
-                "dc:description": [{
-                   "@language": "en",
-                   "@value": "Anonymous lascivious Poems "
+            "totalParents": 1,
+            "totalChildren": 0,
+            "dublincore": {
+                "title": [{"lang": "la", "value": "Priapeia"}],
+                "description": [{
+                   "lang": "en",
+                   "value": "Anonymous lascivious Poems "
                 }],
-                "dc:type": [
+                "type": [
                     "http://chs.harvard.edu/xmlns/cts#edition",
-                    "dc:Text"
+                    "Text"
                 ],
-                "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-                "dc:dateCopyrighted": 1879,
-                "dc:creator": [
-                    {"@language": "en", "@value": "Anonymous"}
+                "source": ["https://archive.org/details/poetaelatinimino12baeh2"],
+                "dateCopyrighted": 1879,
+                "creator": [
+                    {"lang": "en", "value": "Anonymous"}
                 ],
-                "dc:contributor": ["Aemilius Baehrens"],
-                "dc:language": ["la", "en"]
+                "contributor": ["Aemilius Baehrens"],
+                "language": ["la", "en"]
             },
-            "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-            "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-            "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-            "dts:maxCiteDepth": 2,
-            "dts:citeStructure": [
+            "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+            "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+            "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
+            "maxCiteDepth": 2,
+            "citeStructure": [
                 {
-                    "dts:citeType": "poem",
-                    "dts:citeStructure": [
+                    "citeType": "poem",
+                    "citeStructure": [
                         {
-                            "dts:citeType": "line"
+                            "citeType": "line"
                         }
                     ]
                 }
@@ -308,7 +292,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```
 
 ### Child Readable Collection (i.e. a textual Resource)
-This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: dts:references for retrieval of passage references and dts:passage for retrieval of the entire collection of text passages (i.e the full document itself).
+This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: references for retrieval of passage references and passage for retrieval of the entire collection of text passages (i.e the full document itself).
 
 #### Example of url :
 
@@ -324,46 +308,42 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
     "title" : "Priapeia",
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 0,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 0,
-    "dts:dublincore": {
-        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
-        "dc:description": [{
-           "@language": "en",
-            "@value": "Anonymous lascivious Poems "
+    "totalParents": 1,
+    "totalChildren": 0,
+    "dublincore": {
+        "title": [{"lang": "la", "value": "Priapeia"}],
+        "description": [{
+           "lang": "en",
+            "value": "Anonymous lascivious Poems "
         }],
-        "dc:type": [
+        "type": [
             "http://chs.harvard.edu/xmlns/cts#edition",
-            "dc:Text"
+            "Text"
         ],
-        "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-        "dc:dateCopyrighted": 1879,
-        "dc:creator": [
-            {"@language": "en", "@value": "Anonymous"}
+        "source": ["https://archive.org/details/poetaelatinimino12baeh2"],
+        "dateCopyrighted": 1879,
+        "creator": [
+            {"lang": "en", "value": "Anonymous"}
         ],
-        "dc:contributor": ["Aemilius Baehrens"],
-        "dc:language": ["la", "en"]
+        "contributor": ["Aemilius Baehrens"],
+        "language": ["la", "en"]
     },
-    "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "dts:maxCiteDepth": 2,
-    "dts:citeStructure": [
+    "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
+    "maxCiteDepth": 2,
+    "citeStructure": [
         {
-            "dts:citeType": "poem",
-            "dts:citeStructure": [
+            "citeType": "poem",
+            "citeStructure": [
                 {
-                    "dts:citeType": "line"
+                    "citeType": "line"
                 }
             ]
         }
@@ -375,31 +355,26 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "dc": "http://purl.org/dc/elements/1.1/"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "@type" : "Resource",
     "title" : "Bucolica",
     "totalItems": 0,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 0,
-    "dts:passage": "/api/dts/documents?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
-    "dts:references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
-    "dts:download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
-    "dts:maxCiteDepth": 2,
-    "dts:citeStructure": [
+    "totalParents": 1,
+    "totalChildren": 0,
+    "passage": "/api/dts/documents?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
+    "references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
+    "download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
+    "maxCiteDepth": 2,
+    "citeStructure": [
         {
-            "dts:citeType": "front"
+            "citeType": "front"
         },
         {
-            "dts:citeType": "poem",
-            "dts:citeStructure": [
+            "citeType": "poem",
+            "citeStructure": [
                 {
-                    "dts:citeType": "line"
+                    "citeType": "line"
                 }
             ]
         }
@@ -426,21 +401,17 @@ This is an example of a paginated request for a Child Collection's members.
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
     "totalItems" : 10000,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 10000,
+    "totalParents": 1,
+    "totalChildren": 10000,
     "title": "Lettres de Poilus",
-    "dts:dublincore": {
-        "dc:publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
-        "dc:title": [
-            {"@language": "fr", "@value" : "Lettres de Poilus"}
+    "dublincore": {
+        "publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
+        "title": [
+            {"lang": "fr", "value" : "Lettres de Poilus"}
         ]
     },
     "member": ["member 190 up to 200"],
@@ -473,45 +444,41 @@ This is an example of a query for the parents of a Collection. Note that, in thi
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
     "title" : "Priapeia",
     "description": "Priapeia based on the edition of Aemilius Baehrens",
     "totalItems": 1,
-    "dts:totalParents": 1,
-    "dts:totalChildren": 0,
-    "dts:dublincore": {
-        "dc:title": [{"@language": "la", "@value": "Priapeia"}],
-        "dc:description": [{
-           "@language": "en",
-            "@value": "Anonymous lascivious Poems "
+    "totalParents": 1,
+    "totalChildren": 0,
+    "dublincore": {
+        "title": [{"lang": "la", "value": "Priapeia"}],
+        "description": [{
+           "lang": "en",
+            "value": "Anonymous lascivious Poems "
         }],
-        "dc:type": [
+        "type": [
             "http://chs.harvard.edu/xmlns/cts#edition"
         ],
-        "dc:source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-        "dc:dateCopyrighted": 1879,
-        "dc:creator": [
-            {"@language": "en", "@value": "Anonymous"}
+        "source": ["https://archive.org/details/poetaelatinimino12baeh2"],
+        "dateCopyrighted": 1879,
+        "creator": [
+            {"lang": "en", "value": "Anonymous"}
         ],
-        "dc:contributor": ["Aemilius Baehrens"],
-        "dc:language": ["la", "en"]
+        "contributor": ["Aemilius Baehrens"],
+        "language": ["la", "en"]
     },
-    "dts:passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "dts:references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "dts:download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "dts:maxCiteDepth": 2,
-    "dts:citeStructure": [
+    "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
+    "maxCiteDepth": 2,
+    "citeStructure": [
         {
-            "dts:citeType": "poem",
-            "dts:citeStructure": [
+            "citeType": "poem",
+            "citeStructure": [
                 {
-                    "dts:citeType": "line"
+                    "citeType": "line"
                 }
             ]
         }
@@ -520,22 +487,22 @@ This is an example of a query for the parents of a Collection. Note that, in thi
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
             "title" : "Priapeia",
-            "dts:dublincore": {
-                "dc:type": [
+            "dublincore": {
+                "type": [
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
-                "dc:creator": [
-                    {"@language": "en", "@value": "Anonymous"}
+                "creator": [
+                    {"lang": "en", "value": "Anonymous"}
                 ],
-                "dc:language": ["la", "en"],
-                "dc:description": [
-                    { "@language": "en", "@value": "Anonymous lascivious Poems" }
+                "language": ["la", "en"],
+                "description": [
+                    { "lang": "en", "value": "Anonymous lascivious Poems" }
                 ],
             },
             "@type" : "Collection",
             "totalItems": 1,
-            "dts:totalParents": 1,
-            "dts:totalChildren": 1,
+            "totalParents": 1,
+            "totalChildren": 1,
         }
     ]
 }
