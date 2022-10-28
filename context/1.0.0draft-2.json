@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "hydra": "https://www.w3.org/ns/hydra/core#",
+    "dct": "http://purl.org/dc/terms/",
+    "dts": "https://w3id.org/dts/api#",
+    "lang": "@language",
+    "value": "@value",
+    "dublincore": {
+      "@id": "dts:dublincore",
+      "@context": {
+        "@vocab": "http://purl.org/dc/terms/"
+      }
+    }
+  }
+}

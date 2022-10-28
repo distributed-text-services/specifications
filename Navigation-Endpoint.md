@@ -11,38 +11,38 @@ These are the JSON properties allowed in the object returned from a Navigation r
 | name |  description                              |
 | ---- | -----------------------------------------|
 | `@id` | the ID of the current request. This value should be the request URL including any query parameters. |
-| `dts:maxCiteDepth` | a number defining the maximum depth of the document's citation tree. *E.g.*, if the a document has up to three levels, `dts:maxCiteDepth` should be the number 3. |
-| `dts:citeType` | defines the default type of references listed in `member`. |
-| `dts:level` | a number identifying the hierarchical level of the requested identifier (i.e., in the `ref` or `start`/`end` query parameters), counted relative to the top of the document's citation tree. *E.g.*, if a the requested identifier is at the second hierarchical level (like `{"dts:ref": "1.1"}`) then the `dts:level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
-| `dts:passage` | the URI template to the Documents endpoint at which the text of passages corresponding to these references can be retrieved. |
-| `dts:parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `dts:parent` should have a value of "null". |
-| `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `dts:ref` values: `[{"dts:ref": "a"}, {"dts:ref": "b"}, {"dts:ref": "1.1"}]`. Or the list can contain ranges with `dts:start` and `dts:end` values in place of `dts:ref` values: `[{"dts:start": "a", "dts:end": "b"}, {"dts:start": "1.1", "dts:end": "1.3"}]`. Each item in the member list should also include its own `dts:level` parameter specifying the hierarchical level of that identifier in the document.|
+| `maxCiteDepth` | a number defining the maximum depth of the document's citation tree. *E.g.*, if the a document has up to three levels, `maxCiteDepth` should be the number 3. |
+| `citeType` | defines the default type of references listed in `member`. |
+| `level` | a number identifying the hierarchical level of the requested identifier (i.e., in the `ref` or `start`/`end` query parameters), counted relative to the top of the document's citation tree. *E.g.*, if a the requested identifier is at the second hierarchical level (like `{"ref": "1.1"}`) then the `level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
+| `passage` | the URI template to the Documents endpoint at which the text of passages corresponding to these references can be retrieved. |
+| `parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `parent` should have a value of "null". |
+| `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `ref` values: `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`. Or the list can contain ranges with `start` and `end` values in place of `ref` values: `[{"start": "a", "end": "b"}, {"start": "1.1", "end": "1.3"}]`. Each item in the member list should also include its own `level` parameter specifying the hierarchical level of that identifier in the document.|
 
 
 Within the `member` list, each object may have the following properties:
 
 | name | constraint | description                              |
 | ---- | ---------- | -----------------------------------------|
-| `dts:ref` | required unless `dts:start` and `dts:end` supplied | the unique passage identifier for one node in the citation structure of the Resource |
-| `dts:start` | required if `dts:ref` is not present; requires that `dts:end` is also supplied | the unique passage identifier for the first member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
-| `dts:end` | required if `dts:ref` is not present; requires that `dts:start` is also supplied | the unique passage identifier for the last member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
-| `dts:citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"dts:ref": "1.2", "dts:citeType": "Poem"}` |
-| `dts:dublincore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{dts:ref": "1.2", "dts:dublincore": {"dc:author": "Balzac"}}` |
-| `dts:extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
+| `ref` | required unless `start` and `end` supplied | the unique passage identifier for one node in the citation structure of the Resource |
+| `start` | required if `ref` is not present; requires that `end` is also supplied | the unique passage identifier for the first member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `end` | required if `ref` is not present; requires that `start` is also supplied | the unique passage identifier for the last member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"ref": "1.2", "citeType": "Poem"}` |
+| `dublincore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublincore": {"author": "Balzac"}}` |
+| `extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
 
 
 ### Unique `ref` identifiers
 
-Note that all identifiers used as a `dts:ref` value must be unique within the current resource. This is the case for the values retured in the `member` list as well as in the `dts:parent` property.
+Note that all identifiers used as a `ref` value must be unique within the current resource. This is the case for the values retured in the `member` list as well as in the `parent` property.
 
-### Values for the `dts:parent` Property
+### Values for the `parent` Property
 
-The format for the returned `dts:parent` value will depend on where the current `ref` stands in the resource's hierarchical structure.
+The format for the returned `parent` value will depend on where the current `ref` stands in the resource's hierarchical structure.
 
-- If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `dts:parent` should be "null".
-- If the requested `ref` identifies **one of the top level** of the resource's hierarchical divisions, the `dts:parent` property should be an object identifying the document as a whole and specifying that its `@type` is a "Resource". For example: `{"@type": "Resource", "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc5"}`
-- If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `dts:parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "CitableUnit". For example: `{"@type": "CitableUnit", "dts:ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
-- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `dts:parent` value for a range request should again be the value "null". If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
+- If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `parent` should be "null".
+- If the requested `ref` identifies **one of the top level** of the resource's hierarchical divisions, the `parent` property should be an object identifying the document as a whole and specifying that its `@type` is a "Resource". For example: `{"@type": "Resource", "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc5"}`
+- If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "CitableUnit". For example: `{"@type": "CitableUnit", "ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
+- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `parent` value for a range request should again be the value "null". If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
 
 
 ## URI for Navigation Endpoint Requests
@@ -58,7 +58,7 @@ The format for the returned `dts:parent` value will depend on where the current 
 | down | the depth (as a number or the string "max") for reference identifiers (members) to be retrieved, relative to the specified `ref` or `start`/`end` values. *E.g.*, if a request should return the children of the passage "1.2", then the `ref` parameter should be "1.2" and the `down` parameter should be `1`. The default value is `1`. If the descendants of the passage at the maximum depth of the document's structure are desired, a value of "max" may be supplied instead of a number. A value of `0` indicates that members should be at the same hierarchical level as the specified `ref` or `start`/`end` identifiers. When a `start` and `end` value for a range are supplied, a value of `0` indicates that the returned members should be all the references in the specified range *at the same hierarchical level* as the `start` and `end`. When a single `ref` value is supplied with a `down` value of 0, no members are returned, and the return object contains only metadata on the requested node itself.| GET    |
 | groupBy | Retrieve passages in groups of this size instead of single units. This would normally mean that the `member` list returned would be a list of ranges, each of which contains this number of passages. | GET |
 | max | Allows for limiting the number of results and getting pagination | GET |
-| exclude | Exclude keys in members' object such as `exclude=dts:extensions` | GET |
+| exclude | Exclude keys in members' object such as `exclude=extensions` | GET |
 
 ### Response Headers
 
@@ -74,11 +74,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 
 ```json
 {
-  "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-  },
+  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
   "template": "/dts/api/navigation/?id={collection_id}{&ref}{&level}{&start}{&end}{&page}",
   "variableRepresentation": "BasicRepresentation",
@@ -91,7 +87,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "dts:ref",
+      "variable": "ref",
       "property": "hydra:freetextQuery",
       "required": false
     },
@@ -109,19 +105,19 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "dts:down",
+      "variable": "down",
       "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "dts:start",
+      "variable": "start",
       "property": "hydra:freetextQuery",
       "required": false
     },
     {
       "@type": "IriTemplateMapping",
-      "variable": "dts:end",
+      "variable": "end",
       "property": "hydra:freetextQuery",
       "required": false
     }
@@ -149,21 +145,17 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=1",
-    "dts:maxCiteDepth" : 2,
-    "dts:level": 0,
+    "maxCiteDepth" : 2,
+    "level": 0,
     "member": [
-      {"dts:ref": "1", "dts:level": 1},
-      {"dts:ref": "2", "dts:level": 1},
-      {"dts:ref": "3", "dts:level": 1}
+      {"ref": "1", "level": 1},
+      {"ref": "2", "level": 1},
+      {"ref": "3", "level": 1}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": null
+    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "parent": null
 }
 ```
 
@@ -185,24 +177,20 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=2",
-    "dts:maxCiteDepth" : 2,
-    "dts:level": 0,
+    "maxCiteDepth" : 2,
+    "level": 0,
     "member": [
-      {"dts:ref": "1.1", "dts:level": 2},
-      {"dts:ref": "1.2", "dts:level": 2},
-      {"dts:ref": "2.1", "dts:level": 2},
-      {"dts:ref": "2.2", "dts:level": 2},
-      {"dts:ref": "3.1", "dts:level": 2},
-      {"dts:ref": "3.2", "dts:level": 2}
+      {"ref": "1.1", "level": 2},
+      {"ref": "1.2", "level": 2},
+      {"ref": "2.1", "level": 2},
+      {"ref": "2.2", "level": 2},
+      {"ref": "3.1", "level": 2},
+      {"ref": "3.2", "level": 2}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": {"@type": "Resource", "@dts:ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
+    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
 }
 ```
 
@@ -224,20 +212,16 @@ The client wants to retrieve a list of passage identifiers that are children of 
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
-    "dts:maxCiteDepth" : 2,
-    "dts:level": 1,
+    "maxCiteDepth" : 2,
+    "level": 1,
     "member": [
-      {"dts:ref": "1.1", "dts:level": 2},
-      {"dts:ref": "1.2", "dts:level": 2}
+      {"ref": "1.1", "level": 2},
+      {"ref": "1.2", "level": 2}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": {"@type": "Resource", "@dts:ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
+    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
 }
 ```
 
@@ -259,22 +243,18 @@ The client wants to retrieve a list of grand-children passage identifiers that a
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2",
-    "dts:maxCiteDepth" : 3,
-    "dts:level": 1,
+    "maxCiteDepth" : 3,
+    "level": 1,
     "member": [
-      {"dts:ref": "1.1.1", "dts:level": 3},
-      {"dts:ref": "1.1.2", "dts:level": 3},
-      {"dts:ref": "1.2.1", "dts:level": 3},
-      {"dts:ref": "1.2.2", "dts:level": 3}
+      {"ref": "1.1.1", "level": 3},
+      {"ref": "1.1.2", "level": 3},
+      {"ref": "1.2.1", "level": 3},
+      {"ref": "1.2.2", "level": 3}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
-    "dts:parent": {"@type": "Resource", "dts:ref": "/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2"}
+    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
+    "parent": {"@type": "Resource", "ref": "/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2"}
 }
 ```
 
@@ -296,20 +276,16 @@ The client wants to retrieve a list of child passage identifiers that are part o
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1.1&down=1",
-    "dts:maxCiteDepth" : 3,
-    "dts:level": 2,
+    "maxCiteDepth" : 3,
+    "level": 2,
     "member": [
-      {"dts:ref": "1.1.1", "dts:level": 3},
-      {"dts:ref": "1.1.2", "dts:level": 3}
+      {"ref": "1.1.1", "level": 3},
+      {"ref": "1.1.2", "level": 3}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
-    "dts:parent": {"@type": "CitableUnit", "dts:ref": "1"}
+    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
+    "parent": {"@type": "CitableUnit", "ref": "1"}
 }
 ```
 
@@ -333,21 +309,17 @@ The client wants to retrieve a list of passage identifiers which are between two
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=0&start=1&end=3",
-    "dts:maxCiteDepth" : 2,
-    "dts:level": 1,
+    "maxCiteDepth" : 2,
+    "level": 1,
     "member": [
-      {"dts:ref": "1", "dts:level": 1},
-      {"dts:ref": "2", "dts:level": 1},
-      {"dts:ref": "3", "dts:level": 1}
+      {"ref": "1", "level": 1},
+      {"ref": "2", "level": 1},
+      {"ref": "3", "level": 1}
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": null
+    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "parent": null
 }
 ```
 
@@ -369,24 +341,20 @@ The client wants to retrieve a list of passage identifiers which are between two
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=1&start=1&end=3",
-    "dts:maxCiteDepth" : 2,
-    "dts:level": 1,
+    "maxCiteDepth" : 2,
+    "level": 1,
     "member": [
-      {"dts:ref": "1.1", "dts:level": 2},
-      {"dts:ref": "1.2", "dts:level": 2},
-      {"dts:ref": "2.1", "dts:level": 2},
-      {"dts:ref": "2.2", "dts:level": 2},
-      {"dts:ref": "3.1", "dts:level": 2},
-      {"dts:ref": "3.2", "dts:level": 2},
+      {"ref": "1.1", "level": 2},
+      {"ref": "1.2", "level": 2},
+      {"ref": "2.1", "level": 2},
+      {"ref": "2.2", "level": 2},
+      {"ref": "3.1", "level": 2},
+      {"ref": "3.2", "level": 2},
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "dts:parent": null
+    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "parent": null
 }
 ```
 
@@ -408,21 +376,16 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "tei": "http://www.tei-c.org/ns/1.0"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2&groupBy=2",
-    "dts:maxCiteDepth" : 3,
-    "dts:level": 1,
+    "maxCiteDepth" : 3,
+    "level": 1,
     "member": [
-      {"dts:start": "1.1.1", "dts:end": "1.1.2", "dts:level": 3},
-      {"dts:start": "1.2.1", "dts:end": "1.2.2", "dts:level": 3},
+      {"start": "1.1.1", "end": "1.1.2", "level": 3},
+      {"start": "1.2.1", "end": "1.2.2", "level": 3},
     ],
-    "dts:passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
-    "dts:parent": {"@type": "Resource", "dts:ref": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"}
+    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
+    "parent": {"@type": "Resource", "ref": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"}
 }
 ```
 
@@ -444,35 +407,30 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
 
 ```json
 {
-    "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
-        "foo": "http://foo.bar/ontology#"
-    },
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
-    "dts:maxCiteDepth" : 1,
-    "dts:level": 0,
-    "dts:citeType": "letter",
+    "maxCiteDepth" : 1,
+    "level": 0,
+    "citeType": "letter",
     "member": [
       // The two following items are not letters : the data provider notes this different
-      { "dts:ref": "Av", "dts:citeType": "preface", "dts:level": 1},
-      { "dts:ref": "Pr", "dts:citeType": "preface", "dts:level": 1},
+      { "ref": "Av", "citeType": "preface", "level": 1},
+      { "ref": "Pr", "citeType": "preface", "level": 1},
       // Given the fact the following nodes have no citeType, they inherit of the root object citeType : letter
-      { "dts:ref": "1", "dts:level": 1},
-      { "dts:ref": "2", "dts:level": 1},
-      { "dts:ref": "3", "dts:level": 1},
+      { "ref": "1", "level": 1},
+      { "ref": "2", "level": 1},
+      { "ref": "3", "level": 1},
       // And so on
     ],
-    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
-    "dts:parent": null
+    "passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "parent": null
 }
 ```
 
 
 ### Example 10: Retrieval of titles and generic metadata
 
-The client wants the list of passages with their title. If the given data provider has a title, then it will be provided.
+The client wants the list of passages with their title and domain-specific vocabularies. If the given data provider has a title, then it will be provided.
 
 #### Example of url :
 
@@ -489,65 +447,63 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
 ```json
 {
     "@context": {
-        "@vocab": "https://www.w3.org/ns/hydra/core#",
-        "dc": "http://purl.org/dc/terms/",
-        "dts": "https://w3id.org/dts/api#",
+        "@vocab": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
         "foo": "http://foo.bar/ontology#"
     },
     "@id":"/api/dts/navigation/?id=http://data.bnf.fr/ark:/12148/cb11936111v",
-    "dts:maxCiteDepth" : 1,
-    "dts:level": 0,
+    "maxCiteDepth" : 1,
+    "level": 0,
     "member": [
       {
-        "dts:ref": "Av",
-        "dts:level": 1,
-        "dts:dublincore": {
-        "dc:title": "Avertissement de l'Éditeur"
+        "ref": "Av",
+        "level": 1,
+        "dublincore": {
+        "title": "Avertissement de l'Éditeur"
         }
       },
       {
-        "dts:ref": "Pr",
-        "dts:level": 1,
-        "dts:dublincore": {
-          "dc:title": "Préface"
+        "ref": "Pr",
+        "level": 1,
+        "dublincore": {
+          "title": "Préface"
         }
       },
       {
-        "dts:ref": "1",
-        "dts:level": 1,
-        "dts:dublincore": {
-          "dc:title": "Lettre 1"
+        "ref": "1",
+        "level": 1,
+        "dublincore": {
+          "title": "Lettre 1"
         },
-        "dts:extensions": {
+        "extensions": {
           "foo:fictionalSender": "Cécile Volanges",
           "foo:fictionalRecipient": "Sophie Carnay"
         }
       },
       {
-        "dts:ref": "2",
-        "dts:level": 1,
-        "dts:dublincore": {
-          "dc:title": "Lettre 2"
+        "ref": "2",
+        "level": 1,
+        "dublincore": {
+          "title": "Lettre 2"
         },
-        "dts:extensions": {
+        "extensions": {
           "foo:fictionalSender": "La Marquise de Merteuil",
           "foo:fictionalRecipient": "Vicomte de Valmont"
         }
       },
       {
-        "dts:ref": "3",
-        "dts:level": 1,
-        "dts:dublincore": {
-          "dc:title": "Lettre 3"
+        "ref": "3",
+        "level": 1,
+        "dublincore": {
+          "title": "Lettre 3"
         },
-        "dts:extensions": {
+        "extensions": {
           "foo:fictionalSender": "Cécile Volanges",
           "foo:fictionalRecipient": "Sophie Carnay"
         }
       },
       // And so on
     ],
-    "dts:passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
-    "dts:parent": null
+    "passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "parent": null
 }
 ```
