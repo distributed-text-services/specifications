@@ -3,13 +3,54 @@
     "hydra": "https://www.w3.org/ns/hydra/core#",
     "dct": "http://purl.org/dc/terms/",
     "dts": "https://w3id.org/dts/api#",
+    
+    "Collection": "dts:Collection",
+    "Resource": "dts:Resource",
+    "CitableUnit": "dts:CitableUnit",
+    "EntryPoint": "dts:EntryPoint",
+    
+    "statusCode": "hydra:statusCode",
+    "Status": "hydra:Status",
+    
+    "title": "hydra:title",
+    "description": "hydra:description",
+    "member": "hydra:member",
+    "totalItems": "hydra:totalItems",
+    
+    "id": "@id",
+    "type": "@type",
     "lang": "@language",
     "value": "@value",
-    "dublincore": {
-      "@id": "dts:dublincore",
+    
+    "dublinCore": {
+      "@id": "dts:dublinCore",
       "@context": {
         "@vocab": "http://purl.org/dc/terms/"
       }
     }
+    
+    "totalChildren": "dts:totalChildren",
+    "totalParents": "dts:totalParents",
+    "maxCiteDepth": "dts:maxCiteDepth",
+    "references": "dts:references",
+    "download": "dts:download",
+    "passage": "dts:passage",
+    
+    "extensions": "dts:extensions",
+    "citeStructure": {
+    	"@id": "dts:citeStructure",
+      "@type": "@list"
+    },
+    "citeType": {
+      "@id": "dts:citeType",
+      "@type": "@value",
+    },
+    
+    "referenceNode": "dts:referenceNode",
+    "level": "dts:level",
+    "parent": "dts:parent",
+    "ref": "dts:ref",
+    "start": "dts:start",
+    "end": "dts:end"
   }
 }
