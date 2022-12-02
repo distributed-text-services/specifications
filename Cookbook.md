@@ -2,7 +2,7 @@
 
 ## What is the cookbook ?
 
-The cookbook is a set of recipes to help you deal with common questions about how you might want to express some things using DTS. These are not *enforced* standard practices but recommendations. 
+The cookbook is a set of recipes to help you deal with common questions about how you might want to express some things using DTS. These are not *enforced* standard practices but recommendations.
 
 ## IIIF
 
@@ -22,10 +22,10 @@ To link a manifest to a catalog entry, we recommend using the Dublin Core Terms 
     "totalItems": 0,
     "totalParents": 1,
     "totalChildren": 0,
-    "passage": "/api/dts/documents?id=/a/collection/uri",
+    "passage": "/api/dts/document?id=/a/collection/uri",
     "references": "/api/dts/navigation?id=/a/collection/uri",
-    "citeDepth": 2, 
-    "dublincore": {
+    "citeDepth": 2,
+    "dublinCore": {
         "source": [
             {
                 "@id": "https://a/manifest/uri",
@@ -35,11 +35,11 @@ To link a manifest to a catalog entry, we recommend using the Dublin Core Terms 
         ]
     }
 }
-``` 
+```
 
 ### Link manifests to a passage
 
-The operation is really close to the [previous one](#link-manifests-to-a-catalog-entry) as `dublincore` is also available in the [Navigation endpoint](./navigation-endpoint.html)
+The operation is really close to the [previous one](#link-manifests-to-a-catalog-entry) as `dublinCore` is also available in the [Navigation endpoint](./navigation-endpoint.html)
 
 ```json
 {
@@ -54,7 +54,7 @@ The operation is really close to the [previous one](#link-manifests-to-a-catalog
       {"ref": "ref 1"},
       {
         "ref": "ref 2",
-        "dublincore": {
+        "dublinCore": {
             "source": [
                 {
                     "@id": "https://a/manifest/uri",
@@ -65,7 +65,7 @@ The operation is really close to the [previous one](#link-manifests-to-a-catalog
         }
       },
     ],
-    "passage": "/dts/api/documents/?id=/a/text/id{&ref}{&start}{&end}"
+    "passage": "/dts/api/document/?id=/a/text/id{&ref}{&start}{&end}"
 }
-``` 
+```
 

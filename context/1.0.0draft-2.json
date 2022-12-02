@@ -5,8 +5,8 @@
     "dts": "https://w3id.org/dts/api#",
     "lang": "@language",
     "value": "@value",
-    "dublincore": {
-      "@id": "dts:dublincore",
+    "dublinCore": {
+      "@id": "dts:dublinCore",
       "@context": {
         "@vocab": "http://purl.org/dc/terms/"
       }
