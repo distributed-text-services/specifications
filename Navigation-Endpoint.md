@@ -6,34 +6,54 @@ Responses from the Navigation endpoint assume by default that the user is traver
 
 ## Scheme for Navigation Endpoint Responses
 
-These are the JSON properties allowed in the object returned from a Navigation request. All top-level properties are mandatory.
+### `Navigation` Object
 
-| name |  description                              |
-| ---- | -----------------------------------------|
-| `@id` | the ID of the current request. This value should be the request URL including any query parameters. |
-| `maxCiteDepth` | a number defining the maximum depth of the document's citation tree. *E.g.*, if the a document has up to three levels, `maxCiteDepth` should be the number 3. |
-| `citeType` | defines the default type of references listed in `member`. |
-| `level` | a number identifying the hierarchical level of the requested identifier (i.e., in the `ref` or `start`/`end` query parameters), counted relative to the top of the document's citation tree. *E.g.*, if a the requested identifier is at the second hierarchical level (like `{"ref": "1.1"}`) then the `level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
-| `passage` | the URI template to the Document endpoint at which the text of passages corresponding to these references can be retrieved. |
-| `parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `parent` should have a value of "null". |
-| `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `ref` values: `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`. Or the list can contain ranges with `start` and `end` values in place of `ref` values: `[{"start": "a", "end": "b"}, {"start": "1.1", "end": "1.3"}]`. Each item in the member list should also include its own `level` parameter specifying the hierarchical level of that identifier in the document.|
+The top-level response object is a `Navigation` object answering a query about the citation tree of a Resource, containing details about nodes within that tree.
 
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `@id` | URL | Y | The absolute URL of the current request including any query parameters. |
+| `@type` | string | Y | The object's RDF class which must be "Navigation". |
+| `passage` | URL template | Y | The URI template to the Document endpoint at which the text of nodes in the citation tree can be retrieved. |
+| `navigation` | URL template | Y | The URI template to the Navigation endpoint at which the citation tree structure can be queried. |
+| `resource`| Resource | Y | The `Resource` whose citation tree is being queried. |
+| `ref` | CitableUnit | N | The `CitableUnit` in the citation tree which is being queried. |
+| `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
+| `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
+| `member` | list | Y | A list of `CitableUnit` in the subtree specified by the query parameters. |
+<!-- TODO: Revisit `member` when we discuss table of contents traversal -->
 
-Within the `member` list, each object may have the following properties:
+### Resource
 
-| name | constraint | description                              |
-| ---- | ---------- | -----------------------------------------|
-| `ref` | required unless `start` and `end` supplied | The `@id` of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. |
-| `start` | required if `ref` is not present; requires that `end` is also supplied | The `@id` of a node in the citation tree for the resource, used as the starting point for a range serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
-| `end` | required if `ref` is not present; requires that `start` is also supplied | The `@id` of a node in the citation tree for the resource, used as the ending point for a range of passages serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
-| `citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"ref": "1.2", "citeType": "Poem"}` |
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `@id` | URI | Y | The URI of the `Resource`. |
+| `@type` | string | Y | The object's RDF class which must be "Resource". |
+| `collection` | URL template | Y | The URI template to the Collection endpoint at which the `Resource` can be found. |
+| `maxCiteDepth` | int | Y | An integer defining the maximum depth of the Resource's citation tree. |
+
+### CitableUnit
+
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `@id` | URI | Y | The URI of the `CitableUnit`. |
+| `@type` | string | Y | The object's RDF class which must be "CitableUnit". |
+| `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
+| `parent` | nullable string | Y | The URI for the hierarchical parent of the `CitableUnit` in the `Resource`. |
+| `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
+| `extensions` |
+| `dublinCore` |
+<!-- TODO: fill in extensions and dublinCore -->
 | `dublinCore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublinCore": {"author": "Balzac"}}` |
 | `extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
 
+#### Usage
+
+- If the `CitableUnit` has no hierarchical parent the value of `parent` must be `null`.
 
 ### Unique `ref` identifiers
 
-Note that all identifiers used as a `ref` value must be unique within the current resource. This is the case for the values retured in the `member` list as well as in the `parent` property.
+Note that all identifiers used as a `ref` value must be unique within the current Resource. This is the case for the values retured in the `member` list as well as in the `parent` property.
 
 ### Values for the `parent` Property
 
