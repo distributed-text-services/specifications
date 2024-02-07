@@ -23,9 +23,9 @@ Within the `member` list, each object may have the following properties:
 
 | name | constraint | description                              |
 | ---- | ---------- | -----------------------------------------|
-| `ref` | required unless `start` and `end` supplied | the unique passage identifier for one node in the citation structure of the Resource |
-| `start` | required if `ref` is not present; requires that `end` is also supplied | the unique passage identifier for the first member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
-| `end` | required if `ref` is not present; requires that `start` is also supplied | the unique passage identifier for the last member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `ref` | required unless `start` and `end` supplied | The `@id` of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. |
+| `start` | required if `ref` is not present; requires that `end` is also supplied | The `@id` of a node in the citation tree for the resource, used as the starting point for a range serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
+| `end` | required if `ref` is not present; requires that `start` is also supplied | The `@id` of a node in the citation tree for the resource, used as the ending point for a range of passages serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
 | `citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"ref": "1.2", "citeType": "Poem"}` |
 | `dublinCore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublinCore": {"author": "Balzac"}}` |
 | `extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
@@ -52,13 +52,22 @@ The format for the returned `parent` value will depend on where the current `ref
 | name | description                              | methods |
 |------|------------------------------------------|---------|
 | id   | the unique identifier (normally a URN) for the Resource being navigated |  GET    |
-| ref | (NOT used with `start` and `end`) a single passage identifier providing the point of reference for the Navigation request within the Resource. Such identifiers should be unique within a given Resource. | GET    |
-| start | (NOT used if a `ref` is specified, requires `end` as well) Start of the range passages to serve as the reference point for the Navigation request. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
-| end |  (NOT used if a `ref` is specified, requires `start` as well) End of the range of passages to serve as the reference point for the Navigation request. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
-| down | the depth (as a number or the string "max") for reference identifiers (members) to be retrieved, relative to the specified `ref` or `start`/`end` values. *E.g.*, if a request should return the children of the passage "1.2", then the `ref` parameter should be "1.2" and the `down` parameter should be `1`. The default value is `1`. If the descendants of the passage at the maximum depth of the document's structure are desired, a value of "max" may be supplied instead of a number. A value of `0` indicates that members should be at the same hierarchical level as the specified `ref` or `start`/`end` identifiers. When a `start` and `end` value for a range are supplied, a value of `0` indicates that the returned members should be all the references in the specified range *at the same hierarchical level* as the `start` and `end`. When a single `ref` value is supplied with a `down` value of 0, no members are returned, and the return object contains only metadata on the requested node itself.| GET    |
+| ref | (NOT used with `start` and `end`) The `@id` of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. | GET    |
+| start | (NOT used if a `ref` is specified, requires `end` as well) The `@id` of a node in the citation tree for the resource, used as the starting point for a range serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
+| end |  (NOT used if a `ref` is specified, requires `start` as well) The `@id` of a node in the citation tree for the resource, used as the ending point for a range of passages serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
+| down | the depth (as a number or the string "max") for citation tree nodes (members) to be retrieved, relative to the specified `ref` or `start`/`end` values. *E.g.*, if a request should return the children of the passage "1.2", then the `ref` parameter should be "1.2" and the `down` parameter should be `1`. The default value is `1`. If the descendants of the passage at the maximum depth of the document's structure are desired, a value of "max" may be supplied instead of a number. A value of `0` indicates that members should be at the same hierarchical level as the specified `ref` or `start`/`end` identifiers. When a `start` and `end` value for a range are supplied, a value of `0` indicates that the returned members should be all the references in the specified range *at the same hierarchical level* as the `start` and `end`. When a single `ref` value is supplied with a `down` value of 0, no members are returned, and the return object contains only metadata on the requested node itself.| GET    |
 | groupBy | Retrieve passages in groups of this size instead of single units. This would normally mean that the `member` list returned would be a list of ranges, each of which contains this number of passages. | GET |
 | max | Allows for limiting the number of results and getting pagination | GET |
 | exclude | Exclude keys in members' object such as `exclude=extensions` | GET |
+
+
+### Usage
+
+- It is a 400 Bad Request Error not to specify `id`.
+- It is a 400 Bad Request Error to specify both `ref` and either `start` or `end`.
+- It is a 400 Bad Request Error to specify `start` without also specifying `end`, or vice versa.
+- A query with neither `ref`, `start`, nor `end` is valid. This means that the implicit `ref` value is the root node of the citation tree.
+
 
 ### Response Headers
 
@@ -146,6 +155,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+
     "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=1",
     "maxCiteDepth" : 2,
     "level": 0,
@@ -154,7 +164,6 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "2", "level": 1},
       {"ref": "3", "level": 1}
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": null
 }
 ```
