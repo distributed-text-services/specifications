@@ -358,38 +358,7 @@ The client wants to retrieve a list of passage identifiers which are between two
 }
 ```
 
-### Example 8: Passages grouped by the provider
-
-The client wants to retrieve a list of grand-children ranges of two identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`. In this case the references are returned as ranges, each of which groups a number of sequential references equal to the `groupBy` request parameter. Since the specified ref is at the top structural level of the document, the returned parent is the entire Resource.
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2&groupBy=2`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2&groupBy=2",
-    "maxCiteDepth" : 3,
-    "level": 1,
-    "member": [
-      {"start": "1.1.1", "end": "1.1.2", "level": 3},
-      {"start": "1.2.1", "end": "1.2.2", "level": 3},
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
-    "parent": {"@type": "Resource", "ref": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"}
-}
-```
-
-### Example 9: Retrieval of typology of references
+### Example 8: Retrieval of typology of references
 
 Some passages may have a metadata type. The `citeType` refers to the type of a citable node. The node expects a free text or a RDF Class. A default type can be given at the root of the response object.
 
@@ -428,7 +397,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
 ```
 
 
-### Example 10: Retrieval of titles and generic metadata
+### Example 9: Retrieval of titles and generic metadata
 
 The client wants the list of passages with their title and domain-specific vocabularies. If the given data provider has a title, then it will be provided.
 
