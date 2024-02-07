@@ -25,12 +25,12 @@ DTS supports FAIR data practices for textual data by:
 * encouraging publishers to use stable persistent identifiers for their texts and their collections
 * supporting the use of standard vocabularies for the descriptive metadata
 * enabling expression of metadata separate from the textual content itself
-* providing documented (but unconstrained) access to the information about the structure of a textual resource, down to the level of a citation 
+* providing documented (but unconstrained) access to the information about the structure of a textual resource, down to the level of a citation
 * enabling detailed specification of relations among textual resources
 
 ## What kind of API is DTS?
 
-DTS is a REST API that works a lot like a web browser.  When client software makes a request, the server responds by giving it a document.  The client can use the information in this document to make further requests. The API is defined purely in terms of Web requests using HTTP and the documents and headers that the server provides in response to those requests.  This means that DTS is language independent, easy to debug, and scales well to large numbers of users. For API geeks, here are the buzzwords: DTS is a pure hypermedia-centric REST API, defined in terms of HTTP conventions.  
+DTS is a REST API that works a lot like a web browser.  When client software makes a request, the server responds by giving it a document.  The client can use the information in this document to make further requests. The API is defined purely in terms of Web requests using HTTP and the documents and headers that the server provides in response to those requests.  This means that DTS is language independent, easy to debug, and scales well to large numbers of users. For API geeks, here are the buzzwords: DTS is a pure hypermedia-centric REST API, defined in terms of HTTP conventions.
 
 DTS is built like you would build a website: everything is discoverable, sorted so that users (clients) can easily find what they want. On top of that, it uses vocabularies that are linked and shared and which you can find all over the web of data.
 
@@ -71,7 +71,7 @@ Yes.
 
 Yes, partially.
 
-The DTS Collections and Navigations endpoints can be used to provide navigation capabilities across 
+The DTS Collection and Navigations endpoints can be used to provide navigation capabilities across
 collections of texts and within a textual document regardless of the data format. However, the Document endpoint only suppoorts
 TEI texts.
 

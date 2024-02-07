@@ -14,7 +14,7 @@ These are the JSON properties allowed in the object returned from a Navigation r
 | `maxCiteDepth` | a number defining the maximum depth of the document's citation tree. *E.g.*, if the a document has up to three levels, `maxCiteDepth` should be the number 3. |
 | `citeType` | defines the default type of references listed in `member`. |
 | `level` | a number identifying the hierarchical level of the requested identifier (i.e., in the `ref` or `start`/`end` query parameters), counted relative to the top of the document's citation tree. *E.g.*, if a the requested identifier is at the second hierarchical level (like `{"ref": "1.1"}`) then the `level` in the response should be the number 2. (The Resource as a whole is considered level 0.) |
-| `passage` | the URI template to the Documents endpoint at which the text of passages corresponding to these references can be retrieved. |
+| `passage` | the URI template to the Document endpoint at which the text of passages corresponding to these references can be retrieved. |
 | `parent` | the unique passage identifier for the hierarchical parent of the current node in the document structure, defined by the `ref` query parameter. If the query specifies a range rather than a single `ref`, no parent should be specified and `parent` should have a value of "null". |
 | `member` | a list of passage references matching the requested parameters. This can be a list of single `ids` as objects with `ref` values: `[{"ref": "a"}, {"ref": "b"}, {"ref": "1.1"}]`. Or the list can contain ranges with `start` and `end` values in place of `ref` values: `[{"start": "a", "end": "b"}, {"start": "1.1", "end": "1.3"}]`. Each item in the member list should also include its own `level` parameter specifying the hierarchical level of that identifier in the document.|
 
@@ -27,7 +27,7 @@ Within the `member` list, each object may have the following properties:
 | `start` | required if `ref` is not present; requires that `end` is also supplied | the unique passage identifier for the first member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
 | `end` | required if `ref` is not present; requires that `start` is also supplied | the unique passage identifier for the last member of a range of sequential passages. This parameter is inclusive, so the supplied reference is considered part of the specified range. |
 | `citeType` | optional | identifies the passage type for the specified passage or range. *E.g.*, `{"ref": "1.2", "citeType": "Poem"}` |
-| `dublincore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublincore": {"author": "Balzac"}}` |
+| `dublinCore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublinCore": {"author": "Balzac"}}` |
 | `extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
 
 
@@ -154,7 +154,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "2", "level": 1},
       {"ref": "3", "level": 1}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": null
 }
 ```
@@ -189,7 +189,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
       {"ref": "3.1", "level": 2},
       {"ref": "3.2", "level": 2}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
 }
 ```
@@ -220,7 +220,7 @@ The client wants to retrieve a list of passage identifiers that are children of 
       {"ref": "1.1", "level": 2},
       {"ref": "1.2", "level": 2}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
 }
 ```
@@ -253,7 +253,7 @@ The client wants to retrieve a list of grand-children passage identifiers that a
       {"ref": "1.2.1", "level": 3},
       {"ref": "1.2.2", "level": 3}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
     "parent": {"@type": "Resource", "ref": "/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2"}
 }
 ```
@@ -284,7 +284,7 @@ The client wants to retrieve a list of child passage identifiers that are part o
       {"ref": "1.1.1", "level": 3},
       {"ref": "1.1.2", "level": 3}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
     "parent": {"@type": "CitableUnit", "ref": "1"}
 }
 ```
@@ -318,7 +318,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "2", "level": 1},
       {"ref": "3", "level": 1}
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": null
 }
 ```
@@ -353,7 +353,7 @@ The client wants to retrieve a list of passage identifiers which are between two
       {"ref": "3.1", "level": 2},
       {"ref": "3.2", "level": 2},
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
     "parent": null
 }
 ```
@@ -384,8 +384,8 @@ The client wants to retrieve a list of grand-children ranges of two identifiers 
       {"start": "1.1.1", "end": "1.1.2", "level": 3},
       {"start": "1.2.1", "end": "1.2.2", "level": 3},
     ],
-    "passage": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
-    "parent": {"@type": "Resource", "ref": "/dts/api/documents/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"}
+    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"
+    "parent": {"@type": "Resource", "ref": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}"}
 }
 ```
 
@@ -422,7 +422,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       { "ref": "3", "level": 1},
       // And so on
     ],
-    "passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
     "parent": null
 }
 ```
@@ -457,21 +457,21 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       {
         "ref": "Av",
         "level": 1,
-        "dublincore": {
+        "dublinCore": {
         "title": "Avertissement de l'Éditeur"
         }
       },
       {
         "ref": "Pr",
         "level": 1,
-        "dublincore": {
+        "dublinCore": {
           "title": "Préface"
         }
       },
       {
         "ref": "1",
         "level": 1,
-        "dublincore": {
+        "dublinCore": {
           "title": "Lettre 1"
         },
         "extensions": {
@@ -482,18 +482,18 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       {
         "ref": "2",
         "level": 1,
-        "dublincore": {
+        "dublinCore": {
           "title": "Lettre 2"
         },
         "extensions": {
           "foo:fictionalSender": "La Marquise de Merteuil",
           "foo:fictionalRecipient": "Vicomte de Valmont"
         }
-      },
+      }
       {
         "ref": "3",
         "level": 1,
-        "dublincore": {
+        "dublinCore": {
           "title": "Lettre 3"
         },
         "extensions": {
@@ -503,7 +503,7 @@ Example using *Les Liaisons Dangereuses* by Pierre Choderlos de Laclos
       },
       // And so on
     ],
-    "passage": "/dts/api/documents/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
+    "passage": "/dts/api/document/?id=http://data.bnf.fr/ark:/12148/cb11936111v{&ref}{&start}{&end}",
     "parent": null
 }
 ```

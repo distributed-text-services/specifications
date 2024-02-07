@@ -21,7 +21,6 @@
     "type": "@type",
     "lang": "@language",
     "value": "@value",
-    
     "dublinCore": {
       "@id": "dts:dublinCore",
       "@context": {

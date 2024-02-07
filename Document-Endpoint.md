@@ -481,7 +481,7 @@ If a response returns a status of `409(Conflict)` then the XML `<description>` e
 
 In this example we will submit the first structural segments to constitute a new document. Prior to this operation no segments exist for the document on the server. This first `POST` request only creates verses 1-2 of chapter 1 in the document identified by the URN `urn:cts:ancJewLit:1Enoch`.
 
-Note that a metadata record for the document must already have been added via the Collections endpoint. This is the only way to establish a valid identifier for the document, which is then used for the Document `POST` request.
+Note that a metadata record for the document must already have been added via the Collection endpoint. This is the only way to establish a valid identifier for the document, which is then used for the Document `POST` request.
 
 Note too that a `<teiHeader>` element precedes the main `<text>` element. If a `<teiHeader>` is included with the initial form of the document, its metadata should be extracted and integrated with the data accessible via the Collection endpoint.
 

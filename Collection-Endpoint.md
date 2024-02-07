@@ -1,6 +1,6 @@
-# Collections Endpoint
+# Collection Endpoint
 
-The collections endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
+The collection endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
 
 DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
 
@@ -18,27 +18,27 @@ JSON wide attributes :
 
 Item properties :
 
-- `title` is a single string.   Additional descriptions may be placed in `dublincore` using `title`, e.g. for internationalization.
+- `title` is a single string.   Additional descriptions may be placed in `dublinCore` using `title`, e.g. for internationalization.
 - `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
 - `@type` is either `Collection` or `Resource`
 - `totalItems` - total number of items that you can find in the members property (irrespective of pagination)
 - `totalChildren` - total number of members that you will find if you do nav=children
 - `totalParents` - total number of members that you will find if you do nav=parents
 - (Required on Resource) `maxCiteDepth` declare the maximum depth of a readable resource.
-- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dublincore` using `description`, e.g. for internationalization.
+- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization.
 - (Optional) `member` contains members of the collection
-- (Optional) `dublincore` contains Dublin Core Terms metadata
+- (Optional) `dublinCore` contains Dublin Core Terms metadata
 - (Optional) `extensions` contains any supplementary information provided by other ontologies/domains
 - (Optional) `references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
-- (Optional) `passage` contains a link to the Documents API for the object
+- (Optional) `passage` contains a link to the Document API for the object
 - (Optional) `download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
-- (Optional) `citeStructure` holds a declared citation tree, see [Sub-collection readable](#sub-collection-readable)
+- (Optional) `citeStructure` holds a declared citation tree, see [Child Readable Collection](#child-readable-collection) below.
 
 ## URI
 
 ### Query Parameters
 
-The collections endpoint supports the following query parameters:
+The collection endpoint supports the following query parameters:
 
 | name | description                              | methods |
 |------|------------------------------------------|---------|
@@ -48,13 +48,13 @@ The collections endpoint supports the following query parameters:
 
 ### URI Template
 
-Here is a template of the URI for Collections API. The route itself (`/dts/api/collections/`) is up to the implementer.
+Here is a template of the URI for Collection API. The route itself (`/dts/api/collection/`) is up to the implementer.
 
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
-  "template": "/dts/api/collections/?id={collection_id}&page={page}",
+  "template": "/dts/api/collection/?id={collection_id}&page={page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -79,8 +79,8 @@ This is an example of a top-level Collection that groups texts into 3 categories
 
 #### Example of url :
 
-- `/api/dts/collections/`
-- `/api/dts/collections/?id=general`
+- `/api/dts/collection/`
+- `/api/dts/collection/?id=general`
 
 #### Headers
 
@@ -99,7 +99,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "totalParents": 0,
     "totalChildren": 2,
     "title": "Collection Générale de l'École Nationale des Chartes",
-    "dublincore": {
+    "dublinCore": {
         "publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "title": [
             {"lang": "fr", "value": "Collection Générale de l'École Nationale des Chartes"}
@@ -144,7 +144,7 @@ The example is a child of the parent root collection. It contains a single textu
 
 #### Example of url :
 
-- `/api/dts/collections/?id=lasciva_roma`
+- `/api/dts/collection/?id=lasciva_roma`
 
 #### Headers
 
@@ -164,7 +164,7 @@ The example is a child of the parent root collection. It contains a single textu
     "totalChildren": 3,
     "title" : "Lasciva Roma",
     "description": "Collection of primary sources of interest in the studies of Ancient World's sexuality",
-    "dublincore": {
+    "dublinCore": {
         "creator": [
             "Thibault Clérice", "http://orcid.org/0000-0003-1852-9204"
         ],
@@ -182,7 +182,7 @@ The example is a child of the parent root collection. It contains a single textu
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
             "title" : "Priapeia",
-            "dublincore": {
+            "dublinCore": {
                 "type": [
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],
@@ -214,7 +214,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 
 #### Example of url :
 
-- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001`
+- `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001`
 
 #### Headers
 
@@ -230,7 +230,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
     "title" : "Priapeia",
-    "dublincore": {
+    "dublinCore": {
         "type": ["http://chs.harvard.edu/xmlns/cts#work"],
         "creator": [
             {"lang": "en", "value": "Anonymous"}
@@ -254,7 +254,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "totalItems": 0,
             "totalParents": 1,
             "totalChildren": 0,
-            "dublincore": {
+            "dublinCore": {
                 "title": [{"lang": "la", "value": "Priapeia"}],
                 "description": [{
                    "lang": "en",
@@ -272,7 +272,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "contributor": ["Aemilius Baehrens"],
                 "language": ["la", "en"]
             },
-            "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+            "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
             "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
             "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
             "maxCiteDepth": 2,
@@ -296,7 +296,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 #### Example of url :
 
-- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1`
+- `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1`
 
 #### Headers
 
@@ -316,7 +316,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "totalItems": 0,
     "totalParents": 1,
     "totalChildren": 0,
-    "dublincore": {
+    "dublinCore": {
         "title": [{"lang": "la", "value": "Priapeia"}],
         "description": [{
            "lang": "en",
@@ -334,7 +334,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
         "contributor": ["Aemilius Baehrens"],
         "language": ["la", "en"]
     },
-    "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
     "maxCiteDepth": 2,
@@ -362,7 +362,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "totalItems": 0,
     "totalParents": 1,
     "totalChildren": 0,
-    "passage": "/api/dts/documents?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
+    "passage": "/api/dts/document?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
     "maxCiteDepth": 2,
@@ -389,7 +389,7 @@ This is an example of a paginated request for a Child Collection's members.
 
 #### Example of url :
 
-- `/api/dts/collections/?id=lettres_de_poilus&page=19`
+- `/api/dts/collection/?id=lettres_de_poilus&page=19`
 
 #### Headers
 
@@ -408,7 +408,7 @@ This is an example of a paginated request for a Child Collection's members.
     "totalParents": 1,
     "totalChildren": 10000,
     "title": "Lettres de Poilus",
-    "dublincore": {
+    "dublinCore": {
         "publisher": ["École Nationale des Chartes", "https://viaf.org/viaf/167874585"],
         "title": [
             {"lang": "fr", "value" : "Lettres de Poilus"}
@@ -416,12 +416,12 @@ This is an example of a paginated request for a Child Collection's members.
     },
     "member": ["member 190 up to 200"],
     "view": {
-        "@id": "/api/dts/collections/?id=lettres_de_poilus&page=19",
+        "@id": "/api/dts/collection/?id=lettres_de_poilus&page=19",
         "@type": "PartialCollectionView",
-        "first": "/api/dts/collections/?id=lettres_de_poilus&page=1",
-        "previous": "/api/dts/collections/?id=lettres_de_poilus&page=18",
-        "next": "/api/dts/collections/?id=lettres_de_poilus&page=20",
-        "last": "/api/dts/collections/?id=lettres_de_poilus&page=500"
+        "first": "/api/dts/collection/?id=lettres_de_poilus&page=1",
+        "previous": "/api/dts/collection/?id=lettres_de_poilus&page=18",
+        "next": "/api/dts/collection/?id=lettres_de_poilus&page=20",
+        "last": "/api/dts/collection/?id=lettres_de_poilus&page=500"
     }
 }
 ```
@@ -432,7 +432,7 @@ This is an example of a query for the parents of a Collection. Note that, in thi
 
 #### Example of url :
 
-- `/api/dts/collections/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parents`
+- `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parents`
 
 #### Headers
 
@@ -452,7 +452,7 @@ This is an example of a query for the parents of a Collection. Note that, in thi
     "totalItems": 1,
     "totalParents": 1,
     "totalChildren": 0,
-    "dublincore": {
+    "dublinCore": {
         "title": [{"lang": "la", "value": "Priapeia"}],
         "description": [{
            "lang": "en",
@@ -469,7 +469,7 @@ This is an example of a query for the parents of a Collection. Note that, in thi
         "contributor": ["Aemilius Baehrens"],
         "language": ["la", "en"]
     },
-    "passage": "/api/dts/documents?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
     "maxCiteDepth": 2,
@@ -487,7 +487,7 @@ This is an example of a query for the parents of a Collection. Note that, in thi
         {
             "@id" : "urn:cts:latinLit:phi1103.phi001",
             "title" : "Priapeia",
-            "dublincore": {
+            "dublinCore": {
                 "type": [
                     "http://chs.harvard.edu/xmlns/cts#work"
                 ],

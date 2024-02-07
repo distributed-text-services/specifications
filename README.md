@@ -1,7 +1,7 @@
 # Distributed Text Services (DTS)
 
 [<i class="fa fa-comments"></i> Google group](https://groups.google.com/forum/#!forum/distributed-text-services){: .btn .btn--info .btn--x--small}
-[<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small} 
+[<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small}
 [<i class="fa fa-file-code"></i> Check Source and Propose Changes](https://github.com/distributed-text-services/specifications){: .btn .btn--info .btn--x--small}
 
 *The DTS Specification is currently a First Public Working Draft.*
@@ -10,9 +10,9 @@
 
 **The Distributed Text Services (DTS) Specification defines an API for working with collections of text as machine-actionable data.**
 
-Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR).  
+Publishers of digital text collections can use the DTS API to help them make their textual data Findable, Accessible, Interoperable and Reusable (FAIR).
 
-DTS enables _machine-consumption_ of digital text collections, and can be used by consumers of these collections in a variety of ways, such as for data analysis and the development of user-interfaces, tools and services. 
+DTS enables _machine-consumption_ of digital text collections, and can be used by consumers of these collections in a variety of ways, such as for data analysis and the development of user-interfaces, tools and services.
 
 DTS is a _specification_ for an API and not in and of itself an implementation of that API. Reference Implementations are available (see below) and individual text publishers are encouraged to implement this API in their own projects where appropriate.
 
@@ -22,11 +22,11 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- Navigation _across texts_ is supported by the [Collections Endpoint](Collections-Endpoint.md) 
-- Navigation _within a text_ is supported by the [Navigation Endpoint](Navigation-Endpoint.md) 
-- Retrieval of complete or partial texts is supported by the [Documents Endpoint](Documents-Endpoint.md) 
+- Navigation _across texts_ is supported by the [Collection Endpoint](Collection-Endpoint.md)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](Navigation-Endpoint.md)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](Document-Endpoint.md)
 
-The Collections and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Documents endpoint is specified to return TEI/XML of the requested text or fragment.
+The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
 ## Capabilities
 
@@ -47,7 +47,7 @@ The following open source libraries implement the DTS API:
 
 * [TEI Publisher client](https://teipublisher.com/exist/apps/tei-publisher/doc/blog/tei-publisher-50.xml)
   * Implementation of the DTS API + a Client interface to the API
-  * Currently supports browsing collections and document retrieval, but not navigation. 
+  * Currently supports browsing collections and document retrieval, but not navigation.
 * [MyCapytain](https://github.com/Capitains/MyCapytain/tree/3.0.0) + [Nautlius](https://github.com/Capitains/Nautilus/tree/dts-draft-1)
   * MyCapytain is a Python library that implements the DTS data model and Nautlius is a Python library that implements the DTS API Endpoints backed by the MyCapytain libary. Both operate on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
 * [Perseids DTS API](https://github.com/perseids-project/dts-api/)
