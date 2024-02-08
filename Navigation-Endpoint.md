@@ -1,4 +1,7 @@
-# Navigation Endpoint
+Navigation Endpoint
+====================
+
+## Introduction
 
 The Navigation endpoint provides information about a Resource's internal structures (e.g., book, chapter, line, etc.) and how they are referenced. While the Collection endpoint allows for finding Resources within a collection, the Navigation endpoint describes the relationship between structural divisions in the text. References found in the Navigation endpoint can also be used to retrieve corresponding portions of the Resource's text from the Document endpoint.
 
@@ -11,6 +14,19 @@ Using the Navigation endpoint, clients will be able to:
 - find out how to traverse a Resource from one structural section to another
 - construct links to specific sections of the Resource
 - find metadata about a specific section of a Resource (e.g., the writer of one letter in a correspondence)
+
+## What Is a Citation Tree?
+
+<!-- TODO: Add text and image here --->
+When discussing a text, it is common to use labels to identify sections of the text. When referring to pages, for example, we might identify them with numbers. In other situations we might divide the text into logical structures that are hierarchically organized. For example, we might identify "Paragraph 4" within "Section D" which falls within "Chapter 1." In both cases, these structuring labels form citation trees, though with different depths. (A depth of 1 for "pages" and a depth of 3 for "chapter"/"section"/"paragraph.")
+
+The depth of a citation tree can be uneven. In a Ph.D. thesis, for example, the introduction may not be subdivided, while a chapter will often have subdivisions.
+
+It can be that the same text can be discussed using more than one different structuring hierarchy. In the context of a text that has both been printed and made available online, it is not rare to find people referring to the printed version by "page" and the web version by "paragraph." These competing citation trees can often lead to confusion.
+
+Taking the novel *Dracula*, the text can be modeled as follows:
+
+![Citation tree example diagram](assets/img/citation-tree_dracula-example.png)
 
 ## Scheme for Navigation Endpoint Responses
 
@@ -39,13 +55,36 @@ Because the `Navigation` object is a top-level object in the API, each object mu
 | `@id` | URI | Y | The URI of the `Resource`. |
 | `@type` | string | Y | The object's RDF class which must be "Resource". |
 | `collection` | URL template | Y | The URI template to the Collection endpoint at which the `Resource` can be found. |
+| `citationTrees` | list | Y | A list of `CitationTree` objects |
+
+If a `Resource` has a single `CitationTree`, that `CitationTree` object cannot have an `identifier`.
+
+If a `Resource` has multiple `CitationTree`s, then the first listed in `citationTrees` is the default `CitationTree` and cannot have an `identifier`.
+
+If a `Resource` is a document without a citation tree, the `citationTrees` property is an empty list.
+
+### CitationTree
+
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `identifier` | string | N | The string identifier of the `CitationTree`. |
+| `@type` | string | Y | The object's RDF class which must be "CitationTree". |
+| `citeStructure` | list | N | A list of `CiteStructure` objects. |
 | `maxCiteDepth` | int | Y | An integer defining the maximum depth of the Resource's citation tree. |
+| `description` | string | N | A human readable description of the citation tree. |
+
+### CiteStructure
+
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `citeStructure` | list | N | A list of `CiteStructure` objects. |
+| `citeType` | string | N | A type of textual unit that appears at a given level in the citation tree. (E.g., "chapter", "verse") |
 
 ### CitableUnit
 
 | Name |  Type  |  Required | Description                              |
 | ---- | ------ | --------- | -----------------------------|
-| `@id` | URI | Y | The URI of the `CitableUnit`. |
+| `identifier` | string | Y | The string identifier of the `CitableUnit`. |
 | `@type` | string | Y | The object's RDF class which must be "CitableUnit". |
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The URI for the hierarchical parent of the `CitableUnit` in the `Resource`. |
@@ -53,16 +92,16 @@ Because the `Navigation` object is a top-level object in the API, each object mu
 | `dublinCore` | object | N | Dublin Core Terms metadata describing the `CitableUnit`. |
 | `extensions` | object | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
 
-#### Unique `@id` identifiers
+#### Unique `identifier`s
 
-The `@id` of a `CitableUnit` must be unique within its `Resource` citation tree.
+The `identifier` of a `CitableUnit` must be unique within a `CitationTree` for a `Resource`.
 
 #### Values for the `parent` Property
 
 If the `CitableUnit` parent is the root level of the `Resource`, the value returned for `parent` should be `null`.
 
 ```json
-{"@id": "Luke",
+{"identifier": "Luke",
  "level": 1,
  "@type": "CitableUnit",
  "parent": null}
@@ -75,19 +114,27 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 | Name | Type | Description                              | Methods | Constraints |
 |------|------ | ------------------------------------|---------| ----------- |
 | resource   | URI | The unique identifier for the Resource being navigated |  GET    ||
-| ref | URI | The URI of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. | GET    | NOT used with `start` and `end` |
-| start | URI | The URI of a node in the citation tree for the resource, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `end` as well |
-| end |  URI | The URI of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
+| ref | string | The string identifier of a single node in the citation tree for the Resource, used as the point of reference for the query. | GET    | NOT used with `start` and `end` |
+| start | string | The string identifier of a node in the citation tree for the resource, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `end` as well |
+| end |  string | The string identifier of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
 | down | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
+| tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
 | max | int | Allows for limiting the number of results and getting pagination | GET | |
 <!-- look at max and pagination here and in collection -->
 
 #### Errors
 
-- It is a 400 Bad Request Error not to specify `id`.
+- It is a 400 Bad Request Error not to specify `resource`.
 - It is a 400 Bad Request Error to specify both `ref` and either `start` or `end`.
 - It is a 400 Bad Request Error to specify `start` without also specifying `end`, or vice versa.
-- A query with neither `ref`, `start`, nor `end` is valid. This means that the implicit `ref` value is the root node of the citation tree.
+- A 404 Not Found Error must be returned when a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`.
+- A 404 Not Found Error must be returned when a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`.
+
+#### Usage of `tree`
+
+All requests on a `Resource` without any `CitationTree`s at the `Navigation` endpoint will return an empty `member` list and must not return an HTTP error.
+
+If no `tree` parameter is specified, the default `CitationTree` of the `Resource` must be used to traverse the `Resource`.
 
 #### Usage of `down`
 
@@ -101,20 +148,20 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 | > 0 | absent | absent | A `member` list of `CitableUnit`s including the citation tree from the root to the depth requested in `down`. |
 | > 0 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the depth requested in `down`. |
 | > 0 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to a depth relative to the deeper of the `CitableUnit`s identified by `start` and `end`. |
-| -1 | absent | absent | A `member` list of `CitableUnit`s including the citation tree from the root to the deepest level of the `Resource`. |
-| -1 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `Resource`. |
-| -1 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `Resource`. |
+| -1 | absent | absent | A `member` list of `CitableUnit`s including the citation tree from the root to the deepest level of the `CitationTree`. |
+| -1 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `CitationTree`. |
+| -1 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `CitationTree`. |
 
 #### Handling Requests with No Matching `CitableUnit`s
 
-A `Navigation` endpoint request may specify a level in a `Resource`'s citation tree that does not exist. One may, e.g., provide a `down` value of `3` when only `1` lower level exists in the `Resource`'s citation tree. In this case the `member` list will simply include any `CitableUnit`s that do satisfy the parameters.
+A `Navigation` endpoint request may specify a level in a `Resource`'s `CitationTree` that does not exist. One may, e.g., provide a `down` value of `3` when only `1` lower level exists in the `Resource`'s `CitationTree`. In this case the `member` list will simply include any `CitableUnit`s that do satisfy the parameters.
 
 If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request:
 
 - the request must not raise an error
 - the `Navigation` object `member` property must be an empty list.
 
-For example, if the `ref` is at the bottom level of the document's actual citation tree, and a `down` of 2 is provided in the request, the response will provide an empty list as its `member` value.
+For example, if the `ref` is at the bottom level of the queried `CitationTree`, and a `down` of 2 is provided in the request, the response will provide an empty list as its `member` value.
 
 #### Order of `CitableUnit`s in `member`
 
