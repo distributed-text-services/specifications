@@ -105,6 +105,17 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 | -1 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `Resource`. |
 | -1 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `Resource`. |
 
+#### Handling Requests with No Matching `CitableUnit`s
+
+A `Navigation` endpoint request may specify a level in a `Resource`'s citation tree that does not exist. One may, e.g., provide a `down` value of `3` when only `1` lower level exists in the `Resource`'s citation tree. In this case the `member` list will simply include any `CitableUnit`s that do satisfy the parameters.
+
+If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request:
+
+- the request must not raise an error
+- the `Navigation` object `member` property must be an empty list.
+
+For example, if the `ref` is at the bottom level of the document's actual citation tree, and a `down` of 2 is provided in the request, the response will provide an empty list as its `member` value.
+
 #### Order of `CitableUnit`s in `member`
 
 The `CitableUnits` listed in the returned `member` property must be in document order as defined in the XPath 3.1 specification: https://www.w3.org/TR/xpath-31/#dt-document-order.
