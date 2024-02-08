@@ -1,8 +1,16 @@
 # Navigation Endpoint
 
-The Navigation endpoint provides a JSON object listing passages that are accessible for navigation from a given reference within a resource. While the Collection endpoint allows for traversing of collections and their constituent Resources, the Navigation endpoint is used for traversing the internal citation tree of an individual Resource.
+The Navigation endpoint provides information about a Resource's internal structures (e.g., book, chapter, line, etc.) and how they are referenced. While the Collection endpoint allows for finding Resources within a collection, the Navigation endpoint describes the relationship between structural divisions in the text. References found in the Navigation endpoint can also be used to retrieve corresponding portions of the Resource's text from the Document endpoint.
 
-Responses from the Navigation endpoint assume by default that the user is traversing the document downward in the citation tree. A request to the Navigation endpoint specifies a reference within a resource, and the response lists the references that are immediately above or below that reference point in the citation tree. The response also identifies the parent reference of that current node.
+The Navigation endpoint provides JSON objects that describe sections in a Resource's citation tree. A citation tree is represented by a structured hierarchy of `CitableUnit` objects. In general, applications using the Navigation endpoint are moving down and forward through the document.
+
+Using the Navigation endpoint, clients will be able to:
+
+- construct a table of contents
+- display a novel by chapter or a book of poetry by poem
+- find out how to traverse a Resource from one structural section to another
+- construct links to specific sections of the Resource
+- find metadata about a specific section of a Resource (e.g., the writer of one letter in a correspondence)
 
 ## Scheme for Navigation Endpoint Responses
 
@@ -20,8 +28,9 @@ The top-level response object is a `Navigation` object answering a query about t
 | `ref` | CitableUnit | N | The `CitableUnit` in the citation tree which is being queried. |
 | `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
 | `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
-| `member` | list | Y | A list of `CitableUnit` in the subtree specified by the query parameters. |
-<!-- TODO: Revisit `member` when we discuss table of contents traversal -->
+| `member` | list | N | A list of `CitableUnit` in the subtree specified by the query parameters. |
+
+Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json".
 
 ### Resource
 
@@ -41,53 +50,68 @@ The top-level response object is a `Navigation` object answering a query about t
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The URI for the hierarchical parent of the `CitableUnit` in the `Resource`. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
-| `extensions` |
-| `dublinCore` |
-<!-- TODO: fill in extensions and dublinCore -->
-| `dublinCore` | optional | contains Dublin Core Terms metadata for the specified passage or range. *E.g.*, `{ref": "1.2", "dublinCore": {"author": "Balzac"}}` |
-| `extensions` | Optional | contains metadata for the specified passage or range from other namespaces |
+| `dublinCore` | object | N | Dublin Core Terms metadata describing the `CitableUnit`. |
+| `extensions` | object | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
 
-#### Usage
+#### Unique `@id` identifiers
 
-- If the `CitableUnit` has no hierarchical parent the value of `parent` must be `null`.
+The `@id` of a `CitableUnit` must be unique within its `Resource` citation tree.
 
-### Unique `ref` identifiers
+#### Values for the `parent` Property
 
-Note that all identifiers used as a `ref` value must be unique within the current Resource. This is the case for the values retured in the `member` list as well as in the `parent` property.
+If the `CitableUnit` parent is the root level of the `Resource`, the value returned for `parent` should be `null`.
 
-### Values for the `parent` Property
-
-The format for the returned `parent` value will depend on where the current `ref` stands in the resource's hierarchical structure.
-
-- If the requested `ref` is the identifier for the **resource as a whole**, and that resource has no hierarchical parent, the value returned for `parent` should be "null".
-- If the requested `ref` identifies **one of the top level** of the resource's hierarchical divisions, the `parent` property should be an object identifying the document as a whole and specifying that its `@type` is a "Resource". For example: `{"@type": "Resource", "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc5"}`
-- If the requested `ref` identifies **a node at a lower level** of the resource's hierarchical divisions, so that the parent is another division within the citation structure, the `parent` value will be a list of objects much like the list returned for the `member` property, each object identifying one reference that is the current node's direct parent. In this case, though, each object should also include an `@type` value of "CitableUnit". For example: `{"@type": "CitableUnit", "ref": "1.1.1"}`. If only one parent exists then a single object may be returned rather than an array of objects.
-- If the request is **relative to a *range*** rather than a single *reference*, then the request again cannot be relied upon to have a single common hierarchical parent. So the `parent` value for a range request should again be the value "null". If a client wishes to discover the parent for the milestone references at the start and end of the range (specified in the "start" and "end" query parameters), a seprate request should be made for each of these references as individual locations using the "ref" parameter.
-
+```json
+{"@id": "Luke",
+ "level": 1,
+ "@type": "CitableUnit",
+ "parent": null}
+```
 
 ## URI for Navigation Endpoint Requests
 
 ### Query Parameters
 
-| name | description                              | methods |
-|------|------------------------------------------|---------|
-| id   | the unique identifier (normally a URN) for the Resource being navigated |  GET    |
-| ref | (NOT used with `start` and `end`) The `@id` of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. | GET    |
-| start | (NOT used if a `ref` is specified, requires `end` as well) The `@id` of a node in the citation tree for the resource, used as the starting point for a range serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
-| end |  (NOT used if a `ref` is specified, requires `start` as well) The `@id` of a node in the citation tree for the resource, used as the ending point for a range of passages serving as the reference point for the query. This parameter is inclusive, so the supplied reference is considered part of the specified range. | GET |
-| down | the depth (as a number or the string "max") for citation tree nodes (members) to be retrieved, relative to the specified `ref` or `start`/`end` values. *E.g.*, if a request should return the children of the passage "1.2", then the `ref` parameter should be "1.2" and the `down` parameter should be `1`. The default value is `1`. If the descendants of the passage at the maximum depth of the document's structure are desired, a value of "max" may be supplied instead of a number. A value of `0` indicates that members should be at the same hierarchical level as the specified `ref` or `start`/`end` identifiers. When a `start` and `end` value for a range are supplied, a value of `0` indicates that the returned members should be all the references in the specified range *at the same hierarchical level* as the `start` and `end`. When a single `ref` value is supplied with a `down` value of 0, no members are returned, and the return object contains only metadata on the requested node itself.| GET    |
-| groupBy | Retrieve passages in groups of this size instead of single units. This would normally mean that the `member` list returned would be a list of ranges, each of which contains this number of passages. | GET |
-| max | Allows for limiting the number of results and getting pagination | GET |
-| exclude | Exclude keys in members' object such as `exclude=extensions` | GET |
+| Name | Type | Description                              | Methods | Constraints |
+|------|------ | ------------------------------------|---------| ----------- |
+| resource   | URI | The unique identifier for the Resource being navigated |  GET    ||
+| ref | URI | The URI of a single node in the citation tree for the Resource, used as the point of reference for the query. Such identifiers should be unique within a given Resource. | GET    | NOT used with `start` and `end` |
+| start | URI | The URI of a node in the citation tree for the resource, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `end` as well |
+| end |  URI | The URI of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
+| down | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
+| max | int | Allows for limiting the number of results and getting pagination | GET | |
+<!-- look at max and pagination here and in collection -->
 
-
-### Usage
+#### Errors
 
 - It is a 400 Bad Request Error not to specify `id`.
 - It is a 400 Bad Request Error to specify both `ref` and either `start` or `end`.
 - It is a 400 Bad Request Error to specify `start` without also specifying `end`, or vice versa.
 - A query with neither `ref`, `start`, nor `end` is valid. This means that the implicit `ref` value is the root node of the citation tree.
 
+#### Usage of `down`
+
+| `down` | `ref` | `start`/`end` | Result |
+| ------ | ----- | ------------- | ------ |
+| absent | absent | absent | 400 Bad Request Error |
+| absent | present | absent | Information about the `CitableUnit` identified by `ref`. No member property in the `Navigation` object. |
+| absent | absent | present | Information about the `CitableUnit`s identified by `start` and by `end`. No member property in the `Navigation` object. |
+| 0 | present | absent | Information about the `CitableUnit` identified by `ref` along with a `member` property that is a list of `CitableUnit`s that are siblings (sharing the same parent) including the current `CitableUnit` identified by `ref`. |
+| 0 | absent | present | 400 Bad Request Error |
+| > 0 | absent | absent | A `member` list of `CitableUnit`s including the citation tree from the root to the depth requested in `down`. |
+| > 0 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the depth requested in `down`. |
+| > 0 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to a depth relative to the deeper of the `CitableUnit`s identified by `start` and `end`. |
+| -1 | absent | absent | A `member` list of `CitableUnit`s including the citation tree from the root to the deepest level of the `Resource`. |
+| -1 | present | absent | A `member` list of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `Resource`. |
+| -1 | absent | present | A `member` list of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `Resource`. |
+
+#### Order of `CitableUnit`s in `member`
+
+The `CitableUnits` listed in the returned `member` property must be in document order as defined in the XPath 3.1 specification: https://www.w3.org/TR/xpath-31/#dt-document-order.
+
+This is a "pre-order, depth first" traversal moving through nodes of the citation tree as follows:
+
+!["pre-order, depth first traversal example"](./assets/img/tree-traversal_example.png)
 
 ### Response Headers
 
@@ -105,12 +129,12 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation/?id={collection_id}{&ref}{&level}{&start}{&end}{&page}",
+  "template": "/dts/api/navigation/?resource={collection_id}{&ref}{&level}{&start}{&end}{&page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
       "@type": "IriTemplateMapping",
-      "variable": "id",
+      "variable": "resource",
       "property": "hydra:freetextQuery",
       "required": true
     },
@@ -123,12 +147,6 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     {
       "@type": "IriTemplateMapping",
       "variable": "page",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "groupBy",
       "property": "hydra:freetextQuery",
       "required": false
     },
@@ -162,7 +180,7 @@ The client wants to retrieve a list of passage identifiers that are part of the 
 
 #### Example of url :
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=1`
+- `/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=1`
 
 #### Headers
 
