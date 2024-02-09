@@ -35,12 +35,15 @@ The chair has the responsibility to run the meetings, create agendas, ensure tha
 
 ## Technical Committee Members
 
-- Bridget Almas (Alpheios.net)
 - Hugh Cayless (Duke University)
-- Thibault Clérice (Ecole Nationale des Chartes)
-- Vincent Jolivet (Ecole Nationale des Chartes)
-- Jonathan Robbie (SIL International)
+- Thibault Clérice (Inria)
+- Jonathan Robie (Biblica, Inc)
 - Ian W. Scott (Tyndale Seminary)
+
+## Past Members
+
+- Bridget Almas (Alpheios.net)
+- Vincent Jolivet (Ecole Nationale des Chartes)
 
 ## Ambassadors
 
