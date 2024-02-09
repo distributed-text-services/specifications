@@ -87,7 +87,7 @@ If a `Resource` is a document without a citation tree, the `citationTrees` prope
 | `identifier` | string | Y | The string identifier of the `CitableUnit`. |
 | `@type` | string | Y | The object's RDF class which must be "CitableUnit". |
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
-| `parent` | nullable string | Y | The URI for the hierarchical parent of the `CitableUnit` in the `Resource`. |
+| `parent` | nullable string | Y | The string identifier of the hierarchical parent of the `CitableUnit` in the `Resource`. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
 | `dublinCore` | object | N | Dublin Core Terms metadata describing the `CitableUnit`. |
 | `extensions` | object | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
@@ -119,7 +119,7 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 | end |  string | The string identifier of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
 | down | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
 | tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
-<!-- look at max and pagination here and in collection -->
+<!-- TODO: look at pagination here and in collection -->
 
 #### Errors
 
@@ -128,6 +128,7 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 - It is a 400 Bad Request Error to specify `start` without also specifying `end`, or vice versa.
 - A 404 Not Found Error must be returned when a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`.
 - A 404 Not Found Error must be returned when a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`.
+<!-- TODO: If you're unable to issue server stauses, you can fall back to 404 for all errors-->
 
 #### Usage of `tree`
 
@@ -170,14 +171,6 @@ This is a "pre-order, depth first" traversal moving through nodes of the citatio
 
 !["pre-order, depth first traversal example"](./assets/img/tree-traversal_example.png)
 
-### Response Headers
-
-The response contains the following response headers:
-
-| name | description |
-|------|-------------|
-| Link | Gives relation to next and previous pages |
-
 ### URI Template
 
 Here is a template of the URI for Navigation API. The route itself (`/dts/api/navigation/`) is up to the implementer.
@@ -186,7 +179,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation/?resource={collection_id}{&ref}{&level}{&start}{&end}{&page}",
+  "template": "/dts/api/navigation{?resource,ref,down,start,end,page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -198,12 +191,6 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     {
       "@type": "IriTemplateMapping",
       "variable": "ref",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "page",
       "property": "hydra:freetextQuery",
       "required": false
     },
@@ -224,6 +211,12 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
       "variable": "end",
       "property": "hydra:freetextQuery",
       "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
+      "variable": "page",
+      "property": "hydra:freetextQuery",
+      "required": false
     }
   ]
 }
@@ -231,70 +224,162 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 
 ## Examples
 
-### Example 1: Requesting top-level children of a textual Resource
+### Example 1: Requesting top-level `CitableUnit`s of a textual Resource
 
-The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified as  *urn:cts:greekLit:tlg0012.tlg001.opp-grc5*. In other words, the client wants a list of the top-level references in the resource's citation structure. So the `id` parameter supplied in the query is the identifier of the Resource as a whole.
+The client wants to retrieve a list of `CitableUnit`s that are part of the `Resource` with the identifier "https://en.wikisource.org/wiki/Dracula". In other words, the client wants a list of the top-level nodes in the resource's citation tree.
 
 #### Example of url :
 
-- `/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=1`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula=&down=1`
 
 #### Response
 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=1",
-    "maxCiteDepth" : 2,
-    "level": 0,
+    "@id":"https://example.org/api/dts/navigation/?resource=&down=1",
+    "passage": "https://example.org/dts/api/document/?id={?ref,start,end}", // TODO: check this
+    "collection": "https://example.org/dts/api/collection/?id={?ref,start,end}",
+    "navigation": "https://example.org/dts/api/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 2,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "???"
+            }
+          ]
+        }
+      ]
+    },
     "member": [
-      {"ref": "1", "level": 1},
-      {"ref": "2", "level": 1},
-      {"ref": "3", "level": 1}
+      {
+        "identifier": "1",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
+      {
+        "identifier": "2",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
+      {
+        "identifier": "3",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
     ],
-    "parent": null
 }
 ```
 
-### Example 2: Requesting all descendants of a textual Resource at a specified level
+### Example 2: Requesting the `Resource`'s complete citation tree down to specified level
 
-The client wants to retrieve a list of passage identifiers that are part of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and can be found at the second level of the citation tree of the document. Although the second structural level is being returned, we are not requesting the descendants of any single upper-level node. The references returned are in relation to the document as a whole. So the parent node is the whole document.
+The client wants to retrieve a list of all `CitableUnit`s in the `Resource` identified as "urn:cts:greekLit:tlg0012.tlg001.opp-grc5" down to the second level of the `Resource`'s citation tree. We are not requesting the descendants of any single upper-level node, so response will provide the entire top two levels of the citation tree.
 
 #### Example of url :
 
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=2`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
+- `https://example.org/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=2`
 
 #### Response
 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=2",
-    "maxCiteDepth" : 2,
-    "level": 0,
+    "@id":"https://example.org/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=2",
+    "passage": "https://example.org/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,start,end}", // TODO: check this
+    "navigation": "https://example.org/dts/api/document/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 2,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "???"
+            }
+          ]
+        }
+      ]
+    },
     "member": [
-      {"ref": "1.1", "level": 2},
-      {"ref": "1.2", "level": 2},
-      {"ref": "2.1", "level": 2},
-      {"ref": "2.2", "level": 2},
-      {"ref": "3.1", "level": 2},
-      {"ref": "3.2", "level": 2}
+      {
+        "identifier": "1",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
+      {
+        "identifier": "1.1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "1",
+        "citeType": "???"
+      },
+      {
+        "identifier": "1.2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "1",
+        "citeType": "???"
+      },
+      {
+        "identifier": "2",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
+      {
+        "identifier": "2.1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "2",
+        "citeType": "???"
+      },
+      {
+        "identifier": "2.2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "2",
+        "citeType": "???"
+      },
+      {
+        "identifier": "3",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "???"
+      },
+      {
+        "identifier": "3.1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "3",
+        "citeType": "???"
+      },
+      {
+        "identifier": "3.2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "3",
+        "citeType": "???"
+      },
     ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
 }
 ```
 
