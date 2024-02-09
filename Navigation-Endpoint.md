@@ -119,16 +119,17 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 | end |  string | The string identifier of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
 | down | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
 | tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
-<!-- TODO: look at pagination here and in collection -->
+| page | int | The number of identifying a page in paginated query results. | GET | |
 
 #### Errors
 
-- It is a 400 Bad Request Error not to specify `resource`.
-- It is a 400 Bad Request Error to specify both `ref` and either `start` or `end`.
-- It is a 400 Bad Request Error to specify `start` without also specifying `end`, or vice versa.
-- A 404 Not Found Error must be returned when a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`.
-- A 404 Not Found Error must be returned when a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`.
-<!-- TODO: If you're unable to issue server stauses, you can fall back to 404 for all errors-->
+Some combinations of query parameters and their values must return a 4XX HTTP Error. A 400 Bad Request Error should be returned when:
+  - no `resource` value is provided
+  - both `ref` and either `start` or `end` is specified
+  - `start` is provided without also specifying `end`, or vice versa
+A 404 Not Found Error should be returned when
+  - a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`
+  - a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`
 
 #### Usage of `tree`
 
@@ -179,7 +180,7 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
   "@type": "IriTemplate",
-  "template": "/dts/api/navigation{?resource,ref,down,start,end,page}",
+  "template": "/dts/api/navigation{?resource,ref,down,start,end,tree,page}",
   "variableRepresentation": "BasicRepresentation",
   "mapping": [
     {
@@ -214,6 +215,12 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
     },
     {
       "@type": "IriTemplateMapping",
+      "variable": "tree",
+      "property": "hydra:freetextQuery",
+      "required": false
+    },
+    {
+      "@type": "IriTemplateMapping",
       "variable": "page",
       "property": "hydra:freetextQuery",
       "required": false
@@ -222,9 +229,21 @@ Here is a template of the URI for Navigation API. The route itself (`/dts/api/na
 }
 ```
 
+## Response Headers
+
+Responses from the `Navigation` endpoint should include an HTTP response header identifying the `Content-Type` of the response as `application/ld+json`.
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
 ## Examples
 
-### Example 1: Requesting top-level `CitableUnit`s of a textual Resource
+### Writing Conventions for the Examples
+
+In the following examples, JavaScript comments such as /* ... */ are used to indicate that more information may be found at this point in the Response body.
+
+### Example 1: Requesting top-level `CitableUnit`s of a `Resource`
 
 The client wants to retrieve a list of `CitableUnit`s that are part of the `Resource` with the identifier "https://en.wikisource.org/wiki/Dracula". In other words, the client wants a list of the top-level nodes in the resource's citation tree.
 
@@ -232,26 +251,44 @@ The client wants to retrieve a list of `CitableUnit`s that are part of the `Reso
 
 - `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula=&down=1`
 
-#### Response
+#### Response Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response Body
 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"https://example.org/api/dts/navigation/?resource=&down=1",
-    "passage": "https://example.org/dts/api/document/?id={?ref,start,end}", // TODO: check this
-    "collection": "https://example.org/dts/api/collection/?id={?ref,start,end}",
-    "navigation": "https://example.org/dts/api/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,down,start,end,tree,page}",
+    "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula=&down=1",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
     "resource": {
-      "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+      "@id": "https://en.wikisource.org/wiki/Dracula",
       "@type": "Resource",
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 2,
+          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
-              "citeType": "???"
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -259,57 +296,212 @@ The client wants to retrieve a list of `CitableUnit`s that are part of the `Reso
     },
     "member": [
       {
-        "identifier": "1",
+        "identifier": "C1",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter",
+        "dublinCore": {
+          "title": "Chapter 1: Jonathan Harker's Journal"
+        }
       },
       {
-        "identifier": "2",
+        "identifier": "C2",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter",
+        "dublinCore": {
+          "title": "Chapter 2: Jonathan Harker's Journal"
+        }
       },
       {
-        "identifier": "3",
+        "identifier": "C3",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter",
+        "dublinCore": {
+          "title": "Chapter 3: Jonathan Harker's Journal"
+        }
       },
     ],
 }
 ```
 
-### Example 2: Requesting the `Resource`'s complete citation tree down to specified level
+### Example 2: Requesting the `Resource`'s complete citation tree down to a specified level
 
-The client wants to retrieve a list of all `CitableUnit`s in the `Resource` identified as "urn:cts:greekLit:tlg0012.tlg001.opp-grc5" down to the second level of the `Resource`'s citation tree. We are not requesting the descendants of any single upper-level node, so response will provide the entire top two levels of the citation tree.
+The client wants to retrieve a list of all `CitableUnit`s in the `Resource` identified as "https://en.wikisource.org/wiki/Dracula" down to the second level of the `Resource`'s citation tree (in this case chapters and their paragraphs). We are not requesting the descendants of any single upper-level node (i.e., chapter), so response will provide the entire top two levels of the citation tree.
 
 #### Example of url :
 
-- `https://example.org/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=2`
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula=&down=2`
 
-#### Response
+#### Response Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response Body
 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"https://example.org/api/dts/navigation/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=2",
-    "passage": "https://example.org/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,start,end}", // TODO: check this
-    "navigation": "https://example.org/dts/api/document/?resource=urn:cts:greekLit:tlg0012.tlg001.opp-grc{?ref,down,start,end,tree,page}",
+    "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=2",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
     "resource": {
-      "@id": "urn:cts:greekLit:tlg0012.tlg001.opp-grc",
+      "@id": "https://en.wikisource.org/wiki/Dracula",
       "@type": "Resource",
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 2,
+          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
-              "citeType": "???"
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+
+      ]
+    },
+    "member": [
+      {
+        "identifier": "C1",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "Chapter"
+      },
+      {
+        "identifier": "C1.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C1",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C1.E2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C1",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C2",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "Chapter"
+      },
+      {
+        "identifier": "C2.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C2",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C2.E2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C2",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C2.E3",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": "C2",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C3",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": null,
+        "citeType": "Chapter"
+      },
+      {
+        "identifier": "C3.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C3",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C3.E2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C3",
+        "citeType": "Journal Entry"
+      },
+    ],
+}
+```
+
+### Example 3: Requesting all descendants of one top-level `CitableUnit` of a `Resource`
+
+The client wants to retrieve a list of all `CitableUnit`s in the `Resource` identified by "https://en.wikisource.org/wiki/Dracula" that are children of its `Citable Unit` with the identifier "C1". In other words, the client is requesting the entire citation subtree below `CitableUnit` "C1".
+
+#### Example of url :
+
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1`
+
+#### Response Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response Body
+
+```json
+{
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "https://en.wikisource.org/wiki/Dracula",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 3,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -317,233 +509,358 @@ The client wants to retrieve a list of all `CitableUnit`s in the `Resource` iden
     },
     "member": [
       {
-        "identifier": "1",
+        "identifier": "C1",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter"
       },
       {
-        "identifier": "1.1",
+        "identifier": "C1.E1",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "1",
-        "citeType": "???"
+        "parent": "C1",
+        "citeType": "Journal Entry"
       },
       {
-        "identifier": "1.2",
+        "identifier": "C1.E1,P1",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E1,P2",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E2",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "1",
-        "citeType": "???"
+        "parent": "C1",
+        "citeType": "Journal Entry"
       },
       {
-        "identifier": "2",
+        "identifier": "C1.E2,P1",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E2",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E2,P2",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E2",
+        "citeType": "Paragraph"
+      },
+    ],
+}
+```
+
+### Example 4: Requesting descendants of a top-level `CitableUnit` down to grandchildren
+
+The client again wants to retrieve a list of `CitableUnit`s in the citation tree for the `Resource` identified by "https://en.wikisource.org/wiki/Dracula" that are descendants its `CitableUnit` with the identifier "C1" (entitled "Chapter 1"), but only down to the second level of the citation tree below "C1". In other words, we are retrieving the subtree below `CitableUnit` "C1" but including only three levels of the tree, "C1" itself and the two levels below.
+
+(Note that since the resource "https://en.wikisource.org/wiki/Dracula" has only three levels to its citation tree, the resulting `member` list will have the same contents as the one returned in Example 3, even though the query parameters differ.)
+
+#### Example of url :
+
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2`
+
+#### Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response
+
+```json
+{
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "https://en.wikisource.org/wiki/Dracula",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 3,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "member": [
+      {
+        "identifier": "C1",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter"
       },
       {
-        "identifier": "2.1",
+        "identifier": "C1.E1",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "2",
-        "citeType": "???"
+        "parent": "C1",
+        "citeType": "Journal Entry"
       },
       {
-        "identifier": "2.2",
+        "identifier": "C1.E1,P1",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E1,P2",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E2",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "2",
-        "citeType": "???"
+        "parent": "C1",
+        "citeType": "Journal Entry"
       },
       {
-        "identifier": "3",
+        "identifier": "C1.E2,P1",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E2",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E2,P2",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E2",
+        "citeType": "Paragraph"
+      },
+    ],
+}
+```
+
+### Example 5: Requesting children of a lower-level `CitableUnit`
+
+The client wants to retrieve a list of `CitableUnit`s that are part of the `Resource` "https://en.wikisource.org/wiki/Dracula", including the unit "C1.E1" and its direct children.
+
+#### Example of url:
+
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1`
+
+#### Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response
+
+```json
+{
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "https://en.wikisource.org/wiki/Dracula",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 3,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "member": [
+      {
+        "identifier": "C1.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C1",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C1.E1,P1",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      },
+      {
+        "identifier": "C1.E1,P2",
+        "@type": "CitableUnit",
+        "level": 3,
+        "parent": "C1.E1",
+        "citeType": "Paragraph"
+      }
+    ],
+}
+```
+
+### Example 6: Requesting descendants of the `CitationUnit`s in a specified range
+
+The client wants to retrieve a list of `CitableUnit`s in a specified range, including the direct children of the specified `start` and `end` points. Since the `level` parameter has a value of `1`, the returned `member` list includes two levels of the citation tree for the specified range.
+
+#### Example of url :
+
+- `https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3`
+
+#### Headers
+
+| Key | Value |
+| --- | ----- |
+| Content-Type | Content-Type: application/ld+json |
+
+#### Response
+
+```json
+{
+    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3",
+    "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
+    "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
+    "navigation": "https://example.org/dts/api/navigation/{?resource,ref,down,start,end,tree,page}",
+    "resource": {
+      "@id": "https://en.wikisource.org/wiki/Dracula",
+      "@type": "Resource",
+      "citationTrees": [
+        {
+          "@type": "CitationTree",
+          "maxCiteDepth" : 3,
+          "citeStructure": [
+            {
+              "@type": "CiteStructure",
+              "citeType": "Chapter",
+              "citeStructure": [
+                {
+                  "@type": "CiteStructure",
+                  "citeType": "Journal Entry",
+                  "citeStructure": [
+                    {
+                      "@type": "CiteStructure",
+                      "citeType": "Paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "member": [
+      {
+        "identifier": "C1",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": "C1",
+        "citeType": "Chapter"
+      },
+      {
+        "identifier": "C1.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C1",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C1.E2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C1",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C2",
         "@type": "CitableUnit",
         "level": 1,
         "parent": null,
-        "citeType": "???"
+        "citeType": "Chapter"
       },
       {
-        "identifier": "3.1",
+        "identifier": "C2.E1",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "3",
-        "citeType": "???"
+        "parent": "C2",
+        "citeType": "Journal Entry"
       },
       {
-        "identifier": "3.2",
+        "identifier": "C2.E2",
         "@type": "CitableUnit",
         "level": 2,
-        "parent": "3",
-        "citeType": "???"
+        "parent": "C2",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C3",
+        "@type": "CitableUnit",
+        "level": 1,
+        "parent": null,
+        "citeType": "Chapter"
+      },
+      {
+        "identifier": "C3.E1",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C3",
+        "citeType": "Journal Entry"
+      },
+      {
+        "identifier": "C3.E2",
+        "@type": "CitableUnit",
+        "level": 2,
+        "parent": "C3",
+        "citeType": "Journal Entry"
       },
     ],
-}
-```
-
-### Example 3: Requesting children of one top-level structural division of a Resource
-
-The client wants to retrieve a list of passage identifiers that are children of the textual Resource identified by *urn:cts:greekLit:tlg0012.tlg001.opp-grc5* and its division `1`. Since the desired members are direct children of the specified reference, the `down` parameter may be omitted and the default value of `1` will be used. Since the specified reference, the point from which the descendants are viewed, is at the top level of the structural hierarchy, the parent in the return value is still the document as a whole.
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&ref=1`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&ref=1",
-    "maxCiteDepth" : 2,
-    "level": 1,
-    "member": [
-      {"ref": "1.1", "level": 2},
-      {"ref": "1.2", "level": 2}
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "parent": {"@type": "Resource", "@ref": "/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc"}
-}
-```
-
-### Example 4: Requesting grandchild descendants of a top-level structural division
-
-The client wants to retrieve a list of grand-children passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage `1`. Since the specified reference, the point from which the descendants are viewed, is at the top level of the structural hierarchy, the parent in the return value is still the document as a whole.
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1&down=2",
-    "maxCiteDepth" : 3,
-    "level": 1,
-    "member": [
-      {"ref": "1.1.1", "level": 3},
-      {"ref": "1.1.2", "level": 3},
-      {"ref": "1.2.1", "level": 3},
-      {"ref": "1.2.2", "level": 3}
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
-    "parent": {"@type": "Resource", "ref": "/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2"}
-}
-```
-
-### Example 5: Requesting children of a lower-level structural division
-
-The client wants to retrieve a list of child passage identifiers that are part of the textual Resource identified by *urn:cts:latinLit:phi1294.phi001.perseus-lat2* and its passage "1.1". The returned parent is the direct parent (or parents) of the specified reference ("1.1"). Since it is not the document as a whole, the parent `@type` is "CitableUnit" rather than "Resource".
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1.1&down=1`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2&ref=1.1&down=1",
-    "maxCiteDepth" : 3,
-    "level": 2,
-    "member": [
-      {"ref": "1.1.1", "level": 3},
-      {"ref": "1.1.2", "level": 3}
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:latinLit:phi1294.phi001.perseus-lat2{&ref}{&start}{&end}",
-    "parent": {"@type": "CitableUnit", "ref": "1"}
-}
-```
-
-### Example 6: Requesting a range of passage references between milestones
-
-The client wants to retrieve a list of passage identifiers which are between two milestones. In this case there is no single parent node shared by the whole requested range, so no parent is returned. Since the reference list to be returned is at the *same* structural level as the supplied milestones, the `down` query parameter is "0".
-
-<!---FIXME: parent retrieval requires separate requests !-->
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=0&start=1&end=3`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=0&start=1&end=3",
-    "maxCiteDepth" : 2,
-    "level": 1,
-    "member": [
-      {"ref": "1", "level": 1},
-      {"ref": "2", "level": 1},
-      {"ref": "3", "level": 1}
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "parent": null
-}
-```
-
-### Example 7: Requesting descendants of the references in a specified range
-
-The client wants to retrieve a list of passage identifiers which are between two milestones. Since the `level` query parameter is "1", the returned references are one level below the milestones specified. I.e., the returned references are all *children* of structural divisions between the two milestones. In this case there is no single parent node shared by the whole requested range, so no parent is returned.
-
-#### Example of url :
-
-- `/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc5&down=1&start=1&end=3`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
-
-```json
-{
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id":"/api/dts/navigation/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc&down=1&start=1&end=3",
-    "maxCiteDepth" : 2,
-    "level": 1,
-    "member": [
-      {"ref": "1.1", "level": 2},
-      {"ref": "1.2", "level": 2},
-      {"ref": "2.1", "level": 2},
-      {"ref": "2.2", "level": 2},
-      {"ref": "3.1", "level": 2},
-      {"ref": "3.2", "level": 2},
-    ],
-    "passage": "/dts/api/document/?id=urn:cts:greekLit:tlg0012.tlg001.opp-grc{&ref}{&start}{&end}",
-    "parent": null
 }
 ```
 
