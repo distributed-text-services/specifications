@@ -3,41 +3,6 @@ Document Endpoint
 
 The Document endpoint is used to access the content of document, as opposed to metadata (which is found in collections).
 
-## Default Request and Response Body Format
-
-Implementations of the DTS Document endpoint **should**, at minimum, return textual data in an XML format compliant with the Text Encoding Initiative (TEI) guidelines (`application/tei+xml` response format). The XML must be well formed and valid. This should be the default response format.
-
-Implementations **may** return requested data in as many other formats as the content provider wishes. Other formats should not be included in the default response, but should be returned (one format per request) when an alternate format is specified in the request.
-
-### XML/TEI encoding and sub-tree representation
-
-The root node of the XML response **must** be the `<TEI>` root element of the namespace `http://www.tei-c.org/ns/1.0`. So a response would normally look like this:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <!-- XML of the document requested here -->
-</TEI>
-```
-
-If the data to be returned is not a complete document, but a chunk using either `?ref`, or `?start`/`?end`, the chunk of the document **should** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <dts:wrapper xmlns:dts="https://w3id.org/dts/api#">
-    <!-- XML or string of the passage requested here -->
-  </dts:wrapper>
-</TEI>
-```
-
-There is no limitation as to what can be contained by `<dts:wrapper>` or if its siblings can be provided as long as they are well formed and valid. 
-
-The only limiting factor is that `<dts:wrapper>` **must** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
-
-The `<dts:wrapper>` **may** provides the attributes `@ref`, `@start` and `@end` that contains `xpath` that identifies the elements identified by `?ref`, `?start` and `?end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by `?ref`, `?start` and `?end`.
-
-
 ## Query Parameters
 
 The Document endpoint supports the following query parameters:
@@ -72,7 +37,43 @@ Some combination of query parameters and their values **must** produce 4xx HTTP 
 - A `404 Not Found` error **should** be returned when any combination of `?resource`, `?tree`, `?ref`, `?start` and `?end` does not match a `Resource` and its `CitationTree`.
 - A `404 Not Found` error **should** be returned when the requested `?mediaType` is not available for the `Resource` identified by `?resource` in the `Navigation` endpoint. 
 
-### Notes
+### Formats and limitations of the Endpoint
+
+#### TEI as a major format for the Document endpoint
+
+`Document` endpoint **should** return textual data in an XML format compliant with the Text Encoding Initiative (TEI) guidelines (`application/tei+xml` response format). The XML **must** be well formed and **should** be valid. XML/TEI **should** be the default response media-type.
+
+`Document` endpoint **may** not implement TEI media-type.
+
+`Document` endpoints **may** return requested data in as many other formats as the content provider wishes.
+
+#### XML/TEI encoding and sub-tree representation
+
+The root node of the XML response **must** be the `<TEI>` root element of the namespace `http://www.tei-c.org/ns/1.0`. So a response would normally look like this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <!-- XML of the document requested here -->
+</TEI>
+```
+
+If the data to be returned is not a complete document, but a chunk using either `?ref`, or `?start`/`?end`, the chunk of the document **should** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <dts:wrapper xmlns:dts="https://w3id.org/dts/api#">
+    <!-- XML or string of the passage requested here -->
+  </dts:wrapper>
+</TEI>
+```
+
+There is no limitation as to what can be contained by `<dts:wrapper>` or if its siblings can be provided as long as they are well formed and valid. 
+
+The only limiting factor is that `<dts:wrapper>` **must** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
+
+The `<dts:wrapper>` **may** provides the attributes `@ref`, `@start` and `@end` that contains `xpath` that identifies the elements identified by `?ref`, `?start` and `?end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by `?ref`, `?start` and `?end`.
 
 #### Batch Requests
 
