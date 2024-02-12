@@ -1,75 +1,48 @@
 # Collection Endpoint
 
-The collection endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
+The collection endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a Resource.
 
-DTS does not specify URLs. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
+DTS does not specify any particular hierarchy of collections. A collection might provide all `Resource`s in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping. The same Collection or Resource may exist in more than one collection.
 
-### Hydra Representation and Hierarchy
-
-DTS does not specify any particular hierarchy of collections. A collection might provide all documents in a flat collection or a collection hierarchy organized by geography, time, or any other convenient logical grouping.
-
-## Scheme
+## Scheme for Collection API Responses
 
 Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
-- `@context` must set the default vocabulary to Hydra and provide DCT, TEI and DTS namespace prefixes
+- `@context` provides DCT, TEI and DTS namespace prefixes
 
 Item properties :
 
-- `title` is a single string.   Additional descriptions may be placed in `dublinCore` using `title`, e.g. for internationalization.
-- `@id` is the identifier of the object (TODO: add language recommending the use of URIs for ids)
-- `@type` is either `Collection` or `Resource`
-- `totalItems` - total number of items that you can find in the members property (irrespective of pagination)
-- `totalChildren` - total number of members that you will find if you do nav=children
-- `totalParents` - total number of members that you will find if you do nav=parents
-- (Required on Resource) `maxCiteDepth` declare the maximum depth of a readable resource.
-- (Optional) `description` is a string that describes the object. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization.
-- (Optional) `member` contains members of the collection
-- (Optional) `dublinCore` contains Dublin Core Terms metadata
-- (Optional) `extensions` contains any supplementary information provided by other ontologies/domains
-- (Optional) `references` contains links to the Navigation API route for the object (TODO: mandatory in children of `member`?)
-- (Optional) `passage` contains a link to the Document API for the object
-- (Optional) `download` contains a link or a list of links to a downloadable format of the object (TODO: decide on link or map of type:URL)
-- (Optional) `citeStructure` holds a declared citation tree, see [Child Readable Collection](#child-readable-collection) below.
+| Name | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
+| `title` | string | Y | A name for the Collection or Resource. Additional names may be placed in `dublinCore` using `title`, e.g. for internationalization. |
+| `@id` | URI | Y | The identifier of the `Collection` or `Resource`. |
+| `@type` | `Collection` or `Resource` | Y | The type |
+| `totalItems` | int | Y | Total number of parent or child items, depending on the navigation direction specified in the `nav` parameter. |
+| `totalChildren` | int | Y | Total number of child `Collection`s or `Resource`s. |
+| `totalParents` | int | Y | Total number of parent `Collection`s or `Resource`s. |
+| `maxCiteDepth` | int | Y (if `@type` is `Resource`) | The maximum depth of the Citation Tree. |
+| `description` | string | N | Short description of the `Collection` or `Resource`. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization. |
+| `member` | array | N | Contains members of the collection. |
+| `dublinCore` | object | N | Contains metadata following the Dublin Core Terms scheme. |
+| `extensions` | object | N | Contains any supplementary metadata following other schemes. |
+| `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
+| `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
+| `download` | URI or object | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
+| `citeStructure` | array | N | A list of Citation Structures, outlining the types of citation in the `Resource`s citation tree. |
 
-## URI
+## URI for Collection Endpoint Request
 
 ### Query Parameters
 
 The collection endpoint supports the following query parameters:
 
-| name | description                              | methods |
-|------|------------------------------------------|---------|
-| id   | identifier for a collection or document. |  GET    |
-| page | page of the current collection's members |  GET    |
-| nav  | whether members of the collection are its `children` (default)  or `parents` | GET |
-
-### URI Template
-
-Here is a template of the URI for Collection API. The route itself (`/dts/api/collection/`) is up to the implementer.
-
-```json
-{
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-  "@type": "IriTemplate",
-  "template": "/dts/api/collection/?id={collection_id}&page={page}",
-  "variableRepresentation": "BasicRepresentation",
-  "mapping": [
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "collection_id",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "page",
-      "required": false
-    }
-  ]
-}
-```
+| Name | Type | Description | Methods | Constraints |
+|------|----- | ----------- | ------- | ----------- |
+| id | URI | Identifier for a collection or document. | GET | |
+| page| int | Page of the current collection's members | GET | |
+| nav | string | Determines whether the content of the `member` property represents parent or child items. | GET | `children` (default) or `parents` |
 
 ## Examples
 
@@ -77,16 +50,10 @@ Here is a template of the URI for Collection API. The route itself (`/dts/api/co
 
 This is an example of a top-level Collection that groups texts into 3 categories.
 
-#### Example of url :
+#### Example Request
 
 - `/api/dts/collection/`
 - `/api/dts/collection/?id=general`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
 
 #### Response
 
@@ -142,15 +109,9 @@ This is an example of a top-level Collection that groups texts into 3 categories
 
 The example is a child of the parent root collection. It contains a single textual work as a member collection.
 
-#### Example of url :
+#### Example Request
 
 - `/api/dts/collection/?id=lasciva_roma`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
 
 #### Response
 
@@ -207,20 +168,13 @@ The example is a child of the parent root collection. It contains a single textu
 
 The example is a child collection. It represent a single textual work and its members are textual Resources that are individual expressions of that work. These Resources are therefore Readable Collections.
 
-
 #### Note
 
 Although, this is optional, the expansion of `@type:Resource`'s metadata is advised to avoid multiple API calls.
 
-#### Example of url :
+#### Example Request
 
 - `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
 
 #### Response
 
@@ -272,18 +226,23 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "contributor": ["Aemilius Baehrens"],
                 "language": ["la", "en"]
             },
-            "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-            "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+            "document": "/api/dts/document?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree,mediaType}",
+            "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{7ref,start,end,tree}",
             "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-            "maxCiteDepth": 2,
-            "citeStructure": [
+            "citationTrees": [
                 {
-                    "citeType": "poem",
-                    "citeStructure": [
-                        {
-                            "citeType": "line"
-                        }
-                    ]
+                  "@type": "CitationTree",
+                  "maxCiteDepth" : 2,
+                  "citeStructure" : [
+                    {
+                      "citeType": "poem",
+                      "citeStructure": [
+                          {
+                              "citeType": "line"
+                          }
+                      ]
+                    }
+                  ]
                 }
             ]
         }
@@ -294,15 +253,9 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ### Child Readable Collection (i.e. a textual Resource)
 This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: references for retrieval of passage references and passage for retrieval of the entire collection of text passages (i.e the full document itself).
 
-#### Example of url :
+#### Example Request
 
 - `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1`
-
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
 
 #### Response Example 1
 
@@ -334,19 +287,24 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
         "contributor": ["Aemilius Baehrens"],
         "language": ["la", "en"]
     },
-    "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "document": "/api/dts/document?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree,mediaType}",
+    "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree}",
     "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "maxCiteDepth": 2,
-    "citeStructure": [
-        {
+    "citationTrees": [
+      {
+        "@type": "CitationTree",
+        "maxCiteDepth" : 2,
+        "citeStructure" : [
+          {
             "citeType": "poem",
             "citeStructure": [
                 {
                     "citeType": "line"
                 }
             ]
-        }
+          }
+        ]
+      }
     ]
 }
 ```
@@ -362,22 +320,27 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     "totalItems": 0,
     "totalParents": 1,
     "totalChildren": 0,
-    "passage": "/api/dts/document?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
-    "references": "/api/dts/navigation?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
+    "document": "/api/dts/document?resource=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica{&ref,start,end,tree,mediaType}",
+    "navigation": "/api/dts/navigation?resource=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica{&ref,start,end,tree}",
     "download": "https://github.com/sjhuskey/Calpurnius_Siculus/blob/master/editio.xml",
-    "maxCiteDepth": 2,
-    "citeStructure": [
-        {
-            "citeType": "front"
-        },
-        {
+    "citationTrees": [
+      {
+        "@type": "CitationTree",
+        "maxCiteDepth" : 2,
+        "citeStructure" : [
+          {
+            "citeType": "front_matter"
+          },
+          {
             "citeType": "poem",
             "citeStructure": [
                 {
                     "citeType": "line"
                 }
             ]
-        }
+          }
+        ]
+      }
     ]
 }
 ```
@@ -387,17 +350,11 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 This is an example of a paginated request for a Child Collection's members.
 
-#### Example of url :
+#### Example Request
 
 - `/api/dts/collection/?id=lettres_de_poilus&page=19`
 
-#### Headers
-
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
+#### Example Response
 
 ```json
 {
@@ -414,7 +371,9 @@ This is an example of a paginated request for a Child Collection's members.
             {"lang": "fr", "value" : "Lettres de Poilus"}
         ]
     },
-    "member": ["member 190 up to 200"],
+    "member": [
+      "..."
+    ],
     "view": {
         "@id": "/api/dts/collection/?id=lettres_de_poilus&page=19",
         "@type": "PartialCollectionView",
@@ -430,79 +389,91 @@ This is an example of a paginated request for a Child Collection's members.
 
 This is an example of a query for the parents of a Collection. Note that, in this context, `totalItems` == `totalParents`
 
-#### Example of url :
+#### Example Request
 
-- `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1&nav=parents`
+The example comes from Papyri.info and concerns a document that has been published in three different corpora. The record `https://papyri.info/ddbdp/p.louvre;1;4` thus belongs to the BGU collection, the Chrest.Wilck. collection, and the P.Louvre collection.
 
-#### Headers
+- `/api/dts/collection/?id=https://papyri.info/ddbdp/p.louvre;1;4&nav=parents`
 
-| Key | Value |
-| --- | ----- |
-| Content-Type | Content-Type: application/ld+json |
-
-#### Response
+#### Example Response
 
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-    "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
+    "@id": "https://papyri.info/ddbdp/p.louvre;1;4",
     "@type" : "Resource",
-    "title" : "Priapeia",
-    "description": "Priapeia based on the edition of Aemilius Baehrens",
-    "totalItems": 1,
-    "totalParents": 1,
+    "title" : "Housekeeping Book from Temple at Soknopaios (with Festive Calendar)",
+    "totalItems": 3,
+    "totalParents": 3,
     "totalChildren": 0,
     "dublinCore": {
-        "title": [{"lang": "la", "value": "Priapeia"}],
-        "description": [{
-           "lang": "en",
-            "value": "Anonymous lascivious Poems "
-        }],
+        "title": [{"lang": "de", "value": "Haushaltsbuch des Soknopaios  - Heiligtums (mit Festkalender)"}],
         "type": [
-            "http://chs.harvard.edu/xmlns/cts#edition"
+            "http://lawd.info/ontology/WrittenWork"
         ],
-        "source": ["https://archive.org/details/poetaelatinimino12baeh2"],
-        "dateCopyrighted": 1879,
-        "creator": [
-            {"lang": "en", "value": "Anonymous"}
-        ],
-        "contributor": ["Aemilius Baehrens"],
-        "language": ["la", "en"]
+        "language": ["grc", "de"]
     },
-    "passage": "/api/dts/document?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "references": "/api/dts/navigation?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
-    "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
-    "maxCiteDepth": 2,
-    "citeStructure": [
-        {
-            "citeType": "poem",
+    "document": "/api/dts/document?resource=https://papyri.info/ddbdp/p.louvre;1;4{&ref,start,end,tree,mediaType}",
+    "navigation": "/api/dts/navigation?id=https://papyri.info/ddbdp/p.louvre;1;4{&ref,start,end,tree}",
+    "download": "https://papyri.info/ddbdp/p.louvre;1;4/source",
+    "citationTrees": [
+      {
+        "@type": "CitationTree",
+        "maxCiteDepth" : 2,
+        "citeStructure" : [
+          {
+            "citeType": "column",
             "citeStructure": [
                 {
                     "citeType": "line"
                 }
             ]
-        }
+          }
+        ]
+      }
     ],
     "member": [
         {
-            "@id" : "urn:cts:latinLit:phi1103.phi001",
-            "title" : "Priapeia",
+            "@id" : "https://papyri.info/ddbdp/bgu;1",
+            "title" : "BGU 1",
             "dublinCore": {
                 "type": [
-                    "http://chs.harvard.edu/xmlns/cts#work"
+                    "http://lawd.info/ontology/WrittenWork"
                 ],
-                "creator": [
-                    {"lang": "en", "value": "Anonymous"}
-                ],
-                "language": ["la", "en"],
-                "description": [
-                    { "lang": "en", "value": "Anonymous lascivious Poems" }
-                ],
+                "language": ["grc", "de"],
             },
             "@type" : "Collection",
             "totalItems": 1,
             "totalParents": 1,
-            "totalChildren": 1,
+            "totalChildren": 299,
+        },
+        {
+            "@id" : "https://papyri.info/ddbdp/chr.wilck",
+            "title" : "Chrest.Wilck. 92",
+            "dublinCore": {
+                "type": [
+                    "http://lawd.info/ontology/WrittenWork"
+                ],
+                "language": ["grc", "de"],
+            },
+            "@type" : "Collection",
+            "totalItems": 1,
+            "totalParents": 1,
+            "totalChildren": 182,
+        },
+        {
+            "@id" : "https://papyri.info/ddbdp/p.louvre1",
+            "title" : "P.Louvre 1",
+            "dublinCore": {
+                "type": [
+                    "http://lawd.info/ontology/WrittenWork"
+                ],
+                "language": ["grc", "de"],
+            },
+            "@type" : "Collection",
+            "totalItems": 1,
+            "totalParents": 1,
+            "totalChildren": 93,
         }
     ]
 }
