@@ -413,8 +413,8 @@ The example comes from Papyri.info and concerns a document that has been publish
         ],
         "language": ["grc", "de"]
     },
-    "document": "/api/dts/document?resource=https://papyri.info/ddbdp/p.louvre;1;4{&ref,start,end,tree,mediaType}",
-    "navigation": "/api/dts/navigation?id=https://papyri.info/ddbdp/p.louvre;1;4{&ref,start,end,tree}",
+    "document": "/api/dts/document?resource=https://papyri.info/ddbdp/p.louvre;1;4{?ref,start,end,tree,mediaType}",
+    "navigation": "/api/dts/navigation?id=https://papyri.info/ddbdp/p.louvre;1;4{?ref,start,end,tree}",
     "download": "https://papyri.info/ddbdp/p.louvre;1;4/source",
     "citationTrees": [
       {
