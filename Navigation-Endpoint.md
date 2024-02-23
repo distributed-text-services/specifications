@@ -55,12 +55,15 @@ Because the `Navigation` object is a top-level object in the API, each object mu
 | `@type` | string | Y | The object's RDF class which must be "Resource". |
 | `collection` | URL template | Y | The URI template to the Collection endpoint at which the `Resource` can be found. |
 | `citationTrees` | array | Y | An array of `CitationTree` objects |
+| `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
 
 If a `Resource` has a single `CitationTree`, that `CitationTree` object cannot have an `identifier`.
 
 If a `Resource` has multiple `CitationTree`s, then the first listed in `citationTrees` is the default `CitationTree` and cannot have an `identifier`.
 
 If a `Resource` is a document without a citation tree, the `citationTrees` property is an empty array.
+
+Values in the `mediaTypes` array must correspond to content types that the implementation supports as values for the `mediaType` query parameter when requesting segments of the `Resource`'s content via the Document endpoint.
 
 ### CitationTree
 
