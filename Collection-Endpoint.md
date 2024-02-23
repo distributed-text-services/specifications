@@ -32,6 +32,10 @@ Item properties :
 | `download` | URI or object | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
 | `citeStructure` | array | N | A list of Citation Structures, outlining the types of citation in the `Resource`s citation tree. |
 
+Additional properties for `Resource` objects:
+
+| `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
 ## URI for Collection Endpoint Request
 
 ### Query Parameters
