@@ -19,6 +19,7 @@ Item properties :
 | `title` | string | Y | A name for the Collection or Resource. Additional names may be placed in `dublinCore` using `title`, e.g. for internationalization. |
 | `@id` | URI | Y | The identifier of the `Collection` or `Resource`. |
 | `@type` | `Collection` or `Resource` | Y | The type |
+| `dtsVersion` | str | Y | Version of the DTS specification (Default: "1") |
 | `totalItems` | int | Y | Total number of parent or child items, depending on the navigation direction specified in the `nav` parameter. |
 | `totalChildren` | int | Y | Total number of child `Collection`s or `Resource`s. |
 | `totalParents` | int | Y | Total number of parent `Collection`s or `Resource`s. |
@@ -66,6 +67,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
     "@id": "general",
     "@type": "Collection",
+    "dtsVersion": "1",
     "totalItems": 2,
     "totalParents": 0,
     "totalChildren": 2,
@@ -122,6 +124,7 @@ The example is a child of the parent root collection. It contains a single textu
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "lasciva_roma",
     "@type": "Collection",
     "totalItems": 3,
@@ -185,6 +188,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
     "title" : "Priapeia",
@@ -266,6 +270,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
     "title" : "Priapeia",
@@ -318,6 +323,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "@type" : "Resource",
     "title" : "Bucolica",
@@ -363,6 +369,7 @@ This is an example of a paginated request for a Child Collection's members.
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
     "totalItems" : 10000,
@@ -404,6 +411,7 @@ The example comes from Papyri.info and concerns a document that has been publish
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "https://papyri.info/ddbdp/p.louvre;1;4",
     "@type" : "Resource",
     "title" : "Housekeeping Book from Temple at Soknopaios (with Festive Calendar)",
