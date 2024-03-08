@@ -26,11 +26,11 @@ The DTS specifications was built for supporting TEI documents, but can support a
 
 ## Structure
 
-The Distributed Text Services API implements one root [Entry point](#EntryEndpoint) and three different endpoints:
+The Distributed Text Services API implements one root [Entry point](#entry-endpoint) and three different endpoints:
 
-- Navigation _across texts_ is supported by the [Collection Endpoint](#CollectionEndpoint)
-- Navigation _within a text_ is supported by the [Navigation Endpoint](#NavigationEndpoint)
-- Retrieval of complete or partial texts is supported by the [Document Endpoint](#DocumentEndpoint)
+- Navigation _across texts_ is supported by the [Collection Endpoint](#collection-endpoint)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](#navigation-endpoint)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](#document-endpoint)
 
 ## Concepts
 
@@ -118,7 +118,7 @@ including implementations created by generating static files.
 A Level 1 DTS Server supports all valid calls as documented in this
 specification.
 
-## Base API Endpoint
+## Entry Endpoint
 
 A client MUST be able to retrieve the adress of the various endpoints at the root of the API. This endpoint provides this information.
 
@@ -140,7 +140,7 @@ Item properties :
 | `collection` | URI Template | Y (if `@type` is `Resource`) | Link to the Collection API endpoint for the `Resource`. |
 | `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
-<!-- To be completed --> 
+
 
 ### Example
 
@@ -745,8 +745,8 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The string identifier of the hierarchical parent of the `CitableUnit` in the `Resource`. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
-| `dublinCore` | [MetadataObject](#MetadataObjectStructure) | N | Dublin Core Terms metadata describing the `CitableUnit`. |
-| `extensions` | [MetadataObject](#MetadataObjectStructure) | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
+| `dublinCore` | [MetadataObject](#metadataobject-structure) | N | Dublin Core Terms metadata describing the `CitableUnit`. |
+| `extensions` | [MetadataObject](#metadataobject-structure) | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
 
 ##### Unique `identifier`s
 
