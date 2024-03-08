@@ -2,11 +2,17 @@
 
 ## Vocabulary
 
-- *Collection* : an identifiable aggregation of digital resources which has meaning in a specific research context. Resources may be virtual or real.
+- *Collection*: a named aggregation of digital `Resource`s. Collections may contain other Collections or Resources.
 
-- *Readable Collection* : a specific type of *Collection* which represents an aggregation of readable text passages (e.g. a structured text)
+- *Resource*: A document
 
-- *Reference* : Identifier of a citable node inside a *Readable Collection* (aka text)
+- *Citable Unit*: A portion of a Resource identified by a reference string.
+
+- *Citation Tree*: A list of references, in document order, corresponding to the hierarchical structure of a Resource.
+
+## URIs
+
+The DTS specification does not mandate URL syntax. Clients should discover URLs using navigation and link relations since URLs may differ among implementations.
 
 ## Media Types
 

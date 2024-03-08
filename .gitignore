@@ -2,3 +2,5 @@
 _site
 vendor
 MyNotes.md
+
+.DS_Store
