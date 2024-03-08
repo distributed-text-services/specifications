@@ -303,6 +303,8 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 
 | Key          | Value                             |
 | ------------ | --------------------------------- |
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
 
 #### Response Body
@@ -454,6 +456,8 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 
 | Key          | Value                             |
 | ------------ | --------------------------------- |
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
 
 #### Response Body
@@ -589,6 +593,8 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
 
 | Key          | Value                             |
 | ------------ | --------------------------------- |
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
 
 #### Response
@@ -722,6 +728,8 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
 
 | Key          | Value                             |
 | ------------ | --------------------------------- |
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
 
 #### Response
@@ -819,6 +827,8 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
 
 #### Headers
 
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Key          | Value                             |
 | ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
@@ -1087,6 +1097,8 @@ It is up to the implementer to decide what optional metadata to provide using th
 
 #### Headers
 
+| Key          | Value                             |
+| ------------ | --------------------------------- |
 | Key          | Value                             |
 | ------------ | --------------------------------- |
 | Content-Type | Content-Type: application/ld+json |
