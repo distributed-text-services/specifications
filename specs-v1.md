@@ -4,7 +4,7 @@ Specifications
 ## Status of this Document
 
 - This Version: 1-alpha
-- Previous Version: 1-draft1
+- Previous Version: 1-draft2
 
 <span style="color : red;">The current version is the closest we got to a release candidate. Feel free to provide feedback, typo corrections, etc.</span>
 
@@ -64,12 +64,12 @@ The Distributed Text Services specifications reuse the RFC 6570 for defining the
 
 The RFC 6570 provides a variety of ways to describe URIs "query parameters" using template. IN RFC 6570, parameters are wrapped in `{}`. Multiple parameters may be wrapped together using `,` to join them. Parameters can be prefixed so that their resolution is the following:
 
-> Example values are `?var` has a value "value". `x` has the value "x". `?empty` is empty, `?nullv` is [known to the processor to be nullable](https://datatracker.ietf.org/doc/html/rfc6570#section-2.3) and has the null value.
+> Example values are: the `var` parameter has a value "value", `x` has the value "x". `empty` is empty, `null` is [known to the processor to be nullable](https://datatracker.ietf.org/doc/html/rfc6570#section-2.3) and has the null value.
 
 
 |  Example Template | Expansion                          |
 | ----------------- | ---------------------------------- |
-|    {var}          | valuee                             |
+|    {var}          | value                             |
 |    {/var}         | /value                             |
 |    {;var}         | ;var=value                         |
 |    {?var}         | ?var=value                         |
@@ -82,7 +82,7 @@ The RFC 6570 provides a variety of ways to describe URIs "query parameters" usin
 
 *Source: Multiple value example from the [RFC 6570](https://datatracker.ietf.org/doc/html/rfc6570#section-3.2.1)*
 
-If you take the Collection endpoints, which is based around two main parameters, `?id` and `?nav,` a URI template using the query parameters **may** be: `/api/dts/collection/{?id,nav}` which provides for the client a way to build URLs such that `/api/dts/collection/?id=https://en.wikisource.org/wiki/Dracula` works.
+If you take the Collection endpoints, which is based around two main parameters, `id` and `nav`, a URI template using the query parameters **may** be: `/api/dts/collection/{?id,nav}` which provides for the client a way to build URLs such that `/api/dts/collection/?id=https://en.wikisource.org/wiki/Dracula` works.
 
 ### URI Templates examples for static website
 
@@ -134,23 +134,25 @@ Item properties :
 
 | Name | Type | Required | Description |
 | ---- | ---- | -------- | ----------- |
-| | | |
+| `@id` | URI | Y | The identifier of the API, generally its URL. |
+| `@type` | `EntryPoint` | Y | Default Value: `EntryPoint`. |
+| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1". |
+| `collection` | URI Template | Y (if `@type` is `Resource`) | Link to the Collection API endpoint for the `Resource`. |
+| `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
+| `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
 <!-- To be completed --> 
 
 ### Example
 
-In this example, the path of the base endpoint is `/dts/api`, but a server can choose a different relative URL.)
-If the client does a `GET` on the base API endpoint,, the following response is returned:
-
 ```json
 {
-  "@context": "/dts/api/contexts/EntryPoint.jsonld",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "/dts/api/",
   "@type": "EntryPoint",
-  "collection": "/dts/api/collection/", <-- This should be a URI Template.
-  "document": "/dts/api/document/",
-  "navigation" : "/dts/api/navigation"
+  "collection": "/dts/api/collection/{?id,page,nav}",
+  "navigation" : "/dts/api/navigation/{?resource,ref,start,end,down,tree,page}",
+  "document": "/dts/api/document/{?resource,ref,start,end,tree,mediaType}"
 }
 ```
 
@@ -187,7 +189,7 @@ Item properties :
 | `extensions` | MetadataObject | N | Contains any supplementary metadata following other schemes. |
 | `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
-| `download` | URI or object | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
+| `download` | URI or array | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
 | `citeStructure` | array | N | A list of Citation Structures, outlining the types of citation in the `Resource`s citation tree. |
 
 Additional properties for `Resource` objects:
@@ -236,7 +238,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "@id": "general",
     "@type": "Collection",
     "dtsVersion": "1",
@@ -295,7 +297,7 @@ The example is a child of the parent root collection. It contains a single textu
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "lasciva_roma",
     "@type": "Collection",
@@ -359,7 +361,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
@@ -407,7 +409,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "language": ["la", "en"]
             },
             "document": "/api/dts/document?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree,mediaType}",
-            "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{7ref,start,end,tree}",
+            "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree}",
             "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
             "citationTrees": [
                 {
@@ -442,7 +444,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
@@ -495,7 +497,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "@type" : "Resource",
@@ -541,7 +543,7 @@ This is an example of a paginated request for a Child Collection's members.
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
@@ -583,7 +585,7 @@ The example comes from Papyri.info and concerns a document that has been publish
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "https://papyri.info/ddbdp/p.louvre;1;4",
     "@type" : "Resource",
@@ -697,7 +699,7 @@ The top-level response object is a `Navigation` object answering a query about t
 | `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
 | `member` | array | N | An array of `CitableUnit` in the subtree specified by the query parameters. |
 
-Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json".
+Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1-alpha1.json".
 
 #### Resource
 
@@ -863,7 +865,7 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -962,7 +964,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1115,7 +1117,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1252,7 +1254,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1387,7 +1389,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1488,7 +1490,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1671,7 +1673,7 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
 
 ```json
 {
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1756,7 +1758,7 @@ It is up to the implementer to decide what optional metadata to provide using th
 
 ```json
 {
-    "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1",
     "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C2.E2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
@@ -1828,9 +1830,9 @@ The Document endpoint supports the following query parameters:
 | Name | Type | Description                              | Methods | Constraints |
 |------|------ | ------------------------------------|---------| ----------- |
 | resource   | URI | The unique identifier for the `Resource` whose tree or subtree must be returned |  GET    | Required |
-| ref | string | The string identifier of a single node in the `CitationTree` for the `Resource`, used as the root for the sub-tree to be reconstructed. | GET    | NOT used with `?start` and `?end` |
-| start | string | The string identifier of a node in the `CitationTree` for the `Resource`, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the sub-tree to be returned. | GET | NOT used if a `?ref` is specified, requires `?end` as well |
-| end |  string | The string identifier of a node in the `CitationTree` for the `Resource`, used as the ending point for a range that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `?ref` is specified, requires `?start` as well |
+| ref | string | The string identifier of a single node in the `CitationTree` for the `Resource`, used as the root for the sub-tree to be reconstructed. | GET    | NOT used with `start` and `end` |
+| start | string | The string identifier of a node in the `CitationTree` for the `Resource`, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the sub-tree to be returned. | GET | NOT used if a `ref` is specified, requires `end` as well |
+| end |  string | The string identifier of a node in the `CitationTree` for the `Resource`, used as the ending point for a range that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
 | tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
 | mediaType | string | The string identifier for the media-type the resource must be returned in | GET | |
 
@@ -1840,20 +1842,20 @@ For parameter combinations and potential errors, see [Link](#)
 
 ##### Query parameters combinations and requirements
 
-- The `?resource` query parameter **must** be provided.
-- The `?tree` query parameter **must** be omitted to address the default `CitationTree` of a `Resource`.
-- The `?tree` query parameter **must** be provided to address a `CitableUnit` within a different `CitationTree` from the default.
-- The `?ref` query parameter **cannot** be used in combination with `?start` and `?end`.
-- The `?start` query parameter **must** be used in combination with `?end`.
-- The `?end` query parameter **must** be used in combination with `?start`.
+- The `resource` query parameter **must** be provided.
+- The `tree` query parameter **must** be omitted to address the default `CitationTree` of a `Resource`.
+- The `tree` query parameter **must** be provided to address a `CitableUnit` within a different `CitationTree` from the default.
+- The `ref` query parameter **cannot** be used in combination with `start` and `end`.
+- The `start` query parameter **must** be used in combination with `end`.
+- The `end` query parameter **must** be used in combination with `start`.
 
 #### Errors
 
 Some combination of query parameters and their values **must** produce 4xx HTTP Errors:
 
-- A `400 Bad Request` error **should** be returned when the `?resource` parameter is missing.
-- A `404 Not Found` error **should** be returned when any combination of `?resource`, `?tree`, `?ref`, `?start` and `?end` does not match a `Resource` and its `CitationTree`.
-- A `404 Not Found` error **should** be returned when the requested `?mediaType` is not available for the `Resource` identified by `?resource` in the `Navigation` endpoint. 
+- A `400 Bad Request` error **should** be returned when the `resource` parameter is missing.
+- A `404 Not Found` error **should** be returned when any combination of the parameters `resource`, `tree`, `ref`, `start` and `end` does not match a `Resource` and its `CitationTree`.
+- A `404 Not Found` error **should** be returned when the requested value of the `mediaType` parameter is not available for the `Resource` identified by the parameter `resource` in the `Navigation` endpoint. 
 
 #### Formats and limitations of the Endpoint
 
@@ -1876,7 +1878,7 @@ The root node of the XML response **must** be the `<TEI>` root element of the na
 </TEI>
 ```
 
-If the data to be returned is not a complete document, but a chunk using either `?ref`, or `?start`/`?end`, the chunk of the document **should** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
+If the data to be returned is not a complete document, but a chunk using either the `ref` parameter, or the parameters `start`/`end`, the chunk of the document **should** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1891,7 +1893,7 @@ There is no limitation as to what can be contained by `<dts:wrapper>` or if its 
 
 The only limiting factor is that `<dts:wrapper>` **must** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
 
-The `<dts:wrapper>` **may** provides the attributes `@ref`, `@start` and `@end` that contains `xpath` that identifies the elements identified by `?ref`, `?start` and `?end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by `?ref`, `?start` and `?end`.
+The `<dts:wrapper>` **may** provides the attributes `ref`, `start` and `end` that contains `xpath` that identifies the elements identified by the parameters `ref`, `start` and `end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by the parameters `ref`, `start` and `end`.
 
 ##### Batch Requests
 
@@ -1914,7 +1916,7 @@ A `Document` endpoint **should** provide the following entries in their HTTP res
 
 In the examples, HTML comments such as `<!-- ... -->` are used to shorten the amount of information represented, and indicate that more information may be found at this point in the Response body.
 
-#### Example 1: Retrieve a subtree using `?ref`
+#### Example 1: Retrieve a subtree using the `ref` parameter
 
 Retrieve the passage `C1` of the document labeled by the identifier `https://en.wikisource.org/wiki/Dracula`.
 
