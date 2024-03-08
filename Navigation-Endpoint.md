@@ -44,6 +44,7 @@ The top-level response object is a `Navigation` object answering a query about t
 | `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
 | `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
 | `member` | array | N | An array of `CitableUnit` in the subtree specified by the query parameters. |
+| `dtsVersion` | string | Y | The version of the DTS specification the response. Default is "1". |
 
 Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json".
 
@@ -268,6 +269,7 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -364,6 +366,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
     "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -514,6 +517,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -648,6 +652,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -780,6 +785,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -878,6 +884,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1060,6 +1067,7 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+  "dtsVersion": "1",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1142,6 +1150,7 @@ It is up to the implementer to decide what optional metadata to provide using th
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+    "dtsVersion": "1",
     "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C2.E2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
     "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
