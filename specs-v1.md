@@ -82,13 +82,13 @@ The RFC 6570 provides a variety of ways to describe URIs "query parameters" usin
 
 *Source: Multiple value example from the [RFC 6570](https://datatracker.ietf.org/doc/html/rfc6570#section-3.2.1)*
 
-If you take the Collection endpoints, which is based around two main parameters, `id` and `nav`, a URI template using the query parameters **may** be: `/api/dts/collection/{?id,nav}` which provides for the client a way to build URLs such that `/api/dts/collection/?id=https://en.wikisource.org/wiki/Dracula` works.
+If you take the Collection endpoints, which is based around two main parameters, `id` and `nav`, a URI template using the query parameters **MAY** be: `/api/dts/collection/{?id,nav}` which provides for the client a way to build URLs such that `/api/dts/collection/?id=https://en.wikisource.org/wiki/Dracula` works.
 
 ### URI Templates examples for static website
 
-If a user were to define a `Collection` endpoint using static files, without any ability to parse query parameters, their URI template **may** be `/api/dts/collection/{/id,nav*}` which, in turn, helps build URLs such as `/api/dts/collection/Dracula/children`. Note such implementations limits the usage of identifier for `Collection`.`@id` to string, as any URL would break path parsing.
+If a user were to define a `Collection` endpoint using static files, without any ability to parse query parameters, their URI template **MAY** be `/api/dts/collection/{/id,nav*}` which, in turn, helps build URLs such as `/api/dts/collection/Dracula/children`. Note such implementations limits the usage of identifier for `Collection`.`@id` to string, as any URL would break path parsing.
 
-For endpoints with many optional parameters, such as the `Navigation` endpoint, a static implementation **may** look like `/navigation/{resource}{;tree}{;down}{/ref,start,end}`. As `tree` and `down` are optional parameters, there **must** be a way to understand their presence or absence. On the other hand, the parameters `ref`, `start` and `end` are mutually excluding, such that the definition of the URI template allows for using this syntax of the RFC 6570. For such a URI template, `/navigation/resource/Dracula;down=-1/5` would produce the equivalent of `/navigation/?resource=Dracula&ref=5&down=-1` with the `tree` parameter being undefined.
+For endpoints with many optional parameters, such as the `Navigation` endpoint, a static implementation **MAY** look like `/navigation/{resource}{;tree}{;down}{/ref,start,end}`. As `tree` and `down` are optional parameters, there **MUST** be a way to understand their presence or absence. On the other hand, the parameters `ref`, `start` and `end` are mutually excluding, such that the definition of the URI template allows for using this syntax of the RFC 6570. For such a URI template, `/navigation/resource/Dracula;down=-1/5` would produce the equivalent of `/navigation/?resource=Dracula&ref=5&down=-1` with the `tree` parameter being undefined.
 
 ## Conformance
 
@@ -1842,34 +1842,34 @@ For parameter combinations and potential errors, see [Link](#)
 
 ##### Query parameters combinations and requirements
 
-- The `resource` query parameter **must** be provided.
-- The `tree` query parameter **must** be omitted to address the default `CitationTree` of a `Resource`.
-- The `tree` query parameter **must** be provided to address a `CitableUnit` within a different `CitationTree` from the default.
-- The `ref` query parameter **cannot** be used in combination with `start` and `end`.
-- The `start` query parameter **must** be used in combination with `end`.
-- The `end` query parameter **must** be used in combination with `start`.
+- The `resource` query parameter **MUST** be provided.
+- The `tree` query parameter **MUST** be omitted to address the default `CitationTree` of a `Resource`.
+- The `tree` query parameter **MUST** be provided to address a `CitableUnit` within a different `CitationTree` from the default.
+- The `ref` query parameter **CANNOT** be used in combination with `start` and `end`.
+- The `start` query parameter **MUST** be used in combination with `end`.
+- The `end` query parameter **MUST** be used in combination with `start`.
 
 #### Errors
 
-Some combination of query parameters and their values **must** produce 4xx HTTP Errors:
+Some combination of query parameters and their values **MUST** produce 4xx HTTP Errors:
 
-- A `400 Bad Request` error **should** be returned when the `resource` parameter is missing.
-- A `404 Not Found` error **should** be returned when any combination of the parameters `resource`, `tree`, `ref`, `start` and `end` does not match a `Resource` and its `CitationTree`.
-- A `404 Not Found` error **should** be returned when the requested value of the `mediaType` parameter is not available for the `Resource` identified by the parameter `resource` in the `Navigation` endpoint. 
+- A `400 Bad Request` error **SHOULD** be returned when the `resource` parameter is missing.
+- A `404 Not Found` error **SHOULD** be returned when any combination of the parameters `resource`, `tree`, `ref`, `start` and `end` does not match a `Resource` and its `CitationTree`.
+- A `404 Not Found` error **SHOULD** be returned when the requested value of the `mediaType` parameter is not available for the `Resource` identified by the parameter `resource` in the `Navigation` endpoint. 
 
 #### Formats and limitations of the Endpoint
 
 ##### TEI as a major format for the Document endpoint
 
-`Document` endpoint **should** return textual data in an XML format compliant with the Text Encoding Initiative (TEI) guidelines (`application/tei+xml` response format). The XML **must** be well formed and **should** be valid. XML/TEI **should** be the default response media-type.
+`Document` endpoint **SHOULD** return textual data in an XML format compliant with the Text Encoding Initiative (TEI) guidelines (`application/tei+xml` response format). The XML **MUST** be well formed and **SHOULD** be valid. XML/TEI **SHOULD** be the default response media-type.
 
-`Document` endpoint **may** not implement TEI media-type.
+`Document` endpoint **MAY** not implement TEI media-type.
 
-`Document` endpoints **may** return requested data in as many other formats as the content provider wishes.
+`Document` endpoints **MAY** return requested data in as many other formats as the content provider wishes.
 
 ##### XML/TEI encoding and sub-tree representation
 
-The root node of the XML response **must** be the `<TEI>` root element of the namespace `http://www.tei-c.org/ns/1.0`. So a response would normally look like this:
+The root node of the XML response **MUST** be the `<TEI>` root element of the namespace `http://www.tei-c.org/ns/1.0`. So a response would normally look like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1878,7 +1878,7 @@ The root node of the XML response **must** be the `<TEI>` root element of the na
 </TEI>
 ```
 
-If the data to be returned is not a complete document, but a chunk using either the `ref` parameter, or the parameters `start`/`end`, the chunk of the document **should** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
+If the data to be returned is not a complete document, but a chunk using either the `ref` parameter, or the parameters `start`/`end`, the chunk of the document **SHOULD** be embedded in the `<wrapper>` element of the DTS Namespace (`https://w3id.org/dts/api#`) like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1891,9 +1891,9 @@ If the data to be returned is not a complete document, but a chunk using either 
 
 There is no limitation as to what can be contained by `<dts:wrapper>` or if its siblings can be provided as long as they are well formed and valid. 
 
-The only limiting factor is that `<dts:wrapper>` **must** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
+The only limiting factor is that `<dts:wrapper>` **MUST** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
 
-The `<dts:wrapper>` **may** provides the attributes `ref`, `start` and `end` that contains `xpath` that identifies the elements identified by the parameters `ref`, `start` and `end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by the parameters `ref`, `start` and `end`.
+The `<dts:wrapper>` **MAY** provides the attributes `ref`, `start` and `end` that contains `xpath` that identifies the elements identified by the parameters `ref`, `start` and `end`. It is recommended to provide these if the excerpt contains content from other chunks excluded by the sub-tree identified by the parameters `ref`, `start` and `end`.
 
 ##### Batch Requests
 
@@ -1905,10 +1905,10 @@ For the sake of simplicity and usability the DTS guidelines do not allow for bat
 
 #### Header
 
-A `Document` endpoint **should** provide the following entries in their HTTP response header:
+A `Document` endpoint **SHOULD** provide the following entries in their HTTP response header:
 
-- `Link` **should** contain a URI that links back to the `Collection` endpoint for the requested `Resource`, e.g. as `Link: </dts/api/collection/?id=https://en.wikisource.org/wiki/Dracula; rel="collection"`
-- `Content-Type` **should** contain the media-type of the response, e.g. `Content-Type: application/tei+xml`
+- `Link` **SHOULD** contain a URI that links back to the `Collection` endpoint for the requested `Resource`, e.g. as `Link: </dts/api/collection/?id=https://en.wikisource.org/wiki/Dracula; rel="collection"`
+- `Content-Type` **SHOULD** contain the media-type of the response, e.g. `Content-Type: application/tei+xml`
 
 ### Examples
 
