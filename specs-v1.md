@@ -1,5 +1,24 @@
-Version 1 of the specifications
+Specifications
 ===============================
+
+## Status of this Document
+
+- This Version: 1-alpha
+- Previous Version: 1-draft1
+
+<span style="color : red;">The current version is the closest we got to a release candidate. Feel free to provide feedback, typo corrections, etc.</span>
+
+Editors:
+
+- Hugh Cayless
+- Thibault Clérice
+- Jonathan Robie
+- Ian Scott
+- Bridget Almas
+
+Copyright © 2016-2023 Editors and contributors. Published by the editors under the CC-BY 4.0 license. 
+
+## Introduction
 
 The Distributed Text Services (DTS) provides a standard way for clients to interact with collections of documents. A standard API allows users to access many text collections using the same client software. It also allows editors to publish text collections in a usable way that existing clients can process.
 
