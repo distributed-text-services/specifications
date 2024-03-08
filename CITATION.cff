@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Distributed Text Services Specifications
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Hugh
+    family-names: Cayless
+    affiliation: Duke University
+  - family-names: Clérice
+    given-names: Thibault
+    affiliation: Inria
+  - given-names: Robie
+    family-names: Jonathan
+  - given-names: Ian
+    family-names: Scott
+    affiliation: Michigan State University
+  - given-names: Bridget
+    family-names: Almas
+identifiers:
+  - type: url
+    value: 'https://www.w3id.org/dts'
+repository-code: >-
+  https://github.com/distributed-text-services/specifications
+url: 'https://w3id.org'
+license: CC-BY-4.0
+version: 1-alpha
