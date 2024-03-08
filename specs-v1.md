@@ -13,7 +13,6 @@ The Distributed Text Services API implements one root [Entry point](#EntryEndpoi
 - Navigation _within a text_ is supported by the [Navigation Endpoint](#NavigationEndpoint)
 - Retrieval of complete or partial texts is supported by the [Document Endpoint](#DocumentEndpoint)
 
-
 ## Concepts
 
 ### General vocabulary
@@ -100,7 +99,6 @@ including implementations created by generating static files.
 A Level 1 DTS Server supports all valid calls as documented in this
 specification.
 
-
 ## Base API Endpoint
 
 A client MUST be able to retrieve the adress of the various endpoints at the root of the API. This endpoint provides this information.
@@ -166,8 +164,8 @@ Item properties :
 | `maxCiteDepth` | int | Y (if `@type` is `Resource`) | The maximum depth of the Citation Tree. |
 | `description` | string | N | Short description of the `Collection` or `Resource`. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization. |
 | `member` | array | N | Contains members of the collection. |
-| `dublinCore` | object | N | Contains metadata following the Dublin Core Terms scheme. |
-| `extensions` | object | N | Contains any supplementary metadata following other schemes. |
+| `dublinCore` | MetadataObject | N | Contains metadata following the Dublin Core Terms scheme. |
+| `extensions` | MetadataObject | N | Contains any supplementary metadata following other schemes. |
 | `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
 | `download` | URI or object | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
@@ -175,7 +173,22 @@ Item properties :
 
 Additional properties for `Resource` objects:
 
+| Name | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
 | `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
+#### `MetadataObject` Structure
+
+In order to make metadata parsable across implementations of the APIs, we restrict the depth of properties in JSON-LD metadata objects.
+
+`MetadataObject` is an object whose properties **MUST** be defined in the `@context`. [Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) are already provided by the base `@vocab` provided by DTS.
+
+The values of this object's properties **MAY** be:
+
+- a literal that cannot be localized (such as `int` or `float`),
+- a URI,
+- an array of objects with `@value` and `@lang` properties,
+- an array of URIs.
 
 ### URI for Collection Endpoint Request
 
@@ -711,8 +724,8 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The string identifier of the hierarchical parent of the `CitableUnit` in the `Resource`. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
-| `dublinCore` | object | N | Dublin Core Terms metadata describing the `CitableUnit`. |
-| `extensions` | object | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
+| `dublinCore` | [MetadataObject](#MetadataObjectStructure) | N | Dublin Core Terms metadata describing the `CitableUnit`. |
+| `extensions` | [MetadataObject](#MetadataObjectStructure) | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
 
 ##### Unique `identifier`s
 
@@ -809,7 +822,7 @@ Responses from the `Navigation` endpoint should include an HTTP response header 
 
 #### Writing Conventions for the Examples
 
-In the following examples, JavaScript comments such as /_ ... _/ are used to indicate that more information may be found at this point in the Response body.
+In the following examples, JavaScript comments such as `/* ... */` are used to indicate that more information may be found at this point in the Response body.
 
 Note, too, that the `CitableUnit` objects in most of the examples are kept minimal for the sake of clear illustration. In many actual implementations each of these would include `dublinCore` and `extensions` properties containing additional metadata. The choice of what additional content to include in these properties, though, is up to the implementer.
 
