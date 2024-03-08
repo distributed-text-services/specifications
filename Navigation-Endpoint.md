@@ -177,62 +177,6 @@ This is a "pre-order, depth first" traversal moving through nodes of the citatio
 
 !["pre-order, depth first traversal example"](./assets/img/tree-traversal_example.png)
 
-### URI Template
-
-Here is a template of the URI for Navigation API. The route itself (`/dts/api/navigation/`) is up to the implementer.
-
-```json
-{
-  "@context": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
-  "@type": "IriTemplate",
-  "template": "/dts/api/navigation{?resource,ref,down,start,end,tree,page}",
-  "variableRepresentation": "BasicRepresentation",
-  "mapping": [
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "resource",
-      "property": "hydra:freetextQuery",
-      "required": true
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "ref",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "down",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "start",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "end",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "tree",
-      "property": "hydra:freetextQuery",
-      "required": false
-    },
-    {
-      "@type": "IriTemplateMapping",
-      "variable": "page",
-      "property": "hydra:freetextQuery",
-      "required": false
-    }
-  ]
-}
-```
 
 ## Response Headers
 
