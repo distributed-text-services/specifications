@@ -4,7 +4,7 @@ Specifications
 ## Status of this Document
 
 - This Version: 1-alpha
-- Previous Version: [1-draft2](./versions/1-draft2/)
+- Previous Version: [1-draft2](./../1-draft2/)
 
 <span style="color : red;">The current version is the closest we got to a release candidate. Feel free to provide feedback, typo corrections, etc.</span>
 
