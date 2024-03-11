@@ -20,6 +20,24 @@ Editors:
 
 Published by the editors under the CC-BY 4.0 license. 
 
+### How to cite:
+
+**APA:** 
+
+> Cayless, H., Clérice, T., Jonathan, R., Scott, I., & Almas, B. Distributed Text Services Specifications (Version 1-alpha) [Computer software]. https://github.com/distributed-text-services/specifications`
+
+**Bibtex**:
+
+```latex
+@software{Cayless_Distributed_Text_Services,
+author = {Cayless, Hugh and Clérice, Thibault and Jonathan, Robie and Scott, Ian and Almas, Bridget},
+license = {CC-BY-4.0},
+title = {{Distributed Text Services Specifications}},
+url = {https://github.com/distributed-text-services/specifications},
+version = {1-alpha}
+}
+```
+
 ## Introduction
 
 The Distributed Text Services (DTS) provides a standard way for clients to interact with collections of documents. A standard API allows users to access many text collections using the same client software. It also allows editors to publish text collections in a usable way that existing clients can process.
