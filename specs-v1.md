@@ -16,7 +16,7 @@ Editors:
 - Ian Scott
 - Bridget Almas
 
-Copyright © 2016-2023 Editors and contributors. Published by the editors under the CC-BY 4.0 license. 
+Published by the editors under the CC-BY 4.0 license. 
 
 ## Introduction
 
