@@ -41,7 +41,7 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 - *Collection*: a named aggregation of digital `Resource`s. Collections may contain other Collections or Resources.
 - *Resource*: A document
 - *Citable Unit*: A portion of a Resource identified by a reference string.
-
+f
 <!-- 
 - *Citation Tree*: A list of references, in document order, corresponding to the hierarchical structure of a Resource.
  -->
@@ -136,7 +136,7 @@ Item properties :
 | ---- | ---- | -------- | ----------- |
 | `@id` | URI | Y | The identifier of the API, generally its URL. |
 | `@type` | `EntryPoint` | Y | Default Value: `EntryPoint`. |
-| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1". |
+| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
 | `collection` | URI Template | Y (if `@type` is `Resource`) | Link to the Collection API endpoint for the `Resource`. |
 | `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
@@ -147,7 +147,7 @@ Item properties :
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "/dts/api/",
   "@type": "EntryPoint",
   "collection": "/dts/api/collection/{?id,page,nav}",
@@ -177,7 +177,7 @@ Item properties :
 | ---- | ---- | -------- | ----------- |
 | `@id` | URI | Y | The identifier of the `Collection` or `Resource`. |
 | `@type` | `Collection` or `Resource` | Y | The type |
-| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1". |
+| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
 | `title` | string | Y | A name for the Collection or Resource. Additional names may be placed in `dublinCore` using `title`, e.g. for internationalization. |
 | `totalItems` | int | Y | Total number of parent or child items, depending on the navigation direction specified in the `nav` parameter. |
 | `totalChildren` | int | Y | Total number of child `Collection`s or `Resource`s. |
@@ -241,7 +241,7 @@ This is an example of a top-level Collection that groups texts into 3 categories
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "@id": "general",
     "@type": "Collection",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "totalItems": 2,
     "totalParents": 0,
     "totalChildren": 2,
@@ -298,7 +298,7 @@ The example is a child of the parent root collection. It contains a single textu
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "lasciva_roma",
     "@type": "Collection",
     "totalItems": 3,
@@ -362,7 +362,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "urn:cts:latinLit:phi1103.phi001",
     "@type": "Collection",
     "title" : "Priapeia",
@@ -445,7 +445,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1",
     "@type" : "Resource",
     "title" : "Priapeia",
@@ -498,7 +498,7 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica",
     "@type" : "Resource",
     "title" : "Bucolica",
@@ -544,7 +544,7 @@ This is an example of a paginated request for a Child Collection's members.
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id" : "lettres_de_poilus",
     "@type" : "Collection",
     "totalItems" : 10000,
@@ -586,7 +586,7 @@ The example comes from Papyri.info and concerns a document that has been publish
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "https://papyri.info/ddbdp/p.louvre;1;4",
     "@type" : "Resource",
     "title" : "Housekeeping Book from Temple at Soknopaios (with Festive Calendar)",
@@ -690,7 +690,7 @@ The top-level response object is a `Navigation` object answering a query about t
 | ---- | ------ | --------- | -----------------------------|
 | `@id` | URL | Y | The absolute URL of the current request including any query parameters. |
 | `@type` | string | Y | The object's RDF class which must be "Navigation". |
-| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1". |
+| `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
 | `passage` | URL template | Y | The URI template to the Document endpoint at which the text of nodes in the citation tree can be retrieved. |
 | `navigation` | URL template | Y | The URI template to the Navigation endpoint at which the citation tree structure can be queried. |
 | `resource`| Resource | Y | The `Resource` whose citation tree is being queried. |
@@ -866,7 +866,7 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -965,7 +965,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
     "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1118,7 +1118,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1255,7 +1255,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1390,7 +1390,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1491,7 +1491,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1674,7 +1674,7 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
 ```json
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-  "dtsVersion": "1",
+  "dtsVersion": "1-alpha",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1",
   "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
   "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
@@ -1759,7 +1759,7 @@ It is up to the implementer to decide what optional metadata to provide using th
 ```json
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
-    "dtsVersion": "1",
+    "dtsVersion": "1-alpha",
     "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C2.E2",
     "passage": "https://example.org/dts/api/document/{?resource,ref,start,end,format}",
     "collection": "https://example.org/dts/api/collection/{?resource,page,nav}",
