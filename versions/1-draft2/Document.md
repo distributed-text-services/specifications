@@ -1,3 +1,9 @@
+## Status of this Document
+
+- This Version: 1-draft2
+
+<span style="color : red;">This document reflects the status of the version 1-draft2, check API Documentation for the current correct version.</span>
+
 # Document Endpoint
 
 The Document endpoint is used to access and modify the content of document, as opposed to metadata (which is found in collections). Implementations must at least support reading document using `GET` requests as described below. The other request methods (POST, PUT, DELETE) are not required and they may be implemented selectively. For example, an implementation could allow `PUT` operations to update the contents of a document, but not support the total removal of document sections using `DELETE`. If an implementation is going to allow modification of document contents please do so using these methods as described below. An implementation should always document clearly which methods are supported for this endpoint. This should be included both in the human-readable API guidelines and in the endpoint's machine-readable documentation using the `supportedOperation` term. (See the section [Machine Readable Endpoint Documentation](#machine-readable-documentation-of-supported-methods) below.)

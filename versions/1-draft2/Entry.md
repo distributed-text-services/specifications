@@ -1,3 +1,10 @@
+## Status of this Document
+
+- This Version: 1-draft2
+
+<span style="color : red;">This document reflects the status of the version 1-draft2, check API Documentation for the current correct version.</span>
+
+
 # Endpoint Basics
 
 ## Vocabulary

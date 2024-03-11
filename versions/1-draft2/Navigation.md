@@ -1,3 +1,9 @@
+## Status of this Document
+
+- This Version: 1-draft2
+
+<span style="color : red;">This document reflects the status of the version 1-draft2, check API Documentation for the current correct version.</span>
+
 # Navigation Endpoint
 
 The Navigation endpoint provides a JSON object listing passages that are accessible for navigation from a given reference within a resource. While the Collection endpoint allows for traversing of collections and their constituent Resources, the Navigation endpoint is used for traversing the internal citation tree of an individual Resource.

@@ -1,3 +1,9 @@
+## Status of this Document
+
+- This Version: 1-draft2
+
+<span style="color : red;">This document reflects the status of the version 1-draft2, check API Documentation for the current correct version.</span>
+
 # Collection Endpoint
 
 The collection endpoint is used for navigating collections. A collection contains metadata for the collection itself and an array of members.  Each member is either a collection or the metadata for a document.
