@@ -8,6 +8,8 @@ Specifications
 
 <span style="color : red;">The current version is the closest we got to a release candidate. Feel free to provide feedback, typo corrections, etc.</span>
 
+[Changelogs](changelogs.md)
+
 Editors:
 
 - Hugh Cayless
