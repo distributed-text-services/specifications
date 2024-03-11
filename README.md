@@ -22,11 +22,11 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- Navigation _across texts_ is supported by the [Collection Endpoint](Collection-Endpoint.md)
-- Navigation _within a text_ is supported by the [Navigation Endpoint](Navigation-Endpoint.md)
-- Retrieval of complete or partial texts is supported by the [Document Endpoint](Document-Endpoint.md)
+- Navigation _across texts_ is supported by the [Collection Endpoint](specs-v1-alpha.md#collection-endpoint)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](specs-v1-alpha.md#navigation-endpoint)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](specs-v1-alpha.md#document-endpoint)
 
-The Collection and Navigation endpoints are specified to return  LD+JSON adhering to the [W3C Hydra standard](http://www.hydra-cg.com/spec/latest/core/). The Document endpoint is specified to return TEI/XML of the requested text or fragment.
+The Collection and Navigation endpoin. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
 ## Capabilities
 
@@ -43,7 +43,7 @@ The DTS API provides the following core capabilities to clients:
 
 ## Reference Implementations
 
-The following open source libraries implement the DTS API:
+The following open source libraries implement the DTS API (1.0 Draft):
 
 * [TEI Publisher client](https://teipublisher.com/exist/apps/tei-publisher/doc/blog/tei-publisher-50.xml)
   * Implementation of the DTS API + a Client interface to the API
@@ -54,6 +54,9 @@ The following open source libraries implement the DTS API:
   * Ruby on Rails implementation of the DTS API . Operates on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
 
 ## Known Corpora Accessible via the DTS API
+
+The following open source libraries implement the DTS API (1.0 Draft):
+
 * Ecole Nationale des Chartes <http://dev.chartes.psl.eu/api/nautilus/dts> and <http://http://dev.chartes.psl.eu/dts-demo/>
   * A small collection of contemporaneous and medieval French literature. The contemporaneous texts are lightly marked up, and the medieval texts are finely annotated.  Uses the MyCapytain/Nautilus libraries.
 * Alpheios <http://texts.alpheios.net/api/dts>
