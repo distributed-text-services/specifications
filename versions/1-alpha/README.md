@@ -76,7 +76,7 @@ It can be that the same text can be discussed using more than one different stru
 
 Taking the novel *Dracula*, the text can be modeled as follows:
 
-![Citation tree example diagram](assets/img/citation-tree_dracula-example.png)
+![Citation tree example diagram](../../assets/img/citation-tree_dracula-example.png)
 
 ## About URI Templates
 
@@ -848,7 +848,7 @@ The `CitableUnits` listed in the returned `member` property must be in document 
 
 This is a "pre-order, depth first" traversal moving through nodes of the citation tree as follows:
 
-!["pre-order, depth first traversal example"](./assets/img/tree-traversal_example.png)
+!["pre-order, depth first traversal example"](../../assets/img/tree-traversal_example.png)
 
 
 ### Response Headers
