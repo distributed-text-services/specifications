@@ -1,7 +1,7 @@
 # main links
 main:
   - title: "API Documentation"
-    url: "versions/1-alpha/"
+    url: "versions/unstable/"
   - title : "Organization"
     url: "Organization.html"
   - title : "Cookbook"
