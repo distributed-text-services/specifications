@@ -4,7 +4,7 @@
 [<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small}
 [<i class="fa fa-file-code"></i> Check Source and Propose Changes](https://github.com/distributed-text-services/specifications){: .btn .btn--info .btn--x--small}
 
-*The DTS Specification is currently a First Public Working Draft.*
+*The DTS Specification is currently in a public comment period following the 1-alpha release.*
 
 ## What is DTS?
 
@@ -26,7 +26,7 @@ DTS specifies 3 distinct operation endpoints:
 - Navigation _within a text_ is supported by the [Navigation Endpoint](versions/1-alpha/#navigation-endpoint)
 - Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/1-alpha/#document-endpoint)
 
-The Collection and Navigation endpoin. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
+The Collection and Navigation endpoints return JSON-LD. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
 ## Capabilities
 
