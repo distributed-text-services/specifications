@@ -12,6 +12,7 @@ Specifications
 
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
+  - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
 
 - 2024-05-24
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
@@ -729,8 +730,6 @@ The top-level response object is a `Navigation` object answering a query about t
 | `@id` | URL | Y | The absolute URL of the current request including any query parameters. |
 | `@type` | string | Y | The object's RDF class which must be "Navigation". |
 | `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
-| `document` | URI template | Y | The URI template to the Document endpoint at which the text of nodes in the citation tree can be retrieved. |
-| `navigation` | URI template | Y | The URI template to the Navigation endpoint at which the citation tree structure can be queried. |
 | `resource`| Resource | Y | The `Resource` whose citation tree is being queried. |
 | `ref` | CitableUnit | N | The `CitableUnit` in the citation tree which is being queried. |
 | `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
@@ -746,8 +745,11 @@ Because the `Navigation` object is a top-level object in the API, each object mu
 | `@id` | URI | Y | The URI of the `Resource`. |
 | `@type` | string | Y | The object's RDF class which must be "Resource". |
 | `collection` | URL template | Y | The URI template to the Collection endpoint at which the `Resource` can be found. |
+| `navigation` | URI Template | Y | The URI template to the Navigation API endpoint for the `Resource`. |
+| `document` | URI Template | Y | The URI template to the Document API endpoint for the `Resource`. |
 | `citationTrees` | array | Y | An array of `CitationTree` objects |
-| `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
+The `Resource` object may also contain the [optional properties](#scheme-for-collection-api-responses) described for the Collection endpoint.
 
 If a `Resource` has a single `CitationTree`, that `CitationTree` object cannot have an `identifier`.
 
