@@ -10,6 +10,9 @@ Specifications
 
 ## Changelogs
 
+- 2024-08-06
+  - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
+
 - 2024-05-24
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
   - `passage` property (URI template) moved to `document` for consistency between Collection and Navigation endpoint (See https://github.com/distributed-text-services/specifications/issues/249, problem pointed out by @philippepons)
@@ -212,7 +215,6 @@ Properties for Collection or Resource objects:
 | `title` | string | Y | A name for the Collection or Resource. Additional names may be placed in `dublinCore` using `title`, e.g. for internationalization. |
 | `totalParents` | int | Y | Total number of parent `Collection`s or `Resource`s. |
 | `totalChildren` | int | Y (if `@type` is `Collection`) | Total number of child `Collection`s or `Resource`s. |
-| `maxCiteDepth` | int | Y (if `@type` is `Resource`) | The maximum depth of the Citation Tree. |
 | `description` | string | N | Short description of the `Collection` or `Resource`. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization. |
 | `member` | array | N | Contains members of the collection. |
 | `dublinCore` | MetadataObject | N | Contains metadata following the Dublin Core Terms scheme. |
