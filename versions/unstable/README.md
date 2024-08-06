@@ -13,6 +13,7 @@ Specifications
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
   - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
+  - Added `view` properties for paginated responses to the Collection and Navigation endpoints. Added a `PartialCollectionView` and `PartialNavigationView` object to describe the pagination.
 
 - 2024-05-24
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
@@ -225,12 +226,15 @@ Properties for Collection or Resource objects:
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
 | `download` | URI or array | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
 | `citationTrees` | array | N | A list of Citation Trees, outlining the types of citation in each of the `Resource`s citation tree(s). |
+| `view` | PartialCollectionView | N | A PartialCollectionView object for paginated responses. |
 
 Additional properties for `Resource` objects:
 
 | Name | Type | Required | Description |
 | ---- | ---- | -------- | ----------- |
 | `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
+If a response is paginated the response object **MUST** include the `view` property with a `PartialCollectionView` object as its value.
 
 #### `MetadataObject` Structure
 
@@ -244,6 +248,17 @@ The values of this object's properties **MAY** be:
 - a URI,
 - an array of objects with `@value` and `@lang` properties,
 - an array of URIs.
+
+#### `PartialCollectionView` Structure
+
+| Name | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
+| `@id` | URI | Y | The identifier of the current page of the collection. This should be the full URI for the current request including the pagination request parameter |
+| `@type` | string | Y | the type of the object. Must be `PartialCollectionView` |
+| `first` | URI | Y | The URI for the first page of the paginated result set |
+| `previous` | URI | Y | The URI for the previous page of the paginated result set |
+| `next` | URI | Y | The URI for the next page of the paginated result set |
+| `last` | URI | Y | The URI for the last page of the paginated result set |
 
 ### URI for Collection Endpoint Request
 
@@ -735,8 +750,11 @@ The top-level response object is a `Navigation` object answering a query about t
 | `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
 | `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
 | `member` | array | N | An array of `CitableUnit` in the subtree specified by the query parameters. |
+| `view` | PartialNavigationView | N | A PartialNavigationView object for paginated responses. |
 
 Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1-alpha1.json".
+
+If a response is paginated the response object **MUST** include the `view` property with a `PartialNavigationView` object.
 
 #### Resource
 
@@ -804,6 +822,20 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
   "parent": null
 }
 ```
+
+#### PartialNavigationView
+
+This object is used to provide links to the first, previous, next, and last pages of a paginated response.
+
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `@id` | URI | Y | The absolute URI of the current request including any query parameters. |
+| `@type` | string | Y | The object's type which must be "PartialNavigationView". |
+| `first` | URI | Y | The URI of the first page of the paginated response. |
+| `previous` | URI | Y | The URI of the previous page of the paginated response. |
+| `next` | URI | Y | The URI of the next page of the paginated response. |
+| `last` | URI | Y | The URI of the last page of the paginated response. |
+
 
 ### URI for Navigation Endpoint Requests
 
