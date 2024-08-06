@@ -236,7 +236,7 @@ The values of this object's properties **MAY** be:
 
 - a literal that cannot be localized (such as `int` or `float`),
 - a URI,
-- an array of objects with `@value` and `@lang` properties,
+- an array of objects with `value` and `lang` properties (`lang` values **MUST** follow [BCP 47](https://www.rfc-editor.org/info/bcp47)),
 - an array of URIs.
 
 ### URI for Collection Endpoint Request
