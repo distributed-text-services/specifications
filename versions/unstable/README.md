@@ -14,7 +14,7 @@ Specifications
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
   - `passage` property (URI template) moved to `document` for consistency between Collection and Navigation endpoint (See https://github.com/distributed-text-services/specifications/issues/249, problem pointed out by @philippepons)
     - Harmonized the examples to have the resource already populated, as per Collection URI Templates
-  - `collection` property (URI template) added to `Collection` and `Resource` object (See https://github.com/distributed-text-services/specifications/issues/250, problem pointed out by @philippepons) 
+  - `collection` property (URI template) added to `Collection` and `Resource` object (See https://github.com/distributed-text-services/specifications/issues/250, problem pointed out by @philippepons)
   - Fixed a typo in the Entry endpoint table, where it referenced Resources.
 
 ## Editors
@@ -27,11 +27,11 @@ Editors:
 - Ian Scott
 - Bridget Almas
 
-Published by the editors under the CC-BY 4.0 license. 
+Published by the editors under the CC-BY 4.0 license.
 
 ### How to cite:
 
-**APA:** 
+**APA:**
 
 > Cayless, H., Clérice, T., Jonathan, R., Scott, I., & Almas, B. Distributed Text Services Specifications (Version 1-alpha) [Computer software]. https://github.com/distributed-text-services/specifications`
 
@@ -71,7 +71,7 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 - *Resource*: A document
 - *Citable Unit*: A portion of a Resource identified by a reference string.
 f
-<!-- 
+<!--
 - *Citation Tree*: A list of references, in document order, corresponding to the hierarchical structure of a Resource.
  -->
 
@@ -151,7 +151,7 @@ specification.
 
 A client MUST be able to retrieve the adress of the various endpoints at the root of the API. This endpoint provides this information.
 
-### Scheme for Base API Endpoint Responses
+### Scheme for Entry Endpoint Responses
 
 Everything that is not marked as Optional is mandatory.
 
@@ -193,13 +193,15 @@ DTS does not specify any particular hierarchy of collections. A collection might
 
 ### Scheme for Collection API Responses
 
+The Collection endpoint can return two types of objects: `Collection` and `Resource`. The `Collection` object represents a collection of `Resource`s or other `Collection`s. The `Resource` object represents a single readable document. The properties of both object types are mostly identical, but the `Resource` object has additional properties.
+
 Everything that is not marked as Optional is mandatory.
 
 JSON wide attributes :
 
 - `@context` provides DCT, TEI and DTS namespace prefixes
 
-Item properties :
+Properties for Collection or Resource objects:
 
 
 | Name | Type | Required | Description |
@@ -209,6 +211,7 @@ Item properties :
 | `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
 | `title` | string | Y | A name for the Collection or Resource. Additional names may be placed in `dublinCore` using `title`, e.g. for internationalization. |
 | `totalParents` | int | Y | Total number of parent `Collection`s or `Resource`s. |
+| `totalChildren` | int | Y (if `@type` is `Collection`) | Total number of child `Collection`s or `Resource`s. |
 | `maxCiteDepth` | int | Y (if `@type` is `Resource`) | The maximum depth of the Citation Tree. |
 | `description` | string | N | Short description of the `Collection` or `Resource`. Additional descriptions may be placed in `dublinCore` using `description`, e.g. for internationalization. |
 | `member` | array | N | Contains members of the collection. |
@@ -218,7 +221,7 @@ Item properties :
 | `navigation` | URI Template | Y (if `@type` is `Resource`) | Link to the Navigation API endpoint for the `Resource`. |
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
 | `download` | URI or array | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
-| `citeStructure` | array | N | A list of Citation Structures, outlining the types of citation in the `Resource`s citation tree. |
+| `citationTrees` | array | N | A list of Citation Trees, outlining the types of citation in each of the `Resource`s citation tree(s). |
 
 Additional properties for `Resource` objects:
 
@@ -364,8 +367,8 @@ The example is a child of the parent root collection. It contains a single textu
                     { "lang": "en", "value": "Anonymous lascivious Poems" }
                 ],
             },
-            "@type" : "Collection", 
-             "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001{&page,nav}",
+            "@type" : "Collection",
+            "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001{&page,nav}",
             "totalParents": 1,
             "totalChildren": 1
         }
@@ -460,11 +463,11 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
 }
 ```
 
-#### Child Readable Collection (i.e. a textual Resource)
+#### Child Resource
 
-This example is a child Readable Collection, i.e. a textual Resource which is composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Collection: references for retrieval of passage references and passage for retrieval of the entire collection of text passages (i.e the full document itself).
+This example is a child Resource, i.e. document composed of passages of readable text. The response includes fields which identify the urls for the other 2 DTS api endpoints for further exploration of this Resource: the Navigation endpoint (`navigation`) for accessing the document's citation tree and the Document endpoint (`document`) for retrieval of the entire Resource (i.e the full document itself). It also includes an optional `download` property which provides a URL to download the document's text.
 
-##### Example Request
+##### Example Request 1
 
 - `/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1`
 
@@ -520,6 +523,11 @@ This example is a child Readable Collection, i.e. a textual Resource which is co
     ]
 }
 ```
+
+
+##### Example Request 2
+
+- `/api/dts/collection/?id=https://digitallatin.org/ids/Calpurnius_Siculus-Bucolica`
 
 ##### Response Example 2
 
@@ -799,13 +807,13 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
 
 | Name | Type | Description                              | Methods | Constraints |
 |------|------ | ------------------------------------|---------| ----------- |
-| resource   | URI | The unique identifier for the Resource being navigated |  GET    ||
-| ref | string | The string identifier of a single node in the citation tree for the Resource, used as the point of reference for the query. | GET    | NOT used with `start` and `end` |
-| start | string | The string identifier of a node in the citation tree for the resource, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `end` as well |
-| end |  string | The string identifier of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
-| down | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
-| tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
-| page | int | The number of identifying a page in paginated query results. | GET | |
+| `resource`   | URI | The unique identifier for the Resource being navigated |  GET    ||
+| `ref` | string | The string identifier of a single node in the citation tree for the Resource, used as the point of reference for the query. | GET    | NOT used with `start` and `end` |
+| `start` | string | The string identifier of a node in the citation tree for the resource, used as the starting point for a range that serves as the reference point for the query. This parameter is inclusive, so the starting point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `end` as well |
+| `end` |  string | The string identifier of a node in the citation tree for the resource, used as the ending point for a range of passages that serves as the reference point for the query. This parameter is inclusive, so the supplied ending point is considered part of the specified range. | GET | NOT used if a `ref` is specified, requires `start` as well |
+| `down` | int | The maximum depth of the citation subtree to be returned, relative to the specified `ref`, the deeper of the `start`/`end` `CitableUnit`, or if these are not provided relative to the root. A value of `-1` indicates the bottom of the `Resource` citation tree. | GET    |If `down` is not provided only retrieve information about the queried `CitableUnit` |
+| `tree` | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
+| `page` | int | The number of identifying a page in paginated query results. | GET | |
 
 ##### Errors
 
@@ -1883,7 +1891,7 @@ Some combination of query parameters and their values **MUST** produce 4xx HTTP 
 
 - A `400 Bad Request` error **SHOULD** be returned when the `resource` parameter is missing.
 - A `404 Not Found` error **SHOULD** be returned when any combination of the parameters `resource`, `tree`, `ref`, `start` and `end` does not match a `Resource` and its `CitationTree`.
-- A `404 Not Found` error **SHOULD** be returned when the requested value of the `mediaType` parameter is not available for the `Resource` identified by the parameter `resource` in the `Navigation` endpoint. 
+- A `404 Not Found` error **SHOULD** be returned when the requested value of the `mediaType` parameter is not available for the `Resource` identified by the parameter `resource` in the `Navigation` endpoint.
 
 #### Formats and limitations of the Endpoint
 
@@ -1917,7 +1925,7 @@ If the data to be returned is not a complete document, but a chunk using either 
 </TEI>
 ```
 
-There is no limitation as to what can be contained by `<dts:wrapper>` or if its siblings can be provided as long as they are well formed and valid. 
+There is no limitation as to what can be contained by `<dts:wrapper>` or if its siblings can be provided as long as they are well formed and valid.
 
 The only limiting factor is that `<dts:wrapper>` **MUST** contain the requested textual data. This permits an implementation to return contextual material elsewhere within the root `TEI` node alongside the requested fragment.
 
@@ -1925,7 +1933,7 @@ The `<dts:wrapper>` **MAY** provides the attributes `ref`, `start` and `end` tha
 
 ##### Batch Requests
 
-The `Document` endpoint **does not support** batch requests. 
+The `Document` endpoint **does not support** batch requests.
 
 For the sake of simplicity and usability the DTS guidelines do not allow for batch operations, i.e. fetching or altering more than one passage of text in the same request. Implementations should encourage client software and other consumers of their API to use multiple asynchronous requests instead.
 
@@ -2086,7 +2094,7 @@ Retrieve the full content of a `Resource` labeled by the identifier `https://en.
 
 #### Example 4: Retrieve part of a `Resource` as `text/html`
 
-Retrieve the subtree of the `CitableUnit` identified by `C1.E1,P1` of the `Resource` labeled by the identifier `https://en.wikisource.org/wiki/Dracula` as HTML content. 
+Retrieve the subtree of the `CitableUnit` identified by `C1.E1,P1` of the `Resource` labeled by the identifier `https://en.wikisource.org/wiki/Dracula` as HTML content.
 
 ##### Request URL
 
@@ -2120,7 +2128,7 @@ Retrieve the subtree of the `CitableUnit` identified by `C1.E1,P1` of the `Resou
 
 #### Example 5: Retrieve part of a `Resource` as `text/html` of a non-default `CitationTree`
 
-Retrieve the subtree of the `CitableUnit` identified by `5` of the `Resource` labeled by the identifier `https://en.wikisource.org/wiki/Dracula` using its `CitationTree` identified `pages` as HTML content. 
+Retrieve the subtree of the `CitableUnit` identified by `5` of the `Resource` labeled by the identifier `https://en.wikisource.org/wiki/Dracula` using its `CitationTree` identified `pages` as HTML content.
 
 ##### Request URL
 
