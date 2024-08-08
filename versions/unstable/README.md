@@ -10,9 +10,9 @@ Specifications
 
 ## Changelogs
 
-
 - 2004-08-08
   - Made `citeType` required for `CiteStructure` objects.
+  - Removed `maxCiteDepth` everywhere, including in the example.
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
   - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
@@ -458,14 +458,13 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "contributor": ["Aemilius Baehrens"],
                 "language": ["la", "en"]
             },
-            "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1(&nav}",
+            "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&nav}",
             "document": "/api/dts/document?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree,mediaType}",
             "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree}",
             "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
             "citationTrees": [
                 {
                   "@type": "CitationTree",
-                  "maxCiteDepth" : 2,
                   "citeStructure" : [
                     {
                       "citeType": "poem",
@@ -528,7 +527,6 @@ This example is a child Resource, i.e. document composed of passages of readable
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "poem",
@@ -567,7 +565,6 @@ This example is a child Resource, i.e. document composed of passages of readable
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "front_matter"
@@ -662,7 +659,6 @@ The example comes from Papyri.info and concerns a document that has been publish
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "column",
@@ -786,7 +782,6 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `identifier` | string | N | The string identifier of the `CitationTree`. |
 | `@type` | string | Y | The object's RDF class which must be "CitationTree". |
 | `citeStructure` | array | N | An array of `CiteStructure` objects. |
-| `maxCiteDepth` | int | Y | An integer defining the maximum depth of the Resource's citation tree. |
 | `description` | string | N | A human readable description of the citation tree. |
 
 #### CiteStructure
@@ -941,6 +936,7 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -951,7 +947,6 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1041,6 +1036,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1-alpha",
     "@id":"https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=2",
+    "@type": "Navigation",
     "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
     "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
     "navigation": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula{&ref,down,start,end,tree,page}",
@@ -1050,7 +1046,6 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
@@ -1193,6 +1188,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1&down=-1",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1203,7 +1199,6 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1330,6 +1325,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula?ref=C1&down=2",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1340,7 +1336,6 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1465,6 +1460,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1.E1&down=1",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1475,7 +1471,6 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1566,6 +1561,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&down=1&start=C1&end=C3",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1576,7 +1572,6 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1749,6 +1744,7 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
 {
   "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
   "dtsVersion": "1-alpha",
+  "@type": "Navigation",
   "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C1",
   "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
   "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1759,7 +1755,6 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1834,6 +1829,7 @@ It is up to the implementer to decide what optional metadata to provide using th
 {
     "@context": "https://distributed-text-services.github.io/specifications/context/1-alpha1.json",
     "dtsVersion": "1-alpha",
+    "@type": "Navigation",
     "@id": "https://example.org/api/dts/navigation/?resource=https://en.wikisource.org/wiki/Dracula&ref=C2.E2",
     "document": "https://example.org/api/dts/document/?resource=https://en.wikisource.org/wiki/Dracula{&ref,start,end,tree,mediaType}",
     "collection": "https://example.org/api/dts/collection/?resource=https://en.wikisource.org/wiki/Dracula{&page,nav}",
@@ -1844,7 +1840,6 @@ It is up to the implementer to decide what optional metadata to provide using th
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
