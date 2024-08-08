@@ -12,6 +12,8 @@ Specifications
 
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
+  - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
+  - Added `view` properties for paginated responses to the Collection and Navigation endpoints. Added a `Pagination` object type to provide the pagination links.
 
 - 2024-05-24
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
@@ -224,12 +226,15 @@ Properties for Collection or Resource objects:
 | `document` | URI Template | Y (if `@type` is `Resource`) | Link to the Document API endpoint for the `Resource`. |
 | `download` | URI or array | N | A link or a key: value list of media type: link to downloadable versions of the `Resource` |
 | `citationTrees` | array | N | A list of Citation Trees, outlining the types of citation in each of the `Resource`s citation tree(s). |
+| `view` | Pagination | N | A Pagination object for paginated responses. |
 
 Additional properties for `Resource` objects:
 
 | Name | Type | Required | Description |
 | ---- | ---- | -------- | ----------- |
 | `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
+If a response is paginated the response object **MUST** include the `view` property with a `Pagination` object as its value.
 
 #### `MetadataObject` Structure
 
@@ -243,6 +248,17 @@ The values of this object's properties **MAY** be:
 - a URI,
 - an array of objects with `value` and `lang` properties (`lang` values **MUST** follow [BCP 47](https://www.rfc-editor.org/info/bcp47)),
 - an array of URIs.
+
+#### `Pagination` Structure
+
+| Name | Type | Required | Description |
+| ---- | ---- | -------- | ----------- |
+| `@id` | URI | Y | The identifier of the current page of the collection. This should be the full URI for the current request including the pagination request parameter |
+| `@type` | string | Y | the type of the object. Must be `Pagination` |
+| `first` | URI | Y | The URI for the first page of the paginated result set |
+| `previous` | URI | Y | The URI for the previous page of the paginated result set |
+| `next` | URI | Y | The URI for the next page of the paginated result set |
+| `last` | URI | Y | The URI for the last page of the paginated result set |
 
 ### URI for Collection Endpoint Request
 
@@ -600,7 +616,7 @@ This is an example of a paginated request for a Child Collection's members.
     ],
     "view": {
         "@id": "/api/dts/collection/?id=lettres_de_poilus&page=19",
-        "@type": "PartialCollectionView",
+        "@type": "Pagination",
         "first": "/api/dts/collection/?id=lettres_de_poilus&page=1",
         "previous": "/api/dts/collection/?id=lettres_de_poilus&page=18",
         "next": "/api/dts/collection/?id=lettres_de_poilus&page=20",
@@ -729,15 +745,16 @@ The top-level response object is a `Navigation` object answering a query about t
 | `@id` | URL | Y | The absolute URL of the current request including any query parameters. |
 | `@type` | string | Y | The object's RDF class which must be "Navigation". |
 | `dtsVersion` | string | Y | The version of the DTS specification providing the response. Default is "1-alpha". |
-| `document` | URI template | Y | The URI template to the Document endpoint at which the text of nodes in the citation tree can be retrieved. |
-| `navigation` | URI template | Y | The URI template to the Navigation endpoint at which the citation tree structure can be queried. |
 | `resource`| Resource | Y | The `Resource` whose citation tree is being queried. |
 | `ref` | CitableUnit | N | The `CitableUnit` in the citation tree which is being queried. |
 | `start` | CitableUnit | N | The `CitableUnit` at the beginning of the range in the citation tree which is being queried. |
 | `end` | CitableUnit | N |  The `CitableUnit` at the end of the range in the citation tree which is being queried. |
 | `member` | array | N | An array of `CitableUnit` in the subtree specified by the query parameters. |
+| `view` | Pagination | N | A Pagination object for paginated responses. |
 
 Because the `Navigation` object is a top-level object in the API, each object must also have a `@context` property pointing to a DTS JSON-LD context object such as "https://distributed-text-services.github.io/specifications/context/1-alpha1.json".
+
+If a response is paginated the response object **MUST** include the `view` property with a `Pagination` object.
 
 #### Resource
 
@@ -746,8 +763,11 @@ Because the `Navigation` object is a top-level object in the API, each object mu
 | `@id` | URI | Y | The URI of the `Resource`. |
 | `@type` | string | Y | The object's RDF class which must be "Resource". |
 | `collection` | URL template | Y | The URI template to the Collection endpoint at which the `Resource` can be found. |
+| `navigation` | URI Template | Y | The URI template to the Navigation API endpoint for the `Resource`. |
+| `document` | URI Template | Y | The URI template to the Document API endpoint for the `Resource`. |
 | `citationTrees` | array | Y | An array of `CitationTree` objects |
-| `mediaTypes` | array | N | An array of string identifiers for the response body media types (Content-Type values) supported for the `Resource` in Document endpoint queries. |
+
+The `Resource` object may also contain the [optional properties](#scheme-for-collection-api-responses) described for the Collection endpoint.
 
 If a `Resource` has a single `CitationTree`, that `CitationTree` object cannot have an `identifier`.
 
@@ -802,6 +822,20 @@ If the `CitableUnit` parent is the root level of the `Resource`, the value retur
   "parent": null
 }
 ```
+
+#### Pagination
+
+This object is used to provide links to the first, previous, next, and last pages of a paginated response. Its properties are described above in the [Scheme for Collection API Responses](#scheme-for-collection-api-responses). For convenience, we repeat them here:
+
+| Name |  Type  |  Required | Description                              |
+| ---- | ------ | --------- | -----------------------------|
+| `@id` | URI | Y | The absolute URI of the current request including any query parameters. |
+| `@type` | string | Y | The object's type which must be "Pagination". |
+| `first` | URI | Y | The URI of the first page of the paginated response. |
+| `previous` | URI | Y | The URI of the previous page of the paginated response. |
+| `next` | URI | Y | The URI of the next page of the paginated response. |
+| `last` | URI | Y | The URI of the last page of the paginated response. |
+
 
 ### URI for Navigation Endpoint Requests
 
