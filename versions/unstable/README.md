@@ -10,6 +10,8 @@ Specifications
 
 ## Changelogs
 
+- 2024-08-08
+  - Removed `maxCiteDepth` everywhere, including in the example.
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
   - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
@@ -463,7 +465,6 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
             "citationTrees": [
                 {
                   "@type": "CitationTree",
-                  "maxCiteDepth" : 2,
                   "citeStructure" : [
                     {
                       "citeType": "poem",
@@ -526,7 +527,6 @@ This example is a child Resource, i.e. document composed of passages of readable
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "poem",
@@ -565,7 +565,6 @@ This example is a child Resource, i.e. document composed of passages of readable
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "front_matter"
@@ -660,7 +659,6 @@ The example comes from Papyri.info and concerns a document that has been publish
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth" : 2,
         "citeStructure" : [
           {
             "citeType": "column",
@@ -784,7 +782,6 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `identifier` | string | N | The string identifier of the `CitationTree`. |
 | `@type` | string | Y | The object's RDF class which must be "CitationTree". |
 | `citeStructure` | array | N | An array of `CiteStructure` objects. |
-| `maxCiteDepth` | int | Y | An integer defining the maximum depth of the Resource's citation tree. |
 | `description` | string | N | A human readable description of the citation tree. |
 
 #### CiteStructure
@@ -950,7 +947,6 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1050,7 +1046,6 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
@@ -1204,7 +1199,6 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1342,7 +1336,6 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1478,7 +1471,6 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1580,7 +1572,6 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1764,7 +1755,6 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
     "citationTrees": [
       {
         "@type": "CitationTree",
-        "maxCiteDepth": 3,
         "citeStructure": [
           {
             "@type": "CiteStructure",
@@ -1850,7 +1840,6 @@ It is up to the implementer to decide what optional metadata to provide using th
       "citationTrees": [
         {
           "@type": "CitationTree",
-          "maxCiteDepth" : 3,
           "citeStructure": [
             {
               "@type": "CiteStructure",
