@@ -10,11 +10,13 @@ Specifications
 
 ## Changelogs
 
+
+- 2004-08-08
+  - Made `citeType` required for `CiteStructure` objects.
 - 2024-08-06
   - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
   - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
   - Added `view` properties for paginated responses to the Collection and Navigation endpoints. Added a `Pagination` object type to provide the pagination links.
-
 - 2024-05-24
   - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
   - `passage` property (URI template) moved to `document` for consistency between Collection and Navigation endpoint (See https://github.com/distributed-text-services/specifications/issues/249, problem pointed out by @philippepons)
@@ -792,7 +794,7 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | Name |  Type  |  Required | Description                              |
 | ---- | ------ | --------- | -----------------------------|
 | `citeStructure` | array | N | An array of `CiteStructure` objects. |
-| `citeType` | string | N | A type of textual unit that appears at a given level in the citation tree. (E.g., "chapter", "verse") |
+| `citeType` | string | y | A type of textual unit that appears at a given level in the citation tree. (E.g., "chapter", "verse") |
 
 #### CitableUnit
 
