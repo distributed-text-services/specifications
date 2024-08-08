@@ -456,7 +456,7 @@ Although, this is optional, the expansion of `@type:Resource`'s metadata is advi
                 "contributor": ["Aemilius Baehrens"],
                 "language": ["la", "en"]
             },
-            "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1(&nav}",
+            "collection": "/api/dts/collection/?id=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&nav}",
             "document": "/api/dts/document?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree,mediaType}",
             "navigation": "/api/dts/navigation?resource=urn:cts:latinLit:phi1103.phi001.lascivaroma-lat1{&ref,start,end,tree}",
             "download": "https://raw.githubusercontent.com/lascivaroma/priapeia/master/data/phi1103/phi001/phi1103.phi001.lascivaroma-lat1.xml",
