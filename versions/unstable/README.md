@@ -976,10 +976,10 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {
+        "title": [{
           "lang": "en",
           "value": "Chapter 1: Jonathan Harker's Journal"
-        }
+        }]
       }
     },
     {
@@ -988,11 +988,11 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
       "level": 1,
       "parent": null,
       "citeType": "Chapter",
-      "dublinCore": {
+      "dublinCore": [{
         "title": {
           "lang": "en",
           "value": "Chapter 2: Jonathan Harker's Journal - Continued"
-        }
+        }]
       }
     },
     {
@@ -1002,10 +1002,10 @@ The client wants to retrieve an array of `CitableUnit`s that are part of the `Re
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {
+        "title": [{
           "lang": "en",
           "value": "Chapter 3: Jonathan Harker's Journal - Continued"
-        }
+        }]
       }
     }
     /* ... */
@@ -1076,7 +1076,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": null,
         "citeType": "Chapter",
         "dublinCore": {
-          "title": {"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}
+          "title": [{"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}]
         }
       },
       {
@@ -1086,7 +1086,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C1",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "3 May. Bistritz"}
+          "title": [{"lang": "en", "value": "3 May. Bistritz"}]
         }
       },
       {
@@ -1096,7 +1096,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C1",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "4 May"}
+          "title": [{"lang": "en", "value": "4 May"}]
         }
       },
       /* ... */
@@ -1107,7 +1107,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": null,
         "citeType": "Chapter",
         "dublinCore": {
-          "title": {"lang": "en", "value": "Chapter 2: Jonathan Harker's Journal - Continued"}
+          "title": [{"lang": "en", "value": "Chapter 2: Jonathan Harker's Journal - Continued"}]
         }
       },
       {
@@ -1117,7 +1117,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C2",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "5 May"}
+          "title": [{"lang": "en", "value": "5 May"}]
         }
       },
       {
@@ -1127,7 +1127,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C2",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "7 May"}
+          "title": [{"lang": "en", "value": "7 May"}]
         }
       },
       /* ... */
@@ -1138,7 +1138,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": null,
         "citeType": "Chapter",
         "dublinCore": {
-          "title": {"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}
+          "title": [{"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}]
         }
       },
       {
@@ -1148,7 +1148,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C3",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "8 May continued"}
+          "title": [{"lang": "en", "value": "8 May continued"}]
         }
       },
       {
@@ -1158,7 +1158,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
         "parent": "C3",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "Midnight"}
+          "title": [{"lang": "en", "value": "Midnight"}]
         }
       },
       /* ... */
@@ -1227,10 +1227,10 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
     "parent": null,
     "citeType": "Chapter",
     "dublinCore": {
-      "title": {
+      "title": [{
         "lang": "en",
         "value": "Chapter 1: Jonathan Harker's Journal"
-      }
+      }]
     }
   },
   "member": [
@@ -1241,10 +1241,10 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {
+        "title": [{
           "lang": "en",
           "value": "Chapter 1: Jonathan Harker's Journal"
-        }
+        }]
       }
     },
     {
@@ -1254,7 +1254,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": { "lang": "en", "value": "3 May. Bistritz" }
+        "title": [{ "lang": "en", "value": "3 May. Bistritz" }]
       }
     },
     {
@@ -1279,7 +1279,7 @@ The client wants to retrieve an array of all `CitableUnit`s in the `Resource` id
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": { "lang": "en", "value": "4 May" }
+        "title": [{ "lang": "en", "value": "4 May" }]
       }
     },
     {
@@ -1364,10 +1364,10 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
     "parent": null,
     "citeType": "Chapter",
     "dublinCore": {
-      "title": {
+      "title": [{
         "lang": "en",
         "value": "Chapter 1: Jonathan Harker's Journal"
-      }
+      }]
     }
   },
   "member": [
@@ -1378,10 +1378,10 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {
+        "title": [{
           "lang": "en",
           "value": "Chapter 1: Jonathan Harker's Journal"
-        }
+        }]
       }
     },
     {
@@ -1391,7 +1391,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "3 May. Bistritz"}
+        "title": [{"lang": "en", "value": "3 May. Bistritz"}]
       }
     },
     {
@@ -1416,7 +1416,7 @@ The client wants to retrieve the citation subtree below `CitableUnit` "C1" but i
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "4 May"}
+        "title": [{"lang": "en", "value": "4 May"}]
       }
     },
     {
@@ -1499,7 +1499,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "3 May. Bistritz"}
+        "title": [{"lang": "en", "value": "3 May. Bistritz"}]
       }
   },
   "member": [
@@ -1510,7 +1510,7 @@ The client wants to retrieve `CitableUnit` "C1.E1" of the `Resource` "https://en
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "3 May. Bistritz"}
+        "title": [{"lang": "en", "value": "3 May. Bistritz"}]
       }
     },
     {
@@ -1600,7 +1600,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}
+        "title": [{"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}]
       }
   },
   "end": {
@@ -1610,7 +1610,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}
+        "title": [{"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}]
       }
   },
   "member": [
@@ -1621,7 +1621,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}
+        "title": [{"lang": "en", "value": "Chapter 1: Jonathan Harker's Journal"}]
       }
     },
     {
@@ -1631,7 +1631,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "3 May. Bistritz"}
+        "title": [{"lang": "en", "value": "3 May. Bistritz"}]
       }
     },
     {
@@ -1641,7 +1641,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C1",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "4 May"}
+        "title": [{"lang": "en", "value": "4 May"}]
       }
     },
     /* ... */
@@ -1652,7 +1652,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Chapter 2: Jonathan Harker's Journal - Continued"}
+        "title": [{"lang": "en", "value": "Chapter 2: Jonathan Harker's Journal - Continued"}]
       }
     },
     {
@@ -1662,7 +1662,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C2",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "5 May"}
+        "title": [{"lang": "en", "value": "5 May"}]
       }
     },
     {
@@ -1672,7 +1672,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C2",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "7 May"}
+        "title": [{"lang": "en", "value": "7 May"}]
       }
     },
     /* ... */
@@ -1683,7 +1683,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}
+        "title": [{"lang": "en", "value": "Chapter 3: Jonathan Harker's Journal - Continued"}]
       }
     },
     {
@@ -1693,7 +1693,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C3",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "8 May continued"}
+        "title": [{"lang": "en", "value": "8 May continued"}]
       }
     },
     {
@@ -1703,7 +1703,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C3",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Midnight"}
+        "title": [{"lang": "en", "value": "Midnight"}]
       }
     }
     /* ... */
@@ -1714,7 +1714,7 @@ The client wants to retrieve an array of `CitableUnit`s in a specified range, in
       "parent": "C3",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "Later: the Morning of 16 May"}
+        "title": [{"lang": "en", "value": "Later: the Morning of 16 May"}]
       }
     }
   ]
@@ -1783,10 +1783,10 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
     "parent": null,
     "citeType": "Chapter",
     "dublinCore": {
-      "title": {
+      "title": [{
         "lang": "en",
         "value": "Chapter 1: Jonathan Harker's Journal"
-      }
+      }]
     }
   },
   "member": [
@@ -1797,10 +1797,10 @@ Alternately, the same typology of `CitableUnits` and `CiteStructure` may be retr
       "parent": null,
       "citeType": "Chapter",
       "dublinCore": {
-        "title": {
+        "title": [{
           "lang": "en",
           "value": "Chapter 1: Jonathan Harker's Journal"
-        }
+        }]
       }
     },
   ]
@@ -1868,7 +1868,7 @@ It is up to the implementer to decide what optional metadata to provide using th
       "parent": "C2",
       "citeType": "Journal Entry",
       "dublinCore": {
-        "title": {"lang": "en", "value": "7 May"},
+        "title": [{"lang": "en", "value": "7 May"}],
         "publisher": ["Modern Library"],
       }
     },
@@ -1880,7 +1880,7 @@ It is up to the implementer to decide what optional metadata to provide using th
         "parent": "C2",
         "citeType": "Journal Entry",
         "dublinCore": {
-          "title": {"lang": "en", "value": "7 May"},
+          "title": [{"lang": "en", "value": "7 May"}],
           "publisher": ["Modern Library"],
         }
       },
