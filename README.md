@@ -44,8 +44,8 @@ The DTS API provides the following core capabilities to clients:
 
 This list includes implementations that should be generic enough to be compatible with a lot of different corpora.
 
-*[MyDapytains](https://github.com/distributed-text-services/MyDapytains) is a python implementation by a member of the technical committee which uses Flask for web and SaxonC implementation for XPath, XSLT and XQuery.
-*[DoTS](https://github.com/chartes/dots) is an implementation from Biblissima + & the Ecole nationale des chartes built on top of BaseX.
+* [MyDapytains](https://github.com/distributed-text-services/MyDapytains) is a python implementation by a member of the technical committee which uses Flask for web and SaxonC implementation for XPath, XSLT and XQuery.
+* [DoTS](https://github.com/chartes/dots) is an implementation from Biblissima + & the Ecole nationale des chartes built on top of BaseX.
 
 ### Implementation of older versions (Before 1-alpha)
 
