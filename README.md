@@ -22,9 +22,9 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- Navigation _across texts_ is supported by the [Collection Endpoint](versions/1-alpha/#collection-endpoint)
-- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/1-alpha/#navigation-endpoint)
-- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/1-alpha/#document-endpoint)
+- Navigation _across texts_ is supported by the [Collection Endpoint](versions/unstable/#collection-endpoint)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/unstable/#navigation-endpoint)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/unstable/#document-endpoint)
 
 The Collection and Navigation endpoints return JSON-LD. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
@@ -35,13 +35,19 @@ The DTS API provides the following core capabilities to clients:
 * Retrieve lists of collection members
 * Retrieve metadata about individual collection items
 * Retrieve lists of citeable passages within a text
-* Retrieve lists of citeable passages within a text as groups of client-defined sizes (e.g. groups of 10 lines)
 * Retrieve metadata about the citation structure of a document
 * Retrieve a single text passage at any level of the citation hierarchy
 * Retrieve a range of text passages with a clearly defined start and end passage
 * Retrieve an entire text
 
-## Reference Implementations
+## Generic Implementations
+
+This list includes implementations that should be generic enough to be compatible with a lot of different corpora.
+
+*[MyDapytains](https://github.com/distributed-text-services/MyDapytains) is a python implementation by a member of the technical committee which uses Flask for web and SaxonC implementation for XPath, XSLT and XQuery.
+*[DoTS](https://github.com/chartes/dots) is an implementation from Biblissima + & the Ecole nationale des chartes built on top of BaseX.
+
+### Implementation of older versions (Before 1-alpha)
 
 The following open source libraries implement the DTS API (1.0 Draft):
 
@@ -57,6 +63,7 @@ The following open source libraries implement the DTS API (1.0 Draft):
 
 The following open source libraries implement the DTS API (1.0 Draft):
 
+* Dracor <https://dev.dracor.org/api/v1/dts>
 * Ecole Nationale des Chartes <http://dev.chartes.psl.eu/api/nautilus/dts> and <http://http://dev.chartes.psl.eu/dts-demo/>
   * A small collection of contemporaneous and medieval French literature. The contemporaneous texts are lightly marked up, and the medieval texts are finely annotated.  Uses the MyCapytain/Nautilus libraries.
 * Alpheios <http://texts.alpheios.net/api/dts>
