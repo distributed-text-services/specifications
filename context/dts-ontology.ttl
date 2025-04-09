@@ -65,7 +65,10 @@ dts:Resource
 
 dts:dublinCore
     a owl:ObjectProperty ;
-    rdfs:domain dts:Collection, dts:Resource, dts:CitableUnit ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Resource dts:CitableUnit)
+    ] ;
     rdfs:range dts:MetadataObject ;
     rdfs:label "dublinCore" ;
     rdfs:comment "Metadata following the Dublin Core Terms scheme" ;
@@ -73,7 +76,10 @@ dts:dublinCore
 
 dts:extensions
     a owl:ObjectProperty ;
-    rdfs:domain dts:Collection, dts:Resource, dts:CitableUnit ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Resource dts:CitableUnit)
+    ] ;
     rdfs:range dts:MetadataObject ;
     rdfs:label "extensions" ;
     rdfs:comment "Supplementary metadata following other schemes apart from Dublin Core Terms" ;
@@ -89,25 +95,22 @@ dts:citationTrees
 
 dts:view
     a owl:ObjectProperty;
-    rdfs:domain dts:Collection, dts:Resource ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Resource)
+    ] ;
     rdfs:range dts:Pagination ;
     rdfs:label "view" ; 
     rdfs:comment "Pagination object for paginated responses" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
 
-# the Object Properties of Page are tricky, range is always a dts:Collection or dts:Pagination??
 dts:first
     a owl:ObjectProperty;
     rdfs:domain dts:Pagination ;
-    rdfs:range dts:Collection, dts:Navigation ; # can this also be dts:Navigation (paged list of Citable Units?)?
-    rdfs:label "first" ;
-    rdfs:comment "First page of the paginated result set" ;
-    rdfs:isDefinedBy <https://w3id.org/dts/api> .
-
-dts:first
-    a owl:ObjectProperty;
-    rdfs:domain dts:Pagination ;
-    rdfs:range dts:Collection, dts:Navigation ; # can this also be dts:Navigation (paged list of Citable Units?)?
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Navigation)
+    ] ;
     rdfs:label "first" ;
     rdfs:comment "First page of the paginated result set" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -115,7 +118,10 @@ dts:first
 dts:previous
     a owl:ObjectProperty;
     rdfs:domain dts:Pagination ;
-    rdfs:range dts:Collection, dts:Navigation ; # can this also be dts:Navigation (paged list of Citable Units?)?
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Navigation)
+    ] ;
     rdfs:label "previous" ;
     rdfs:comment "Previous page of the paginated result set" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -123,7 +129,10 @@ dts:previous
 dts:next
     a owl:ObjectProperty;
     rdfs:domain dts:Pagination ;
-    rdfs:range dts:Collection, dts:Navigation ; # can this also be dts:Navigation (paged list of Citable Units?)?
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Navigation)
+    ] ;
     rdfs:label "next" ;
     rdfs:comment "Next page of the paginated result set" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -131,7 +140,10 @@ dts:next
 dts:last
     a owl:ObjectProperty;
     rdfs:domain dts:Pagination ;
-    rdfs:range dts:Collection, dts:Navigation ; # can this also be dts:Navigation (paged list of Citable Units?)?
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Navigation)
+    ] ;
     rdfs:label "last" ;
     rdfs:comment "Last page of the paginated result set" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -178,7 +190,10 @@ dts:citationTrees
 
 dts:citeStructure
     a owl:ObjectProperty ;
-    rdfs:domain dts:CiteStructure, dts:CitationTree ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:CiteStructure dts:CitationTree)
+    ] ;
     rdfs:range dts:citeStructure ;
     rdfs:label "citeStructure" ;
     rdfs:comment "CiteStructure objects" ;
@@ -188,7 +203,10 @@ dts:citeStructure
 
 dts:dtsVersion 
     a owl:DatatypeProperty ;
-    rdfs:domain dts:EntryPoint, dts:Collection, dts:Resource, dts:Navigation ; 
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:EntryPoint dts:Collection dts:Resource dts:Navigation)
+    ] ;
     rdfs:range xsd:string ;
     rdfs:label "dtsVersion" ;
     rdfs:comment "The version of the DTS specification providing the response" ;
@@ -196,33 +214,45 @@ dts:dtsVersion
 
 dts:collection
     a owl:DatatypeProperty ;
-    rdfs:domain dts:EntryPoint, dts:Collection, dts:Resource ;
-    rdfs:range rdfs:Literal ; # it's a string, could also be xsd:anyURI, or dataType "URI Template" 
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:EntryPoint dts:Collection dts:Resource)
+    ] ;
+    rdfs:range dts:UriTemplate ; # Custom Datatype, see below
     rdfs:label "collection" ;
     rdfs:comment "Link to the Collection API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
 
-# Should check Class hydra:TemplatedLink to see how URI Templates are included in Hydra in the RDF
+# Should also check Class hydra:TemplatedLink to see how URI Templates are included in Hydra in the RDF
 
 dts:navigation
     a owl:DatatypeProperty ;
-    rdfs:domain dts:EntryPoint, dts:Collection, dts:Resource ;
-    rdfs:range rdfs:Literal ; # it's a string, could also be xsd:anyURI, or dataType "URI Template" 
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:EntryPoint dts:Collection dts:Resource)
+    ] ;
+    rdfs:range dts:UriTemplate ; 
     rdfs:label "navigation" ;
     rdfs:comment "Link to the Navigation API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
 
 dts:document
     a owl:DatatypeProperty ;
-    rdfs:domain dts:EntryPoint, dts:Resource ; # not dts:Collection!
-    rdfs:range rdfs:Literal ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:EntryPoint dts:Resource)
+    ] ;
+    rdfs:range dts:UriTemplate ;
     rdfs:label "document" ;
     rdfs:comment "Link to the Document API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
 
 dts:totalParents
     a owl:DatatypeProperty ;
-    rdfs:domain dts:Collection, dts:Resource ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Resource)
+    ] ;
     rdfs:range xsd:integer ;	
     rdfs:label "totalParents" ;
     rdfs:comment "Total number of parent Collections or Resources" ;
@@ -238,8 +268,14 @@ dts:totalChildren
 
 dts:download
     a owl:DatatypeProperty ;
-    rdfs:domain dts:Collection, dts:Resource ; # also dts:Collection?
-    # rdfs:range ? URI or array
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection dts:Resource)
+    ] ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (xsd:anyURI xsd:string) # range could be either a URI or a key:value pair of mediaType:URL (no example in Specification, therefore xsd:string at the moment)
+    ] ; 
     rdfs:label "download" ;
     rdfs:comment "A link or a key: value list of media type: link to downloadable versions" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -254,7 +290,10 @@ dts:mediaTypes
 
 dts:identifier
     a owl:DatatypeProperty ;
-    rdfs:domain dts:CitationTree, dts:CitableUnit ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:CitationTree dts:CitableUnit)
+    ] ;
     rdfs:range xsd:string ;
     rdfs:label "identifier" ;
     rdfs:comment "String identifier of the Citation Tree or Citable Unit" ;
@@ -262,7 +301,10 @@ dts:identifier
 
 dts:citeType
     a owl:DatatypeProperty ;
-    rdfs:domain dts:CiteStructure , dts:CitableUnit ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:CiteStructure dts:CitableUnit)
+    ] ;
     rdfs:range xsd:string ;
     rdfs:label "citeType" ;
     rdfs:comment "Type of textual unit that appears at a given level in the citation tree. (E.g., “chapter”, “verse”)" ;
@@ -300,6 +342,23 @@ dts:NullableString
         )
     ] ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
+
+dts:UriTemplate
+    a rdfs:Datatype ;
+    rdfs:label "uri template" ;
+    rdfs:comment "The Distributed Text Services specifications reuse the RFC 6570 for defining the syntax of URI templates used to build URL on the API in its various endpoints" ;
+    rdfs:seeAlso <https://distributed-text-services.github.io/specifications/versions/unstable/#about-uri-templates> ;
+    owl:equivalentClass [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:withRestrictions (
+            [
+                xsd:pattern ".*\\{[^}]*\\}.*" ;  # strings containing {} placeholders, maybe must be refined
+            ]
+        )
+    ] ;
+    rdfs:isDefinedBy <https://w3id.org/dts/api> .
+ 
 
 ### Imported from Hydra
 
