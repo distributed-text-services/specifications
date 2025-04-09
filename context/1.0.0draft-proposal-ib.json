@@ -1,0 +1,58 @@
+{
+  "@context": {
+    "dts": "https://w3id.org/dts/api#",
+    "dct": "http://purl.org/dc/terms/",
+    "hydra": "https://www.w3.org/ns/hydra/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "CitableUnit": "dts:CitableUnit",
+    "CitationTree": "dts:itationTree",
+    "CiteStructure": "dts:CiteStructure",
+    "Collection": "dts:Collection",
+    "EntryPoint": "dts:EntryPoint",
+    "MetadataObject": "dts:MetadataObject",
+    "Navigation": "dts:Navigation",
+    "Pagination": "dts:Pagination",
+    "Resource": "dts:Resource",
+
+    "citationTrees": "dts:citationTrees",
+    "citeStructure":"dts:citeStructure",
+    "dublinCore": {
+      "@id": "dts:dublinCore",
+      "@context": {
+        "@vocab": "http://purl.org/dc/terms/"
+      }
+    },
+    "end": "dts:end",
+    "extensions": "dts:extensions",
+    "first": "dts:first",
+    "last": "dts:last",
+    "next": "dts:next",
+    "previous": "dts:previous",
+    "ref": "dts:ref",
+    "resource": "dts:resource",
+    "start": "dts:start",
+    "view": "dts:view",
+    
+    "citeType": "dts:citeType",
+    "collection": "dts:collection",
+    "document": "dts:document",
+    "download": "dts:download",
+    "dtsVersion": "dts:dtsVersion",
+    "identifier": "dts:identifier",
+    "level": "dts:level",
+    "mediaTypes": "dts:mediaTypes",
+    "navigation": "dts:navigation",
+    "parent": "dts:parent",
+    "totalChildren": "dts:totalChildren",
+    "totalParents": "dts:totalParents",
+    
+    "title": "hydra:title",
+    "description": "hydra:description",
+    "member": "hydra:member"
+    
+  }
+}
