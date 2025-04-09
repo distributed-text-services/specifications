@@ -231,7 +231,7 @@ dts:navigation
         a owl:Class ;
         owl:unionOf (dts:EntryPoint dts:Collection dts:Resource)
     ] ;
-    rdfs:range dts:UriTemplate ; 
+    rdfs:range dts:UriTemplate ; # Custom Datatype, see below
     rdfs:label "navigation" ;
     rdfs:comment "Link to the Navigation API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
@@ -242,7 +242,7 @@ dts:document
         a owl:Class ;
         owl:unionOf (dts:EntryPoint dts:Resource)
     ] ;
-    rdfs:range dts:UriTemplate ;
+    rdfs:range dts:UriTemplate ; # Custom Datatype, see below
     rdfs:label "document" ;
     rdfs:comment "Link to the Document API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
