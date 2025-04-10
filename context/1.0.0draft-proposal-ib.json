@@ -53,6 +53,5 @@
     "title": "hydra:title",
     "description": "hydra:description",
     "member": "hydra:member"
-    
   }
 }
