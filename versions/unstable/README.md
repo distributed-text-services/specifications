@@ -16,6 +16,7 @@ Specifications
   - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
   - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 274](https://github.com/distributed-text-services/specifications/issues/274)).
   - Clarify that headers of the Entry Endpoint SHOULD be JSON+LD ([Issue 272](https://github.com/distributed-text-services/specifications/issues/272)).
+  - Clarify that `MetadataObject` MUST have their vocabularies defined, either by the main `@context` property if they are reusing base DTS vocabulary (including Dublin Core Terms) or by their own `@context` property.
 - 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
@@ -252,7 +253,12 @@ If a response is paginated the response object **MUST** include the `view` prope
 
 In order to make metadata parsable across implementations of the APIs, we restrict the depth of properties in JSON-LD metadata objects.
 
-`MetadataObject` is an object whose properties **MUST** be defined in the `@context`. [Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) are already provided by the base `@vocab` provided by DTS.
+A `MetadataObject` is an object whose properties **MUST** be defined. 
+
+[Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) are already provided by the base `@context` of any DTS response.
+
+For a `MetadataObject` that does not simply reuse the vocabulary defined in the global `@context` of the response object (e.g. `dts:extension`), a `MetadataObject` **MUST** have a `@context` property providing the definition of absent terms.
+
 
 The values of this object's properties **MAY** be:
 
