@@ -14,6 +14,7 @@ Specifications
   - Fixed a formatting issue.
   - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268))
   - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
+  - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 269](https://github.com/distributed-text-services/specifications/issues/274)).
 - 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
@@ -803,6 +804,7 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `@type` | string | Y | The object's RDF class which must be "CitableUnit". |
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The string identifier of the hierarchical parent of the `CitableUnit` in the `Resource`. |
+| `@id` | URI | N | An optional URI identifier for the unit. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
 | `dublinCore` | [MetadataObject](#metadataobject-structure) | N | Dublin Core Terms metadata describing the `CitableUnit`. |
 | `extensions` | [MetadataObject](#metadataobject-structure) | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
