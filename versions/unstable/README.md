@@ -10,7 +10,14 @@ Specifications
 
 ## Changelogs
 
-- 2004-08-08
+- 2025-04-17
+  - Fixed formatting issues.
+  - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268))
+  - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
+  - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 274](https://github.com/distributed-text-services/specifications/issues/274)).
+  - Clarify that headers of the Entry Endpoint SHOULD be JSON+LD ([Issue 272](https://github.com/distributed-text-services/specifications/issues/272)).
+  - Clarify that `MetadataObject` MUST have their vocabularies defined, either by the main `@context` property if they are reusing base DTS vocabulary (including Dublin Core Terms) or by their own `@context` property.
+- 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
 - 2024-08-06
@@ -77,10 +84,6 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 - *Collection*: a named aggregation of digital `Resource`s. Collections may contain other Collections or Resources.
 - *Resource*: A document
 - *Citable Unit*: A portion of a Resource identified by a reference string.
-f
-<!--
-- *Citation Tree*: A list of references, in document order, corresponding to the hierarchical structure of a Resource.
- -->
 
 ### Citation Tree
 
@@ -177,6 +180,14 @@ Item properties :
 | `navigation` | URI Template | Y | Link to the Navigation API endpoint. |
 | `document` | URI Template | Y | Link to the Document API endpoint. |
 
+### Response Headers
+
+Responses from the `Navigation` endpoint should include an HTTP response header identifying the `Content-Type` of the response as `application/ld+json`.
+
+| Key          | Value                             |
+| ------------ | --------------------------------- |
+| Content-Type | Content-Type: application/ld+json |
+
 
 ### Example
 
@@ -242,7 +253,12 @@ If a response is paginated the response object **MUST** include the `view` prope
 
 In order to make metadata parsable across implementations of the APIs, we restrict the depth of properties in JSON-LD metadata objects.
 
-`MetadataObject` is an object whose properties **MUST** be defined in the `@context`. [Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) are already provided by the base `@vocab` provided by DTS.
+A `MetadataObject` is an object whose properties **MUST** be defined. 
+
+[Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/) are already provided by the base `@context` of any DTS response.
+
+For a `MetadataObject` that does not simply reuse the vocabulary defined in the global `@context` of the response object (e.g. `dts:extension`), a `MetadataObject` **MUST** have a `@context` property providing the definition of absent terms.
+
 
 The values of this object's properties **MAY** be:
 
@@ -799,6 +815,7 @@ Values in the `mediaTypes` array must correspond to content types that the imple
 | `@type` | string | Y | The object's RDF class which must be "CitableUnit". |
 | `level` | int | Y | A number identifying the depth at which the `CitableUnit` is found within the citation tree of the `Resource`. |
 | `parent` | nullable string | Y | The string identifier of the hierarchical parent of the `CitableUnit` in the `Resource`. |
+| `@id` | URI | N | An optional URI identifier for the unit. |
 | `citeType` | string | N | The type of textual unit corresponding to the `CitableUnit` in the Resource. (E.g., "chapter", "verse") |
 | `dublinCore` | [MetadataObject](#metadataobject-structure) | N | Dublin Core Terms metadata describing the `CitableUnit`. |
 | `extensions` | [MetadataObject](#metadataobject-structure) | N | Metadata for the `CitableUnit` from vocabularies other than Dublin Core Terms. |
@@ -854,6 +871,7 @@ Some combinations of query parameters and their values must return a 4XX HTTP Er
   - no `resource` value is provided
   - both `ref` and either `start` or `end` is specified
   - `start` is provided without also specifying `end`, or vice versa
+
 A 404 Not Found Error should be returned when
   - a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`
   - a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`
@@ -871,6 +889,7 @@ If no `tree` parameter is specified, the default `CitationTree` of the `Resource
 | absent | absent | absent | 400 Bad Request Error |
 | absent | present | absent | Information about the `CitableUnit` identified by `ref`. No member property in the `Navigation` object. |
 | absent | absent | present | Information about the `CitableUnit`s identified by `start` and by `end`. No member property in the `Navigation` object. |
+| 0 | absent | absent | 400 Bad Request Error |
 | 0 | present | absent | Information about the `CitableUnit` identified by `ref` along with a `member` property that is an array of `CitableUnit`s that are siblings (sharing the same parent) including the current `CitableUnit` identified by `ref`. |
 | 0 | absent | present | 400 Bad Request Error |
 | > 0 | absent | absent | A `member` array of `CitableUnit`s including the citation tree from the root to the depth requested in `down`. |
@@ -880,16 +899,17 @@ If no `tree` parameter is specified, the default `CitationTree` of the `Resource
 | -1 | present | absent | A `member` array of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `CitationTree`. |
 | -1 | absent | present | A `member` array of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `CitationTree`. |
 
-##### Handling Requests with No Matching `CitableUnit`s
+##### Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)
 
 A `Navigation` endpoint request may specify a level in a `Resource`'s `CitationTree` that does not exist. One may, e.g., provide a `down` value of `3` when only `1` lower level exists in the `Resource`'s `CitationTree`. In this case the `member` array will simply include any `CitableUnit`s that do satisfy the parameters.
 
-If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request:
+If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request except for the `ref`:
+- the request must not raise an error
+- the `Navigation` object `member` property must be an array containing only this `CitableUnit`.
 
+If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request, and where `ref` and `start`/`end` are not provided, then 
 - the request must not raise an error
 - the `Navigation` object `member` property must be an empty array.
-
-For example, if the `ref` is at the bottom level of the queried `CitationTree`, and a `down` of 2 is provided in the request, the response will provide an empty array as its `member` value.
 
 ##### Order of `CitableUnit`s in `member`
 
