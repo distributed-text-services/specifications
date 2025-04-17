@@ -11,10 +11,11 @@ Specifications
 ## Changelogs
 
 - 2025-04-17
-  - Fixed a formatting issue.
+  - Fixed formatting issues.
   - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268))
   - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
-  - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 269](https://github.com/distributed-text-services/specifications/issues/274)).
+  - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 274](https://github.com/distributed-text-services/specifications/issues/274)).
+  - Clarify that headers of the Entry Endpoint SHOULD be JSON+LD ([Issue 272](https://github.com/distributed-text-services/specifications/issues/272)).
 - 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
@@ -82,10 +83,6 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 - *Collection*: a named aggregation of digital `Resource`s. Collections may contain other Collections or Resources.
 - *Resource*: A document
 - *Citable Unit*: A portion of a Resource identified by a reference string.
-f
-<!--
-- *Citation Tree*: A list of references, in document order, corresponding to the hierarchical structure of a Resource.
- -->
 
 ### Citation Tree
 
@@ -181,6 +178,14 @@ Item properties :
 | `collection` | URI Template | Y | Link to the Collection API endpoint. |
 | `navigation` | URI Template | Y | Link to the Navigation API endpoint. |
 | `document` | URI Template | Y | Link to the Document API endpoint. |
+
+### Response Headers
+
+Responses from the `Navigation` endpoint should include an HTTP response header identifying the `Content-Type` of the response as `application/ld+json`.
+
+| Key          | Value                             |
+| ------------ | --------------------------------- |
+| Content-Type | Content-Type: application/ld+json |
 
 
 ### Example
