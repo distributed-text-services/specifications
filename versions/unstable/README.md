@@ -12,7 +12,8 @@ Specifications
 
 - 2025-04-17
   - Fixed a formatting issue.
-  - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268)) 
+  - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268))
+  - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
 - 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
@@ -875,6 +876,7 @@ If no `tree` parameter is specified, the default `CitationTree` of the `Resource
 | absent | absent | absent | 400 Bad Request Error |
 | absent | present | absent | Information about the `CitableUnit` identified by `ref`. No member property in the `Navigation` object. |
 | absent | absent | present | Information about the `CitableUnit`s identified by `start` and by `end`. No member property in the `Navigation` object. |
+| 0 | absent | absent | 400 Bad Request Error |
 | 0 | present | absent | Information about the `CitableUnit` identified by `ref` along with a `member` property that is an array of `CitableUnit`s that are siblings (sharing the same parent) including the current `CitableUnit` identified by `ref`. |
 | 0 | absent | present | 400 Bad Request Error |
 | > 0 | absent | absent | A `member` array of `CitableUnit`s including the citation tree from the root to the depth requested in `down`. |
