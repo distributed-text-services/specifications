@@ -10,7 +10,10 @@ Specifications
 
 ## Changelogs
 
-- 2004-08-08
+- 2025-04-17
+  - Fixed a formatting issue.
+  - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268)) 
+- 2024-08-08
   - Made `citeType` required for `CiteStructure` objects.
   - Removed `maxCiteDepth` everywhere, including in the example.
 - 2024-08-06
@@ -881,16 +884,17 @@ If no `tree` parameter is specified, the default `CitationTree` of the `Resource
 | -1 | present | absent | A `member` array of `CitableUnit`s including the citation tree from the `CitableUnit` identified by `ref` to the deepest level of the `CitationTree`. |
 | -1 | absent | present | A `member` array of `CitableUnit`s including the citation tree between the `start` and `end` `CitableUnit`s inclusive, down to the deepest level of the `CitationTree`. |
 
-##### Handling Requests with No Matching `CitableUnit`s
+##### Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)
 
 A `Navigation` endpoint request may specify a level in a `Resource`'s `CitationTree` that does not exist. One may, e.g., provide a `down` value of `3` when only `1` lower level exists in the `Resource`'s `CitationTree`. In this case the `member` array will simply include any `CitableUnit`s that do satisfy the parameters.
 
-If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request:
+If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request except for the `ref`:
+- the request must not raise an error
+- the `Navigation` object `member` property must be an array containing only this `CitableUnit`.
 
+If there are no `CitableUnit`s at all that satisfy the parameters of a `Navigation` endpoint request, and where `ref` and `start`/`end` are not provided, then 
 - the request must not raise an error
 - the `Navigation` object `member` property must be an empty array.
-
-For example, if the `ref` is at the bottom level of the queried `CitationTree`, and a `down` of 2 is provided in the request, the response will provide an empty array as its `member` value.
 
 ##### Order of `CitableUnit`s in `member`
 
