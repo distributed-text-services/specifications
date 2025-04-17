@@ -1,12 +1,9 @@
 @prefix dts: <https://w3id.org/dts/api#> .
-@prefix hydra: <https://www.w3.org/ns/hydra/core#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix schema: <http://schema.org/> . # Used by Hydra domainIncludes. If Hydra is not used, this is not needed.
-
 
 <https://w3id.org/dts/api>
     a owl:Ontology ;
@@ -199,6 +196,39 @@ dts:citeStructure
     rdfs:comment "CiteStructure objects" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
 
+dts:title
+    a owl:ObjectProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "A name for a Collection or Resource."
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection, dts:Resource) ;
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://w3id.org/dts/api> .
+
+dts:description
+    a owl:ObjectProperty ;
+    rdfs:label "description" ;
+    rdfs:comment "Short description of a Collection or Resource"
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (dts:Collection, dts:Resource) ;
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://w3id.org/dts/api> .
+
+dts:member
+    a owl:ObjectProperty ;
+    rdfs:label "member" ;
+    rdfs:comment "Contains members of a collection."
+    rdfs:domain dts:Collection
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf (dts:Collection, dts:Resource) ;
+    ] ; 
+    rdfs:isDefinedBy <https://w3id.org/dts/api> .
+
 ### Data Properties ###
 
 dts:dtsVersion 
@@ -222,8 +252,6 @@ dts:collection
     rdfs:label "collection" ;
     rdfs:comment "Link to the Collection API endpoint" ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
-
-# Should also check Class hydra:TemplatedLink to see how URI Templates are included in Hydra in the RDF
 
 dts:navigation
     a owl:DatatypeProperty ;
@@ -358,39 +386,3 @@ dts:UriTemplate
         )
     ] ;
     rdfs:isDefinedBy <https://w3id.org/dts/api> .
- 
-
-### Imported from Hydra
-
-# I would rather define them in the DTS Namespace: dts:title a subPropertyOf hydra:title and so on
-# Could import the whole of Hydra:
-# <https://w3id.org/dts/api#> owl:imports <http://www.w3.org/ns/hydra/core> .
-# It does not seem to be possible to import certain classes and properties only.
-
-# Below are the Hydra Properties (as in JSON-LD https://www.hydra-cg.com/spec/latest/core/core.jsonld, but written as Turtle)
-
-# hydra:title
-# a rdf:Property ;
-# rdfs:subPropertyOf rdfs:label ;
-# rdfs:label "title" ;
-# rdfs:comment "A title, often used along with a description" ;
-# rdfs:range xsd:string ;
-# schema:domainIncludes hydra:ApiDocumentation, hydra:Status, hydra:Class, hydra:SupportedProperty, hydra:Operation, hydra:Link, hydra:TemplatedLink ;
-# rdfs:isDefinedBy <http://www.w3.org/ns/hydra/core> .   
-
-# hydra:description 
-#   a rdf:Property ;
-#   rdfs:subPropertyOf rdfs:comment ;
-#   rdfs:label "description" ;
-#   rdfs:comment "A description." ;
-#   rdfs:range xsd:string ;
-#   schema:domainIncludes hydra:ApiDocumentation, hydra:Status, hydra:Class, hydra:SupportedProperty, hydra:Operation, hydra:Link, hydra:TemplatedLink ;
-#   rdfs:isDefinedBy <http://www.w3.org/ns/hydra/core> .  
-
-# hydra:member
-#   a hydra:Link ;
-#   rdfs:label "member" ;
-#   rdfs:comment "A member of the collection" ;
-#   rdfs:domain hydra:Collection ;
-#   rdfs:isDefinedBy <http://www.w3.org/ns/hydra/core> . 
-
