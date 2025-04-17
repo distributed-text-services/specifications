@@ -854,6 +854,7 @@ Some combinations of query parameters and their values must return a 4XX HTTP Er
   - no `resource` value is provided
   - both `ref` and either `start` or `end` is specified
   - `start` is provided without also specifying `end`, or vice versa
+
 A 404 Not Found Error should be returned when
   - a query specifies a `ref`, `start`, or `end` value that does not exist in the queried `CitationTree`
   - a query specifies a `tree` value that does not correspond to an existing `CitationTree` for the `Resource`
