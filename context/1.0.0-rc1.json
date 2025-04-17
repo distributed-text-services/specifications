@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "dts": "https://w3id.org/dts/api#",
+    "dct": "http://purl.org/dc/terms/",
+
+    "CitableUnit": "dts:CitableUnit",
+    "CitationTree": "dts:CitationTree",
+    "CiteStructure": "dts:CiteStructure",
+    "Collection": "dts:Collection",
+    "EntryPoint": "dts:EntryPoint",
+    "MetadataObject": "dts:MetadataObject",
+    "Navigation": "dts:Navigation",
+    "Pagination": "dts:Pagination",
+    "Resource": "dts:Resource",
+
+    "citationTrees": "dts:citationTrees",
+    "citeStructure":"dts:citeStructure",
+    "description": "dts:description",
+    "dublinCore": {
+      "@id": "dts:dublinCore",
+      "@context": {
+        "@vocab": "http://purl.org/dc/terms/"
+      }
+    },
+    "end": "dts:end",
+    "extensions": "dts:extensions",
+    "first": "dts:first",
+    "last": "dts:last",
+    "member": "dts:member",
+    "next": "dts:next",
+    "previous": "dts:previous",
+    "ref": "dts:ref",
+    "resource": "dts:resource",
+    "start": "dts:start",
+    "title": "dits:title",
+    "view": "dts:view",
+    
+    "citeType": "dts:citeType",
+    "collection": "dts:collection",
+    "document": "dts:document",
+    "download": "dts:download",
+    "dtsVersion": "dts:dtsVersion",
+    "identifier": "dts:identifier",
+    "level": "dts:level",
+    "mediaTypes": "dts:mediaTypes",
+    "navigation": "dts:navigation",
+    "parent": "dts:parent",
+    "totalChildren": "dts:totalChildren",
+    "totalParents": "dts:totalParents"
+    
+  }
+}
