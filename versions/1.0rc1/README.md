@@ -6,7 +6,7 @@ Specifications
 - This Version: 1.0rc1
 - Previous Version: [1-alpha](./../1-alpha/)
 
-<span style="color : red;">The current version is approaching release candidate status. Please provide feedback, typo corrections, etc. on our [issues](https://github.com/distributed-text-services/specifications/issues).</span>
+<span style="color : red;">The current version is a release candidate. Please provide feedback, typo corrections, etc. on our [issues](https://github.com/distributed-text-services/specifications/issues) before we release a stable version !</span>
 
 ## Changelogs
 
