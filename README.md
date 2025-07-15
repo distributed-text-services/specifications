@@ -4,7 +4,11 @@
 [<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small}
 [<i class="fa fa-file-code"></i> Check Source and Propose Changes](https://github.com/distributed-text-services/specifications){: .btn .btn--info .btn--x--small}
 
-*The DTS Specification is currently in a public comment period following the 1-alpha release.*
+## Distributed Text Services 1.0 Release Candidate Published – July 11, 2025
+
+After years of development, independent implementations, interoperability testing, and a public comment period, the Distributed Text Services Technical Committee is pleased to announce the publication of the Distributed Text Services 1.0 Release Candidate (RC1).
+
+We strongly encourage you to implement DTS now and share your feedback. The specification is feature-complete and stable, and we expect only minor clarifications before the final 1.0 release in three months (11/10/2025). Early adoption will ensure your projects are ready and help the community validate the standard in real-world use.
 
 ## What is DTS?
 
