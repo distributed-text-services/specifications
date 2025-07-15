@@ -7,7 +7,7 @@
 
 <https://w3id.org/dts/api>
     a owl:Ontology ;
-    owl:versionInfo "unstable";
+    owl:versionInfo "1.0rc1";
     rdfs:label "Distributed Text Services (DTS) Vocabulary" ;
     rdfs:seeAlso "https://distributed-text-services.github.io/specifications" .
 

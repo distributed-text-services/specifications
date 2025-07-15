@@ -22,9 +22,9 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- Navigation _across texts_ is supported by the [Collection Endpoint](versions/unstable/#collection-endpoint)
-- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/unstable/#navigation-endpoint)
-- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/unstable/#document-endpoint)
+- Navigation _across texts_ is supported by the [Collection Endpoint](versions/1.0rc1/#collection-endpoint)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/1.0rc1/#navigation-endpoint)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/1.0rc1/#document-endpoint)
 
 The Collection and Navigation endpoints return JSON-LD. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
