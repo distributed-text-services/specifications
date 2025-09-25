@@ -104,7 +104,7 @@ The Distributed Text Services specifications reuse the RFC 6570 for defining the
 
 The RFC 6570 provides a variety of ways to describe URIs "query parameters" using template. IN RFC 6570, parameters are wrapped in `{}`. Multiple parameters may be wrapped together using `,` to join them. Parameters can be prefixed so that their resolution is the following:
 
-> Example values are: the `var` parameter has a value "value", `x` has the value "x". `empty` is empty, `null` is [known to the processor to be nullable](https://datatracker.ietf.org/doc/html/rfc6570#section-2.3) and has the null value.
+> Example values are: the `var` parameter has a value "value", `x` has the value "1024". `empty` is empty, `null` is [known to the processor to be nullable](https://datatracker.ietf.org/doc/html/rfc6570#section-2.3) and has the null value.
 
 
 |  Example Template | Expansion                          |
@@ -118,7 +118,7 @@ The RFC 6570 provides a variety of ways to describe URIs "query parameters" usin
 |    {?var,x}       | ?var=value&x=1024                  |
 |    {&var,x}       | &var=value&x=1024                  |
 |    {?var,x,empty} | ?var=value&x=1024&empty=           |
-|    {?var,x,nullv} | ?var=value&x=1024                  |
+|    {?var,x,null} | ?var=value&x=1024                  |
 
 *Source: Multiple value example from the [RFC 6570](https://datatracker.ietf.org/doc/html/rfc6570#section-3.2.1)*
 
