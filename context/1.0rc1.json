@@ -16,14 +16,17 @@
     "citationTrees": "dts:citationTrees",
     "citeStructure":"dts:citeStructure",
     "description": "dts:description",
+    
+    "lang": "@language",
+    "value": "@value",
     "dublinCore": {
-      "@id": "dts:dublinCore",
+      "@id": "@nest",
       "@context": {
         "@vocab": "http://purl.org/dc/terms/"
       }
     },
     "end": "dts:end",
-    "extensions": "dts:extensions",
+    "extensions": "@nest",
     "first": "dts:first",
     "last": "dts:last",
     "member": "dts:member",
