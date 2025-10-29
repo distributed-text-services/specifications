@@ -32,7 +32,7 @@
     "ref": "dts:ref",
     "resource": "dts:resource",
     "start": "dts:start",
-    "title": "dits:title",
+    "title": "dts:title",
     "view": "dts:view",
     
     "citeType": "dts:citeType",
