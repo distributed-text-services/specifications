@@ -50,32 +50,26 @@ This list includes implementations that should be generic enough to be compatibl
 
 * [MyDapytains](https://github.com/distributed-text-services/MyDapytains) is a python implementation by a member of the technical committee which uses Flask for web and SaxonC implementation for XPath, XSLT and XQuery.
 * [DoTS](https://github.com/chartes/dots) is an implementation from Biblissima + & the Ecole nationale des chartes built on top of BaseX.
+* [SCDH/dts-transformations](https://github.com/SCDH/dts-transformations) is a XSLT-based implementation based on CiteStructure for document and navigation endpoints.
 
-### Implementation of older versions (Before 1-alpha)
+## Conformance Evaluation
 
-The following open source libraries implement the DTS API (1.0 Draft):
-
-* [TEI Publisher client](https://teipublisher.com/exist/apps/tei-publisher/doc/blog/tei-publisher-50.xml)
-  * Implementation of the DTS API + a Client interface to the API
-  * Currently supports browsing collections and document retrieval, but not navigation.
-* [MyCapytain](https://github.com/Capitains/MyCapytain/tree/3.0.0) + [Nautlius](https://github.com/Capitains/Nautilus/tree/dts-draft-1)
-  * MyCapytain is a Python library that implements the DTS data model and Nautlius is a Python library that implements the DTS API Endpoints backed by the MyCapytain libary. Both operate on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
-* [Perseids DTS API](https://github.com/perseids-project/dts-api/)
-  * Ruby on Rails implementation of the DTS API . Operates on TEI text collections that adhere to the [Capitains Guidelines](http://capitains.org/pages/guidelines)
+Matteo Romanello built a toolkit to evaluate implementation against the specifications: <https://github.com/mromanello/DTS-validator>.
 
 ## Known Corpora Accessible via the DTS API
 
-The following open source libraries implement the DTS API (1.0 Draft):
+The following open access libraries implement the DTS API :
 
-* Dracor <https://dev.dracor.org/api/v1/dts>
-* Ecole Nationale des Chartes <http://dev.chartes.psl.eu/api/nautilus/dts> and <http://http://dev.chartes.psl.eu/dts-demo/>
+* (1.0rc1) CoMMA <https://comma.inria.fr>
+* (1.0rc1) Dracor <https://dev.dracor.org/api/v1/dts>
+* (1.0-alpha) Ecole Nationale des Chartes <https://dots.chartes.psl.eu/demo/api/dts/>
   * A small collection of contemporaneous and medieval French literature. The contemporaneous texts are lightly marked up, and the medieval texts are finely annotated.  Uses the MyCapytain/Nautilus libraries.
-* Alpheios <http://texts.alpheios.net/api/dts>
+* (1.0 Draft) Alpheios <http://texts.alpheios.net/api/dts>
   * A small collection of Latin and Greek texts that have been aligned with linguistic annotations for learning ancient languages. Uses the MyCapytain/Nautilus libraries.
-* Perseids <https://dts.perseids.org/>
+* (1.0 Draft) Perseids <https://dts.perseids.org/>
   * Serves all textual resources available from Perseus within the Ancient Greek and Latin corpora as well as some resources in Hebrew and Farsi.
-* Beta maṣāḥǝft <http://betamasaheft.eu/>
+* (1.0 Draft) Beta maṣāḥǝft <http://betamasaheft.eu/>
   * Collection of written artefacts from the highlands of Ethiopia and Eritrea mainly in Gǝʿǝz (Classical Ethiopic). In the collection are present both transcriptions of manuscripts and editions of textual units. The scarce availability of transcriptions as well as available editions means that the actual text contents are few in comparison with the textual units and written artefacts identified and described.
-* Epigraphische Datenbank Heidelberg <https://edh-www.adw.uni-heidelberg.de/api/dts/>
+* (1.0 Draft) Epigraphische Datenbank Heidelberg <https://edh-www.adw.uni-heidelberg.de/api/dts/>
   * A corpus of 80,000 short texts from the Latin epigraphic databases.
 
