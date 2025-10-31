@@ -22,9 +22,18 @@
     "dublinCore": {
       "@id": "@nest",
       "@context": {
-        "@vocab": "http://purl.org/dc/terms/"
+        "@vocab": "http://purl.org/dc/terms/",
+        "description": { 
+          "@id": "dct:description"
+        },
+        "identifier": { 
+          "@id": "dct:identifier"
+        },
+        "title": { 
+          "@id": "dct:title"
+        }
       }
-    },
+    }
     "end": "dts:end",
     "extensions": "@nest",
     "first": "dts:first",
