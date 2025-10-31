@@ -33,7 +33,7 @@
           "@id": "dct:title"
         }
       }
-    }
+    },
     "end": "dts:end",
     "extensions": "@nest",
     "first": "dts:first",
