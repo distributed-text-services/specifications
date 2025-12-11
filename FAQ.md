@@ -72,7 +72,7 @@ Yes.
 Yes, partially.
 
 The DTS Collection and Navigations endpoints can be used to provide navigation capabilities across
-collections of texts and within a textual document regardless of the data format. However, the Document endpoint only suppoorts
+collections of texts and within a textual document regardless of the data format. However, the Document endpoint only supports
 TEI texts.
 
 ## What is the relationship between DTS and CTS? Are they redundant?
