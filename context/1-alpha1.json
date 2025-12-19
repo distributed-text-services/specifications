@@ -42,7 +42,7 @@
     },
     "citeType": {
       "@id": "dts:citeType",
-      "@type": "@value",
+      "@type": "@value"
     },
     
     "referenceNode": "dts:referenceNode",
