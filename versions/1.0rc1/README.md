@@ -10,6 +10,9 @@ Specifications
 
 ## Changelogs
 
+- 2026-02-04
+  - Fixed ([Issue 271](https://github.com/distributed-text-services/specifications/issues/271)) to have extensions and dublinCore be nested JSON LD properties
+  - Clarification on the fact that Citation Trees without a reference represent the same document.
 - 2025-07-11 : 1.0 Release Candidate 1 !
 - 2025-04-17
   - Fixed formatting issues.
@@ -88,7 +91,9 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 
 ### Citation Tree
 
-When discussing a text, it is common to use labels to identify sections of the text. When referring to pages, for example, we might identify them with numbers. In other situations we might divide the text into logical structures that are hierarchically organized. For example, we might identify "Paragraph 4" within "Section D" which falls within "Chapter 1." In both cases, these structuring labels form citation trees, though with different depths. (A depth of 1 for "pages" and a depth of 3 for "chapter"/"section"/"paragraph.")
+When discussing a text, it is common to use labels to identify sections of the text. When referring to pages, for example, we might identify them with numbers. In other situations we might divide the text into logical structures that are hierarchically organized. For example, we might identify "Paragraph 4" within "Section D" which falls within "Chapter 1." In both cases, these structuring labels form citation trees, though with different depths. (A depth of 1 for "pages" and a depth of 3 for "chapter"/"section"/"paragraph."). 
+
+A Citation Tree is therefore a contextual information to interpret references.
 
 The depth of a citation tree can be uneven. In a Ph.D. thesis, for example, the introduction may not be subdivided, while a chapter will often have subdivisions.
 
@@ -1934,6 +1939,7 @@ For parameter combinations and potential errors, see [Link](#)
 
 - The `resource` query parameter **MUST** be provided.
 - The `tree` query parameter **MUST** be omitted to address the default `CitationTree` of a `Resource`.
+- The `tree` query parameter **MUST** not have effects on the response if used without a `ref`, or a `start` and a `end` parameters 
 - The `tree` query parameter **MUST** be provided to address a `CitableUnit` within a different `CitationTree` from the default.
 - The `ref` query parameter **CANNOT** be used in combination with `start` and `end`.
 - The `start` query parameter **MUST** be used in combination with `end`.
