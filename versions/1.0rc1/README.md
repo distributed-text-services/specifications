@@ -291,6 +291,9 @@ The collection endpoint supports the following query parameters:
 | page| int | Page of the current collection's members | GET | |
 | nav | string | Determines whether the content of the `member` property represents parent or child items. | GET | `children` (default) or `parents` |
 
+#### Extensions
+The `extensions` property is provided as a mechanism for DTS implementers to add properties that follow vocabularies other than DTS and Dublin Core. If an implementer wishes to use `extensions` and have its members be interpretable as RDF, then they **MUST** extend the DTS context to define any additional vocabularies used. Without such an extension, the contents of `extensions` will be discarded by RDF processors.
+
 ### Examples
 
 #### Root collection
