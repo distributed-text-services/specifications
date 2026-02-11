@@ -1925,7 +1925,7 @@ In some cases a Resource might include the same types of citable units but neste
 !["Resource with uneven organizational levels"](./assets/img/thesis_citation-tree_example.png)
 
 
-We would represent that hierchy as follows:
+We would represent that hierarchy as follows:
 
 
 ```json
