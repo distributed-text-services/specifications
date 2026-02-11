@@ -1914,6 +1914,156 @@ It is up to the implementer to decide what optional metadata to provide using th
 }
 ```
 
+### Handling Complex Document Structures
+
+In many cases a Resource's CitationTree will not be a neat and consistent hierarchy. A Resource's references may appear in uneven or varied nested relationships. A single CitationTree may allow for completely different citeTypes in different sections of a Resource. In general, a CitationTree declaration should represent _all possible hierarchical relationships among CitableUnits of different citeTypes_. If a citeType can appear at a variety of different locations in the Resource's reference structure, it will appear multiple times in the CitationTree declaration. A citeType may even appear as its own descendant where appropriate. It is also possible for a Resource to have multiple unrelated reference schemes for the same material. In this case, multiple CitationTree objects can be declared in the Resource's `citationTrees` property.
+
+What follows are examples of some CitationTrees with these more complex relationships.
+
+
+#### Unevenly nested references
+
+
+In some cases a Resource might include the same types of citable units but nested differently in different parts of its tree. For example, a thesis might be comprised of `chapters`, `sections`, and `paragraphs`. Some `paragraphs` might be direct children of the `chapters`. Other parts of a `chapter` might be divided into `section` citable units, with the `paragraphs` as children of those `sections`.
+
+
+!["Resource with uneven organizational levels"](./assets/img/thesis_citation-tree_example.png)
+
+
+We would represent that hierarchy as follows:
+
+
+```json
+"citationTrees": [
+    {
+        "@type": "CitationTree",
+        "citeStructure": [
+            {
+                "citeType": "chapter",
+                "citeStructure": [
+                    {
+                        "citeType": "section",
+                        "citeStructure": [
+                            {
+                                "citeType": "paragraph"
+                            }
+                        ]
+                    },
+                    {
+                        "citeType": "paragraph"
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+
+<!--*Different reference schemes for different sections*-->
+
+#### Parallel independent reference schemes
+
+In some cases a Resource might have multiple reference schemes that identify the same sections of text. Aristotle's *Nicomachean Ethics*, for example, has traditionally been divided into books with chapters. The classic passage describing virtue as the "mean" is Book 2, Chapter 6. The same work is also divided according to a different scheme based on the old print edition of Bekker. These Bekker numbers refer first to a page in that printed edition, with a lower-case letter indicating the column on a given page. Finally a third number is added to indicate a line in the column. So the same stretch of Aristotle's work can be referenced as 1106a14-1107a27.
+
+
+!["Resource with different reference schemes for different sections."](./assets/img/multiple-independent-b_citation-tree_example.png)
+
+
+These referencing systems would be represented as two separate CitationTree objects within the Resource's `citationTrees` property:
+
+
+```json
+"citationTrees": [
+    {
+        "@type": "CitationTree",
+        "citeStructure": [
+            {
+                "citeType": "book",
+                "citeStructure": [
+                    {
+                        "citeType": "chapter",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "@type": "CitationTree",
+        "identifier": "Bekker",
+        "citeStructure": [
+            {
+                "citeType": "page",
+                "citeStructure": [
+                    {
+                        "citeType": "column",
+                        "citeStructure": [
+                            {
+                                "citeType": "line"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+
+#### Parallel, partly overlapping reference schemes
+
+It might sometimes be unclear when to use a single CitationTree and when to use a list of parallel CitationTree objects. If the *same part* of the Resource is always only identified with one identifier, then one CitationTree is used. If the same section of the Resource may be identified with two or more different reference ids, and the one is not simply a finer subdivision of the other, then multiple CitationTrees should be used. 
+
+For example, Flavius Josephus' *Jewish Antiquities* is always referenced using the same division into books. Those books, however, can be subdivided in two traditional ways: either as a flat series of "sections" (Niese's system) or in Whiston's system of chapters with nested sections. 
+
+
+!["Resource with different reference schemes for different sections."](./assets/img/multiple-independent_citation-tree_example.png)
+
+
+Niese's second-level "section" divisions do not line up with the Whiston "chapters". So the same stretch of text can be identified as 7.8.6-7.9.2 or as 7.320-402. These different identifiers point to the same section of the Resource using different organizational divisions for levels below the "Book". So we would represent this with multiple CitationTrees (taking Niese's system as the default):
+
+
+```json
+"citationTrees": [
+    {
+        "@type": "CitationTree",
+        "citeStructure": [
+            {
+                "citeType": "book",
+                "citeStructure": [
+                    {
+                        "citeType": "section",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "@type": "CitationTree",
+        "identifier": "Whiston",
+        "citeStructure": [
+            {
+                "citeType": "book",
+                "citeStructure": [
+                    {
+                        "citeType": "chapter",
+                        "citeStructure": [
+                            {
+                                "citeType": "paragraph",
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+The fact that some citeType labels ("book") are shared between these two CitationTrees does not make any difference. There are two distinct systems of referencing, which produce different, incompatible reference identifiers for the same section of text.
+
+
 ## Document Endpoint
 
 The Document endpoint is used to access the content of document, as opposed to metadata (which is found in collections).
