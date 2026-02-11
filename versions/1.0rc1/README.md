@@ -93,7 +93,7 @@ The Distributed Text Services API implements one root [Entry point](#entry-endpo
 
 When discussing a text, it is common to use labels to identify sections of the text. When referring to pages, for example, we might identify them with numbers. In other situations we might divide the text into logical structures that are hierarchically organized. For example, we might identify "Paragraph 4" within "Section D" which falls within "Chapter 1." In both cases, these structuring labels form citation trees, though with different depths. (A depth of 1 for "pages" and a depth of 3 for "chapter"/"section"/"paragraph."). 
 
-A Citation Tree is therefore a contextual information to interpret references.
+A Citation Tree in the DTS specification is a model for interpreting references. Each Citation Tree maps the possible hierarchical relationships between different kinds of reference identifiers in a given document.
 
 The depth of a citation tree can be uneven. In a Ph.D. thesis, for example, the introduction may not be subdivided, while a chapter will often have subdivisions.
 
