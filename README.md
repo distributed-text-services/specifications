@@ -4,11 +4,9 @@
 [<i class="fa fa-bug"></i> Raise Issues and Ask Questions](https://github.com/distributed-text-services/specifications/issues){: .btn .btn--info .btn--x--small}
 [<i class="fa fa-file-code"></i> Check Source and Propose Changes](https://github.com/distributed-text-services/specifications){: .btn .btn--info .btn--x--small}
 
-## Distributed Text Services 1.0 Release Candidate Published – July 11, 2025
+## Distributed Text Services 1.0 Published – February 13, 2026
 
-After years of development, independent implementations, interoperability testing, and a public comment period, the Distributed Text Services Technical Committee is pleased to announce the publication of the Distributed Text Services 1.0 Release Candidate (RC1).
-
-We strongly encourage you to implement DTS now and share your feedback. The specification is feature-complete and stable, and we expect only minor clarifications before the final 1.0 release in three months (11/10/2025). Early adoption will ensure your projects are ready and help the community validate the standard in real-world use.
+After years of development, independent implementations, interoperability testing, and a release candidate period, the Distributed Text Services Technical Committee is pleased to announce the publication of the Distributed Text Services v1.0.
 
 ## What is DTS?
 
@@ -26,9 +24,9 @@ See the [FAQ](FAQ.html) for more information and a list of frequently asked ques
 
 DTS specifies 3 distinct operation endpoints:
 
-- Navigation _across texts_ is supported by the [Collection Endpoint](versions/1.0rc1/#collection-endpoint)
-- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/1.0rc1/#navigation-endpoint)
-- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/1.0rc1/#document-endpoint)
+- Navigation _across texts_ is supported by the [Collection Endpoint](versions/v1.0/#collection-endpoint)
+- Navigation _within a text_ is supported by the [Navigation Endpoint](versions/v1.0/#navigation-endpoint)
+- Retrieval of complete or partial texts is supported by the [Document Endpoint](versions/v1.0/#document-endpoint)
 
 The Collection and Navigation endpoints return JSON-LD. The Document endpoint is specified to return TEI/XML of the requested text or fragment.
 
@@ -54,7 +52,7 @@ This list includes implementations that should be generic enough to be compatibl
 
 ## Conformance Evaluation
 
-Matteo Romanello built a toolkit to evaluate implementation against the specifications: <https://github.com/mromanello/DTS-validator>.
+Matteo Romanello built a toolkit to evaluate implementation against the specifications: <https://github.com/distributed-text-services/validator>.
 
 ## Known Corpora Accessible via the DTS API
 

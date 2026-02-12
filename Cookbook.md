@@ -13,9 +13,10 @@ To link a manifest to a catalog entry, we recommend using the Dublin Core Terms 
 ```json
 {
     "@context": {
-        "@vocab": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+        "@vocab": "https://dtsapi.org/context/v1.0.json",
         "sc": "http://iiif.io/api/presentation/2#"
     },
+    "dtsVersion": "1.0",
     "@id": "/a/collection/uri",
     "@type" : "Resource",
     "title" : "A title",
@@ -44,9 +45,10 @@ The operation is really close to the [previous one](#link-manifests-to-a-catalog
 ```json
 {
     "@context": {
-        "@vocab": "https://distributed-text-services.github.io/specifications/context/1.0.0draft-2.json",
+        "@vocab": "https://dtsapi.org/context/v1.0.json",
         "sc": "http://iiif.io/api/presentation/2#"
     },
+    "dtsVersion": "1.0",
     "@id":"/api/dts/navigation/?id=/a/text/id&level=2",
     "citeDepth" : 2,
     "level": 2,

@@ -1,6 +1,33 @@
 Changelogs
 ==========
 
+# 1-alpha to 1.0
+
+- 2026-02-04
+  - Fixed ([Issue 271](https://github.com/distributed-text-services/specifications/issues/271)) to have extensions and dublinCore be nested JSON LD properties
+  - Clarification on the fact that Citation Trees without a reference represent the same document.
+- 2025-07-11 : 1.0 Release Candidate 1 !
+- 2025-04-17
+  - Fixed formatting issues.
+  - Removed ambiguity around the section "Handling Requests with No Matching `CitableUnit`s at the Requested Level(s)" ([Issue 268](https://github.com/distributed-text-services/specifications/issues/268))
+  - Clarified the behaviour of `?down=0` while no `start/end`/`ref` are provided (=400 Bad Request Error) ([Issue 269](https://github.com/distributed-text-services/specifications/issues/269))
+  - Allow `CitableUnit` to have `@id` for Linked Data usages ([Issue 274](https://github.com/distributed-text-services/specifications/issues/274)).
+  - Clarify that headers of the Entry Endpoint SHOULD be JSON+LD ([Issue 272](https://github.com/distributed-text-services/specifications/issues/272)).
+  - Clarify that `MetadataObject` MUST have their vocabularies defined, either by the main `@context` property if they are reusing base DTS vocabulary (including Dublin Core Terms) or by their own `@context` property.
+- 2024-08-08
+  - Made `citeType` required for `CiteStructure` objects.
+  - Removed `maxCiteDepth` everywhere, including in the example.
+- 2024-08-06
+  - Removed `maxCiteDepth` from Collection objects at the Collection endpoint now that we have a `CitationTree` object at the Resource level.
+  - Harmonized the properties for `Resource` objects between the Collection and Navigation endpoints. This involves adding required `document` and `navigation` properties, as well as allowing additional optional properties. Also removed the `document` and `navigation` properties from the `Navigation` object since these URI templates are now part of the `Resource` object.
+  - Added `view` properties for paginated responses to the Collection and Navigation endpoints. Added a `Pagination` object type to provide the pagination links.
+- 2024-05-24
+  - Removed `totalItems` from the Collection Endpoints (See https://github.com/distributed-text-services/specifications/issues/248, problem pointed out by @kbrueckmann)
+  - `passage` property (URI template) moved to `document` for consistency between Collection and Navigation endpoint (See https://github.com/distributed-text-services/specifications/issues/249, problem pointed out by @philippepons)
+    - Harmonized the examples to have the resource already populated, as per Collection URI Templates
+  - `collection` property (URI template) added to `Collection` and `Resource` object (See https://github.com/distributed-text-services/specifications/issues/250, problem pointed out by @philippepons)
+  - Fixed a typo in the Entry endpoint table, where it referenced Resources.
+
 # 1-draft2 to 1-alpha
 
 ## Hydra
