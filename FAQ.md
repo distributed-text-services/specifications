@@ -2,15 +2,20 @@
 
 ## What is DTS?
 
-DTS is an API for collections of TEI documents.
+DTS is an API for collections of documents.
 
-## Why does TEI need an API for collections?
+## Can DTS provide an API for TEI collections?
 
 DTS provides a standard way for clients to interact with collections of TEI documents. A standard API allows users to access many text collections using the same client software. It also allows editors to publish text collections in a usable way that existing clients can use.
 
+## Can I use DTS if I don't publish my texts in TEI/XML?
+
+Yes (since 1.0's first release candidate). The DTS Collection and Navigations endpoints can be used to provide navigation capabilities across
+collections of texts and within a textual document regardless of the data format.
+
 ## Where can I download DTS and start using it?
 
-You can’t.  DTS defines the way that programs communicate with each other. An end-user will use this software.  For software developers, there are libraries that support DTS, they are listed [here](../index.html#reference-implementations).
+You can’t. DTS defines the way that programs communicate with each other. An end-user will use this software. For software developers, there are libraries that support DTS, they are listed [here](../#reference-implementations).
 
 ## What can clients do with these documents?
 
@@ -33,10 +38,6 @@ DTS supports FAIR data practices for textual data by:
 DTS is a REST API that works a lot like a web browser.  When client software makes a request, the server responds by giving it a document.  The client can use the information in this document to make further requests. The API is defined purely in terms of Web requests using HTTP and the documents and headers that the server provides in response to those requests.  This means that DTS is language independent, easy to debug, and scales well to large numbers of users. For API geeks, here are the buzzwords: DTS is a pure hypermedia-centric REST API, defined in terms of HTTP conventions.
 
 DTS is built like you would build a website: everything is discoverable, sorted so that users (clients) can easily find what they want. On top of that, it uses vocabularies that are linked and shared and which you can find all over the web of data.
-
-## What is Hydra?  Why Hydra?
-
-Hydra provides a good framework for building REST APIs.  We wanted to use a standard instead of starting from scratch. We wanted good support for JSON and pure hypermedia-based APIs. Hydra provides core functionality and provides extensibility that allows us to customize to fit our model.  (We tried three or four other approaches before choosing Hydra.  We know there are religious debates about APIs, this one worked well for our use cases.)
 
 ## If I implement the DTS API for my text collection what does it enable?
 
@@ -66,14 +67,6 @@ Yes.
 ## Does DTS support text citation hierarchies which vary within a document?
 
 Yes.
-
-## Can I use DTS if I don't publish my texts in TEI/XML?
-
-Yes, partially.
-
-The DTS Collection and Navigations endpoints can be used to provide navigation capabilities across
-collections of texts and within a textual document regardless of the data format. However, the Document endpoint only supports
-TEI texts.
 
 ## What is the relationship between DTS and CTS? Are they redundant?
 
