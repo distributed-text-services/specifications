@@ -1901,7 +1901,7 @@ What follows are examples of some CitationTrees with these more complex relation
 In some cases a Resource might include the same types of citable units but nested differently in different parts of its tree. For example, a thesis might be comprised of `chapters`, `sections`, and `paragraphs`. Some `paragraphs` might be direct children of the `chapters`. Other parts of a `chapter` might be divided into `section` citable units, with the `paragraphs` as children of those `sections`.
 
 
-!["Resource with uneven organizational levels"](./assets/img/thesis_citation-tree_example.png)
+!["Resource with uneven organizational levels"](../../assets/img/thesis_citation-tree_example.png)
 
 
 We would represent that hierarchy as follows:
@@ -1941,7 +1941,7 @@ We would represent that hierarchy as follows:
 In some cases a Resource might have multiple reference schemes that identify the same sections of text. Aristotle's *Nicomachean Ethics*, for example, has traditionally been divided into books with chapters. The classic passage describing virtue as the "mean" is Book 2, Chapter 6. The same work is also divided according to a different scheme based on the old print edition of Bekker. These Bekker numbers refer first to a page in that printed edition, with a lower-case letter indicating the column on a given page. Finally a third number is added to indicate a line in the column. So the same stretch of Aristotle's work can be referenced as 1106a14-1107a27.
 
 
-!["Resource with different reference schemes for different sections."](./assets/img/multiple-independent-b_citation-tree_example.png)
+!["Resource with different reference schemes for different sections."](../../assets/img/multiple-independent-b_citation-tree_example.png)
 
 
 These referencing systems would be represented as two separate CitationTree objects within the Resource's `citationTrees` property:
@@ -1992,7 +1992,7 @@ It might sometimes be unclear when to use a single CitationTree and when to use 
 For example, Flavius Josephus' *Jewish Antiquities* is always referenced using the same division into books. Those books, however, can be subdivided in two traditional ways: either as a flat series of "sections" (Niese's system) or in Whiston's system of chapters with nested sections. 
 
 
-!["Resource with different reference schemes for different sections."](./assets/img/multiple-independent_citation-tree_example.png)
+!["Resource with different reference schemes for different sections."](../../assets/img/multiple-independent_citation-tree_example.png)
 
 
 Niese's second-level "section" divisions do not line up with the Whiston "chapters". So the same stretch of text can be identified as 7.8.6-7.9.2 or as 7.320-402. These different identifiers point to the same section of the Resource using different organizational divisions for levels below the "Book". So we would represent this with multiple CitationTrees (taking Niese's system as the default):
@@ -2055,7 +2055,6 @@ The Document endpoint supports the following query parameters:
 | tree | string | The string identifier for a `CitationTree` of the `Resource`. | GET | NOT used to query the default `CitationTree` |
 | mediaType | string | The string identifier for the media-type the resource must be returned in | GET | |
 
-For parameter combinations and potential errors, see [Link](#)
 
 #### Usages
 
